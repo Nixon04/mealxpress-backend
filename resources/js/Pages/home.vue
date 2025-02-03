@@ -1,10 +1,11 @@
 <template>
+  <div>
   <Head>
     <title>Mealxpress | Rich in content, Deliverying with no hassle </title>
     <meta name="description" content="Discover extreme cheap services on our plattform, Order foods at your home and get it delivered right at your home with no hassle whatsoever, mealxpress is here to stay">
    <link rel="icon" :href="getImageUrl('logo.png')" type="image/*" width="4">
   </Head>
-  <div>
+
     <MainIndex />
     <section class="hero-section-header bg-main-colo position-relative">
       <div class="hero-section-container bg-set-body ">
@@ -234,7 +235,6 @@
 
 <Hookstage/>
   <Footer/>
-
 
   </div>
 </template>

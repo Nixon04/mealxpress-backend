@@ -11,6 +11,10 @@ class GeneralView extends Controller
     public function HomeIndex(){
         return inertia::render('home');
     }
+
+    public function NewHome(){
+        return Inertia::render('newhome');
+    }
     public function About(){
         return inertia::render('about');
     }

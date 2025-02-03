@@ -18,6 +18,7 @@ Route::get('/route/home',[AuthController::class,'EmailRoute']);
 
 Route::controller(GeneralView::class)->group(function(){
 Route::get('/', 'HomeIndex');
+Route::get('/newhome', 'NewHome');
 Route::get('/about', 'About');
 Route::get('/privacy', 'Privacy');
 Route::get('/drivers/overview', 'Drivers');
