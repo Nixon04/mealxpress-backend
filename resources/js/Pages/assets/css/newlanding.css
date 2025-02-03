@@ -1,0 +1,147 @@
+:root{
+    --bg-primary-main: #2D2942;
+    --bg-primary-light: #443D65;
+    --bg-secondary-meal: #E26900;
+    --bg-hover-main: #f1f1f1;
+    --bg-border-first: #E6F5F9;
+    --bg-border-second: #EFFCEF;
+    --bg-border-third: #EFF6FC;
+    --bg-info-background: #F9FAFB;  
+    --bg-state-background: #fff1ee
+}
+
+*{
+    padding: 0;
+    margin: 0; 
+    overflow: hidden;
+}
+.bg-navbarcontainer-v{
+    width: 100%;
+    position: fixed;
+    background: var(--bg-primary-main); 
+    z-index: 9999!important;
+}
+.v-herosectionbody{
+    height: 100vh;
+    margin-top: 60px;
+    width: 100%;
+    background: var(--bg-primary-main);
+    position: relative;
+}
+
+.v-hero-bottom{
+    position:absolute;
+    right: 0px;
+    left: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    bottom: -100px;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.v-hero-left{
+    position: absolute;
+    left:35%;
+    transform: translateX(-25%);
+}
+.v-hero-rightside{
+    position: absolute;
+    right: 12px;
+    bottom: 5rem;
+    display: flex;
+    gap:12px;
+}
+.v-hero-leftside{
+    position: absolute;
+    left: 12px;
+    bottom: 5rem;
+    display: flex;
+    gap:12px;
+}
+.v-sm-txt{
+    font-size: 8px;
+}
+
+.btn-activedownload{
+    border: 0.45px solid #f1f1f1;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+.v-image-stage{
+    max-width: 40%; 
+ }
+
+
+.bg-navbarflex{
+    padding: 1.3rem;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+.v-heroallpadding{
+    padding: 12px;
+}
+.v-flex{
+  display: flex;  
+}
+.v-flex-between{
+    display: flex;
+    justify-content: space-between;
+}
+.v-listmodel{
+    display: flex;
+    gap: 20px;
+}
+.v-listmodel, .v-listmodel-links{
+    color: #fff;
+    cursor: pointer;
+}
+.v-listmodel-links:hover{
+ color: var(--bg-secondary-meal);
+}
+.bg-navbarflex  span{
+    color: #fff;
+}
+
+.v-herohedertop{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+.v-xtralarge-txt{
+    font-size: clamp(3rem, 8vw, 10rem);
+    font-weight: 500;   
+}
+.v-stralarge-txt{
+font-size: clamp(0.4rem, 8vw, 8rem);
+text-align: center;
+padding: 12px;
+}
+.bg-sec-color{
+    color: var(--bg-secondary-meal);
+}
+.v-image-responsive{
+    width: 100%;
+    height: auto;
+}
+.bg-height-resolved{
+    height: 100%;
+    position: fixed;
+}
+.v-btnoutline  span{
+    border: 1px solid #fff;
+    color: #fff;
+    background: transparent;
+    padding: 0.9rem;
+    border-radius: 15px;
+}
+.v-btnoutline  span:hover{
+    background: var(--bg-secondary-meal);
+    color: #fff;
+    transition: 2 ease-in-out;
+}
+

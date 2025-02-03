@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mealxpress-header">
     <div class="d-flex justify-content-between">
       <div class="d-flex gap-3">
@@ -141,6 +142,7 @@
   <!-- <aside class="aside-mealxpresscontent" :class="{ 'is-visible': isSidebarVisible }">
     <p>Sidebar Content</p>
   </aside> -->
+  </div>
 </template>
 
 <script>

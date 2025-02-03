@@ -16,7 +16,6 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import Vue3Marquee from 'vue3-marquee';
 
 
-
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
