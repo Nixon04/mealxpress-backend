@@ -1,0 +1,21 @@
+/* set of rules for mealxpress landing page  */
+
+.hero-section-header{
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+    position: relative;
+}
+.hero-section-container{
+    padding: 1.5rem;
+}
+.hero-section-bgheader{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+.bg-big-header{
+    font-size: 6rem;
+}

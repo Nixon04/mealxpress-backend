@@ -1,0 +1,151 @@
+@media (max-width: 800px){
+    .flex-left-state, .flex-right-state{
+        flex: 100%;
+    }
+    .login-container-set{
+        width: 90%!important;
+        padding: 2.5rem;
+    }
+    .bg-center-headers{
+        display: none;
+    }
+    .bg-navigation-content{
+        height: 100vh;
+        gap: 30px;
+       }
+       
+    .bg-navigation-flex{
+        display: flex;
+        flex-direction: column;
+    }
+    .bg-toggle{
+        display: block;
+    }
+    .bg-drawers-container{
+        right:0px;
+        bottom:0px;
+        width: 100%;
+    }
+ 
+}
+
+@media(max-width:1124px){
+    .bg-toggle{
+        display: block!important;
+    }
+    .bg-display-charts{
+        display: none;
+    }
+
+    .bg-display-flex{
+        display: block;
+    }
+    .bg-col-dismiss{
+        display: none;
+    }
+    .aside-mealxpress{
+        width: 250px;
+        background-color: var(--bg-primary-main);
+        color: #fff;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: auto;
+        z-index: 9999;
+        display: none;
+    }
+    .mealxpress-content{
+        flex: 1;
+        margin-left: 250px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 80px;
+        width: calc(100% - 250px);
+    }
+    .bg-scrollable{
+        height: auto!important;
+        overflow-x: auto;
+        overflow-y: initial;
+    }
+    .bg-scrollform{
+        display: flex;
+        flex-direction: row!important;
+    }
+
+  
+    .bg-flex-1, .bg-flex-2{
+        flex: 100%!important;
+       
+      }
+     
+    
+    
+    .bg-transfer-padding-all{
+        width: 80%;
+    }
+    .bg-dynamic-image{
+        width: 60%;
+    }
+    .bg-drawer-center-container{
+        height: 100%;
+        width: 100%;
+        border-radius: 0px;
+    }
+    .bg-bigger{
+        font-size: 3em!important;
+    }
+    .bg-font-note{
+        font-size: 1em!important;
+    }
+    .flexright, .flexleft{
+        flex: 100%;
+    }
+    .flex-info-right, .flex-info-left{
+        flex: 100%;
+    }
+    .flexleftcontent, .flexrightcontent{
+        flex: 100%;
+    }
+    .bg-largermeal{
+        font-size: 30px;
+    }
+    
+    .bg-px-space{
+        margin: 20px;
+    }
+   
+    .bg-container-all{
+        margin-left: -10px!important;
+        margin-right: 10px!important;
+    }
+    .flex-right, .flex-left{
+        flex: 100%;
+        width: 100%;
+    }
+
+    .c-header{
+        width: 80%;
+        font-size: 40px;
+    }
+   
+    
+    .card-mutate-swig{
+        width: 90%;
+        top: 75%;
+    }
+    .bg-dialog-pad{
+        width: 90%;
+    }
+    .mealxpress-content{
+        margin-left: 0!important;
+        width: 100%;
+    }
+    .mealxpress-header{
+        width: calc(100% - 0px)!important;
+        left: 0;
+    }
+    .deletepadding{
+        width: 70%;
+    }
+}
