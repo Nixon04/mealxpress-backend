@@ -124,12 +124,27 @@
                           <div class="d-flex flex-column">
                             <h1 class="fs-1  fw-bold text-main mb-3 text-main">Get More from Vendors stores</h1>
                             <h6 class="mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
-                            <div class="rx-card-light mb-3">
-
-                            </div>
+                                <div class="rx-card-light mb-3 position-relative">
+                                    <div class="rx-cardcontainer-light">
+                                        <div class="rx-cardleft">
+                                          <h1 class="fs-1 fw-bold text-main">Get Fast Delivery on Time</h1>
+                                        </div>
+                                        <div class="rx-cardright">
+                                            <img :src="LandingImages('clockrecord.png')" class="rx-shape-box"  alt="">
+                                        </div>
+                                    </div>
+                             
+                                </div> 
 
                             <div class="rx-card-light">
-
+                                <div class="rx-cardcontainer-light">
+                                    <div class="rx-cardleft">
+                                      <h1 class="fs-1 fw-bold text-main">Our Couriers are upto Date</h1>
+                                    </div>
+                                    <div class="rx-cardright">
+                                        <img :src="LandingImages('deliveryride.png')" class="rx-shape-box"  alt="">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

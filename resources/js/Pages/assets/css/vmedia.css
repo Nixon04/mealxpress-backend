@@ -7,6 +7,11 @@
         height: auto;
     }
 
+    .rx-cardleft, .rx-cardright{
+        flex: 100%;
+        gap: 12px;
+    }
+
     .col-rate-column{
         display: grid;
         grid-template-columns: repeat(1,1fr);

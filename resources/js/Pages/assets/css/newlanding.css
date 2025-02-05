@@ -316,18 +316,37 @@ padding: 12px;
     grid-template-columns: repeat(2,1fr);
 }
 .rx-card-light {
-    background: var(--bg-secondary-meal);
-    height: 20vh;
+    background: var(--bg-hover-main);
+    height: auto;
     padding: 12px;
     border-radius: 12px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.rx-card-light:hover {
-    box-shadow: 0px 8px 32px 12px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05); /* Slightly enlarges the card */
-}
+.rx-shape-box{
+    width: 14rem;
 
+}
+.rx-cardcontainer-light{
+    display: flex;
+    flex-wrap: wrap;
+}
+.rx-cardleft{
+    flex: 50%;
+    height: 20vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    
+}
+.rx-cardright{
+    flex: 50%;
+    height: 20vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
 .v-col-center{
   margin: auto;
   padding: 100px;
