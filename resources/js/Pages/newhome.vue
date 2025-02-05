@@ -1,10 +1,10 @@
 <template>
     <div>
         <NavBar/>
-        <section id="herosectionpage" class="v-herosectionbody">
+          <section id="herosectionpage" class="v-herosectionbody">
                 <div class="v-herohedertop">
                     <span class="v-xtralarge-txt text-white">Mealxpress.<span class="bg-sec-color">ng</span></span>
-                    <span class="fs-3 text-white v-stralarge-txt">order from any where and lets deliver to your doorstep asap</span>
+                    <span class=" text-white v-stralarge-txt">order from any where and lets deliver to your doorstep asap</span>
                     <Link href="/" class="btn v-btnoutline">
                         <span>View Market Records</span>
                     </Link>
@@ -23,11 +23,10 @@
                                 <img :src="LandingImages('google.png')" class="me-2" width="30" height="30" alt="">
                                  <div class="d-flex flex-column text-start">
                                     <span class="v-sm-txt">Get on Apple Store</span>
-                                    <span>Google Playstore</span>
+                                    <span>Google Store</span>
                                </div>
                               </div>
                         </div>
-
                         <div class="btn-activedownload">
                             <div class="v-flex-column d-flex flex-start">
                                 <img :src="LandingImages('apple.png')" class="me-2" width="30" height="30" alt="">
@@ -41,7 +40,266 @@
                     </div>
          </section>
 
-         <section id="herosectionpage2" class="v-herosectionbody"></section>
+         <section id="herosectionpage2" class="v-herosectionbodymain ">
+            <div class="bg-circlebody1 position-absolute"></div>
+            <div class="bg-circlebody2 position-absolute"></div>
+            <div class="bg-circlebody3 position-absolute"></div>
+            <div class="hero-paddingtop">
+                <div class="d-flex justify-content-center">
+                    <div class="patch-circlebody">
+                        <span>Security</span>
+                    </div>
+                </div>
+                <div class="hero-contentpad">
+                    <h1 class="v-large-text text-center">Regulated, with the highest security standard</h1>
+                </div>
+            <div class="v-col-cente">
+                <div class="col-rate-column">
+                    <div class="v-column-bridge position-relative">
+                        <div class="bg-circlebody"></div>
+                        <div class="v-flex flex-column text-start v-bg-gridcard">
+                            <div class="bg-icon-body1">
+                                <i class="fas fa-home"></i>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <h1 class="fs-3 fw-bold text-main mb-3 text-main">Your assets is insured</h1>
+                                <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="v-column-bridge">
+                        <div class="v-flex flex-column v-bg-gridcard">
+                            <div class="bg-icon-body2">
+                                <i class="fas fa-home"></i>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <h1 class="fs-3 fw-bold text-main mb-3 text-main">We are fully regulated</h1>
+                                <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="v-column-bridge">
+                        <div class="v-flex flex-column v-bg-gridcard">
+                            <div class="bg-icon-body3">
+                                <i class="fas fa-home"></i>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <h1 class="fs-3 fw-bold text-main mb-3 text-main">We deliver intentionally</h1>
+                                <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+         </div>
+     </section>
+
+
+
+     <section id="herosectionpage2" class="v-herosectionbodymain ">
+        <div class="bg-circlebody1 position-absolute"></div>
+        <div class="bg-circlebody2 position-absolute"></div>
+        <div class="bg-circlebody3 position-absolute"></div>
+        <div class="hero-paddingtop">
+            <div class="d-flex justify-content-center">
+                <div class="patch-circlebody">
+                    <span>Security</span>
+                </div>
+            </div>
+            <div class="hero-contentpad">
+                <h1 class="v-large-text text-center">Regulated, with the highest security standard</h1>
+            </div>
+        <div class="v-col-cente">
+            <div class="col-rate-column-twosides">
+
+                <div class="v-column-bridge position-relative">
+                    <div class="bg-circlebody"></div>
+                    <div class="v-flex flex-column text-start v-bg-gridcard">
+                        <div class="bg-icon-body1">
+                            <i class="fas fa-home"></i>
+                          </div>
+                          <div class="d-flex flex-column">
+                            <h1 class="fs-1  fw-bold text-main mb-3 text-main">Get More from Vendors stores</h1>
+                            <h6 class="mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                            <div class="rx-card-light mb-3">
+
+                            </div>
+
+                            <div class="rx-card-light">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-column-bridge">
+                    <div class="v-flex flex-column v-bg-gridcard">
+                       <img :src="getImages('info1.png')" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+     </div>
+ </section>
+
+
+
+     <section id="herosectionpage2" class="v-herosectionapp mb-5">
+        <div class="herosectionappflex">
+            <div class="herostagefirst">
+                <div class="herostagefirstcontainer">
+                <div class="text-center py-1 ">
+                    <h1 class="text-white fw-500 fs-1 mb-5">Order with ease</h1>
+                    <Link href="/" class="btn v-btnoutline">
+                        <span>View Market Records</span>
+                    </Link>
+                </div>
+                <div class="herodowninput">
+                    <img :src="getImages('info2.png')" class="img-fluidcontext" alt="">
+                </div>
+               </div>
+            </div>
+            <div class="herostagesecond px-3">
+                <div class="rx-col-as">
+                    <div class="rx-card d-flex justify-content-center align-items-center w-100 mb-3 bg-rx-light">
+                       <div class="d-flex align-items-center">
+                            <div class="d-flex flex-column text-start px-2">
+                                <h1 class="fs-1 fw-bold text-main">Get All Drinks In One List</h1>
+                                <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptates, maiores dicta eveniet ex nesciunt alias at ducimus rem, nam doloremque nihil dolorem delectus natus et nisi iusto quos minus!</h6>
+                             </div>
+                           </div>
+                        </div>
+                    <div class="rx-card w-100 p-2 bg-bg_main_color">
+                       <div class="rx-col-row">
+                          <div class="rx-set-card bg-card-lady" :style="{backgroundImage:`url(${LandingImages('delivery3.png')})`,
+                           backgroundRepeat: 'no-repeat',
+                           backgroundPosition: 'center',
+                           backgroundSize: 'cover',
+                        }"></div>
+                          <div class="rx-set-card-outline">
+                                <div class="rx-set-card mb-2">
+                                    <div class="rx-setbodycard mb-1">
+                                        <div class="rx-notifiercard mb-4">
+                                           <div class="d-flex justify-content-between">
+                                             <div class="d-flex align-items-center">
+                                                <div class="bg-circleround">
+                                                    <img :src="LandingImages('logo.png')" width="50" height="50" alt="">
+                                                  </div>
+                                                   <div class="d-flex flex-column">
+                                                    <h1 class="fw-bold text-main fs-5">Hey your goods in close by</h1>
+                                                    <h6 class="fs-6">Share your id code with the courier for confirmation of your goods. Thanks.</h6>
+                                                  </div>
+                                             </div>
+                                           </div>
+                                        </div>
+
+                                        <div class="rx-notifiercard">
+                                            <div class="d-flex justify-content-between">
+                                              <div class="d-flex align-items-center">
+                                                 <div class="bg-circleround">
+                                                     <img :src="LandingImages('logo.png')" width="50" height="50" alt="">
+                                                   </div>
+                                                    <div class="d-flex flex-column">
+                                                     <h1 class="fw-bold text-main fs-5">Hey your goods in close by</h1>
+                                                     <h6 class="fs-6">Share your id code with the courier for confirmation of your goods. Thanks.</h6>
+                                                   </div>
+                                              </div>
+                                            </div>
+                                         </div>
+
+                                    </div>
+                                    <div class="rx-setbodycard position-relative">
+                                        <h1 class="text-white fw-bold text-center  mb-0">We are just a few steps away</h1>
+                                        <img :src="LandingImages('frontcar.png')" class="position-absolute bg-rx-bottom" alt="">
+                                    </div>
+                                </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     </section>
+
+     <section id="herosectionpage2" class="v-herosectionbodymainv3">
+       <div class="v3-cardlookout">
+            <div class="d-flex flex-column justify-content-center align-items-center w-50">
+               <h1 class="fs-1 text-white fw-bold text-center mb-3">Join Millions to order Today</h1>
+               <h6 class="text-white mb-3">Start today, buy as much as you intend to go for with mealxpress</h6>
+               <Link href="/" class="btn v-btnoutline py-3">
+                <span>View Market Records</span>
+            </Link>
+            </div>
+       </div>
+     </section>
+
+
+
+       <section id="herosectionpage2" class="v-herosectionbodymainv4">
+          <div class="bg-flexsection-v1">
+            <div class="flexsectionleft flexleftpad">
+              <div class="d-flex mb-3">
+                <img :src="LandingImages('logo.png')" class="me-2" width="30" alt="">
+                 <span class="text-main fs-5 text-main">Mealxpress.ng </span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis velit sapiente hic at voluptas assumenda porro? Tempore et aliquid sed, harum atque deleniti perspiciatis aperiam tenetur nobis? Quam, alias neque.</span>
+             </div>
+
+            </div>
+            <div class="flexsectionright">
+                <div class="d-flex mb-3">
+                     <div class="footer-v-cron">
+                        <div class="p-4 d-flex flex-column gap-2">
+                            <h1>Products</h1>
+                             <Link href="/" class="footer-autolink">Drivers</Link>
+                             <Link href="/" class="footer-autolink">Vendors</Link>
+                             <Link href="/" class="footer-autolink">Live stocks</Link>
+                             <Link href="/" class="footer-autolink">Rates</Link>
+                        </div>
+                        <div class="p-4 d-flex flex-column gap-2">
+                            <h1>Resources</h1>
+                             <Link href="/" class="footer-autolink">About</Link>
+                             <Link href="/" class="footer-autolink">Careers</Link>
+                             <Link href="/" class="footer-autolink">Our team</Link>
+                        </div>
+                        <div class="p-4 d-flex flex-column gap-2">
+                            <h1>Contact</h1>
+                             <Link href="/">
+                            <i class="fas fa-facebook"></i>
+                             </Link>
+                             <Link href="/" class="footer-autolink">Stock</Link>
+                             <Link href="/" class="footer-autolink">Stock</Link>
+                             <Link href="/" class="footer-autolink">Stock</Link>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+          </div>
+       </section>
+       <hr class="text-brake">
+
+       <section id="herosectionpage2" class="herosectionbodymainv5">
+        <div class="footer-container">
+            <div class="vconleft mb-3">
+                copyright 2025 Mealxpress, Inc, All rights Reserved.
+            </div>
+            <div class="vconright">
+                <Link href="/">
+                  Privacy
+                </Link>
+                <Link href="/">
+                    Terms of use
+                  </Link>
+            </div>
+        </div>
+
+       </section>
         
     </div>
 </template>
@@ -60,6 +318,10 @@ export default{
       Link,
    },
    methods:{
+    check() {
+  const imagePath = this.getImages('logo.png');
+  console.log('Image Path:', imagePath);
+},
     getImages(filename){
     return `/infosets/${filename}`;
     },

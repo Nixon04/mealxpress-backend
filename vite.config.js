@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import vuetify from 'vite-plugin-vuetify';
 import ip from 'ip'
+import path from 'path';
 export default defineConfig({
     build: {
         chunkSizeWarningLimit: 1600, // Adjust the limit as necessary
@@ -13,7 +14,7 @@ export default defineConfig({
                     if (id.includes('node_modules')) {
                         return id.split('node_modules/')[1].split('/')[0]; // Chunk by package name
                     }
-                }
+                }   
             }
         }
     },
@@ -27,6 +28,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
+    resolve:{
+        alias: {
+            '@' : path.resolve(__dirname, 'resources/js'),
+        },
+    },
 
     server:{
         host:  ip.address(),
