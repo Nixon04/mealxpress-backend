@@ -21,9 +21,10 @@ Route::get('/', 'HomeIndex');
 Route::get('/newhome', 'NewHome');
 Route::get('/about', 'About');
 Route::get('/privacy', 'Privacy');
-Route::get('/drivers/overview', 'Drivers');
-Route::get('/vendors/overview', 'Vendors');
-Route::get('/contact', 'Contact');
+Route::get('/occupations/drivers', 'Drivers');
+Route::get('/occupations/vendors', 'Vendors');
+Route::get('/support/contact', 'Contact');
+Route::get('/support/faqs', 'Faqs');
 });
 
 

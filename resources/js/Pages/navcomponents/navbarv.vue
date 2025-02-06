@@ -3,15 +3,28 @@
     <div class="bg-navbarcontainer-v" :style="navigationstyle">
         <div class="bg-navbarflex">
                 <div class="bg-navbarlogo v-flex">
+                   <Link href="/newhome">
                     <span>Mealxpress</span>
+                  </Link>
                 </div>
                 <div class="v-flex v-navbarcontents-container">
                     <ul class="v-listmodel">
+                      <Link href="/about">
                         <li class="v-listmodel-links" :style="colorbond">Products</li>
-                        <li class="v-listmodel-links" :style="colorbond">Solutions</li>
-                        <li class="v-listmodel-links" :style="colorbond">Use Cases</li>
-                        <li class="v-listmodel-links" :style="colorbond">Pricing</li>
-                        <li class="v-listmodel-links" :style="colorbond">Company</li>
+                      </Link>
+                      <Link href="/occupations/drivers">
+                        <li class="v-listmodel-links" :style="colorbond">Drivers</li>
+                      </Link>
+                      <Link href="/occupations/vendors">
+                        <li class="v-listmodel-links" :style="colorbond">Vendors</li>
+                      </Link>
+                      <Link href="/support/faqs">
+                        <li class="v-listmodel-links" :style="colorbond">Faqs</li>
+                      </Link>
+                      <Link href="/support/contact">
+                        <li class="v-listmodel-links" :style="colorbond">Contact</li>
+                      </Link>
+                       
                     </ul>
                 </div>
                 <div class="v-flex">
@@ -22,8 +35,12 @@
     </div>
 </template>
 <script>
+import { Link } from '@inertiajs/inertia-vue3';
 import '../assets/css/newlanding.css';
 export default{
+  components:{
+    Link,
+  },
   data () {
     return {
       topPosition: 0, // initial position of the nav

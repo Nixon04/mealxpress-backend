@@ -14,7 +14,9 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import Vue3Marquee from 'vue3-marquee';
+import {createPinia} from 'pinia';
 
+const pinia = createPinia();
 
 const vuetify = createVuetify({
   icons: {
@@ -67,6 +69,7 @@ createInertiaApp({
       .use(plugin)
       .use(Toast)
       .use(Vue3Marquee)
+      .use(pinia)
       .use(PrimeVue, {
         theme:{
           preset: Aura

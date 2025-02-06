@@ -10,7 +10,7 @@
     <section class="hero-section-header bg-main-colo position-relative">
       <div class="hero-section-container bg-set-body ">
         <div class="d-flex flex-column align-items-center text-center bg-flex-medium mb-4 ">
-          <h4 class="bg-f-1 fw-bold text-white mb-3">
+          <h4 class="bg-f-1 fw-bold text-white mb-3" >
             MealXpress<span class="bg-font-note bg-secondarycolor">.ng</span>
           </h4>
           <h6 class="text-white mb-5">

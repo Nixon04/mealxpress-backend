@@ -20,15 +20,19 @@ class GeneralView extends Controller
     }
 
     public function Privacy(){
-        return inertia::render('privacy');
+        return inertia::render('support/privacy');
     }
 
     public function Drivers(){
-        return inertia::render('drivers/overview');
+        return inertia::render('occupations/drivers');
+    }
+
+    public function Faqs(){
+        return Inertia::render('support/faqs');
     }
 
     public function Vendors(){
-        return inertia::render('vendors/overview');
+        return inertia::render('occupations/vendors');
     }
 
     public function Stores(){
@@ -37,7 +41,7 @@ class GeneralView extends Controller
     
 
     public function Contact(){
-        return Inertia::render('contact');
+        return Inertia::render('support/contact');
     }
 
 }

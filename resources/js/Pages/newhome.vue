@@ -62,7 +62,7 @@
                                 <i class="fas fa-home"></i>
                               </div>
                               <div class="d-flex flex-column">
-                                <h1 class="fs-3 fw-bold text-main mb-3 text-main">Your assets is insured</h1>
+                                <h1 class="fs-3 fw-bold text-main mb-3 text-main" data-aos="fade-left" data-aos-anchor-placement="center-bottom">Your assets is insured</h1>
                                 <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="hero-contentpad">
-                <h1 class="v-large-text text-center">Regulated, with the highest security standard</h1>
+                <h1 class="v-large-text text-center">Vendors are the backbond of our products</h1>
             </div>
         <div class="v-col-cente">
             <div class="col-rate-column-twosides">
@@ -141,7 +141,7 @@
                                     <div class="rx-cardleft">
                                       <h1 class="fs-1 fw-bold text-main">Our Couriers are upto Date</h1>
                                     </div>
-                                    <div class="rx-cardright">
+                                    <div class="rx-cardright" data-aos="fade-top" data-aos-duration="3000">
                                         <img :src="LandingImages('deliveryride.png')" class="rx-shape-box"  alt="">
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="v-column-bridge">
-                    <div class="v-flex flex-column v-bg-gridcard">
+                    <div class="v-flex flex-column v-bg-gridcard" data-aos="fade-left" data-aos-anchor-placement="center-bottom">
                        <img :src="getImages('info1.png')" alt="">
                     </div>
                 </div>
@@ -238,92 +238,20 @@
                 </div>
             </div>
         </div>
+      
 
      </section>
 
-     <section id="herosectionpage2" class="v-herosectionbodymainv3">
-       <div class="v3-cardlookout">
-            <div class="d-flex flex-column justify-content-center align-items-center w-50">
-               <h1 class="fs-1 text-white fw-bold text-center mb-3">Join Millions to order Today</h1>
-               <h6 class="text-white mb-3">Start today, buy as much as you intend to go for with mealxpress</h6>
-               <Link href="/" class="btn v-btnoutline py-3">
-                <span>View Market Records</span>
-            </Link>
-            </div>
-       </div>
-     </section>
-
-
-
-       <section id="herosectionpage2" class="v-herosectionbodymainv4">
-          <div class="bg-flexsection-v1">
-            <div class="flexsectionleft flexleftpad">
-              <div class="d-flex mb-3">
-                <img :src="LandingImages('logo.png')" class="me-2" width="30" alt="">
-                 <span class="text-main fs-5 text-main">Mealxpress.ng </span>
-              </div>
-              <div class="d-flex flex-column">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis velit sapiente hic at voluptas assumenda porro? Tempore et aliquid sed, harum atque deleniti perspiciatis aperiam tenetur nobis? Quam, alias neque.</span>
-             </div>
-
-            </div>
-            <div class="flexsectionright">
-                <div class="d-flex mb-3">
-                     <div class="footer-v-cron">
-                        <div class="p-4 d-flex flex-column gap-2">
-                            <h1>Products</h1>
-                             <Link href="/" class="footer-autolink">Drivers</Link>
-                             <Link href="/" class="footer-autolink">Vendors</Link>
-                             <Link href="/" class="footer-autolink">Live stocks</Link>
-                             <Link href="/" class="footer-autolink">Rates</Link>
-                        </div>
-                        <div class="p-4 d-flex flex-column gap-2">
-                            <h1>Resources</h1>
-                             <Link href="/" class="footer-autolink">About</Link>
-                             <Link href="/" class="footer-autolink">Careers</Link>
-                             <Link href="/" class="footer-autolink">Our team</Link>
-                        </div>
-                        <div class="p-4 d-flex flex-column gap-2">
-                            <h1>Contact</h1>
-                             <Link href="/">
-                            <i class="fas fa-facebook"></i>
-                             </Link>
-                             <Link href="/" class="footer-autolink">Stock</Link>
-                             <Link href="/" class="footer-autolink">Stock</Link>
-                             <Link href="/" class="footer-autolink">Stock</Link>
-                        </div>
-                     </div>
-                  </div>
-            </div>
-          </div>
-       </section>
-       <hr class="text-brake">
-
-       <section id="herosectionpage2" class="herosectionbodymainv5">
-        <div class="footer-container">
-            <div class="vconleft mb-3">
-                copyright 2025 Mealxpress, Inc, All rights Reserved.
-            </div>
-            <div class="vconright">
-                <Link href="/">
-                  Privacy
-                </Link>
-                <Link href="/">
-                    Terms of use
-                  </Link>
-            </div>
-        </div>
-
-       </section>
-        
+     <Footer/>
     </div>
 </template>
 
 <script>
 import NavBar from './navcomponents/navbarv.vue';
 import {Link} from '@inertiajs/inertia-vue3';
-import './assets/css/newlanding.css';
-import './assets/css/vmedia.css';
+import  './assets/css/newlanding.css';
+import   './assets/css/vmedia.css';
+import  Footer from './navcomponents/footer.vue';
 import './assets/css/stageindex.css';
 
 export default{
@@ -331,6 +259,7 @@ export default{
     components:{
       NavBar,
       Link,
+      Footer,
    },
    methods:{
     check() {
