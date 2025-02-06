@@ -14,6 +14,12 @@
         flex: 100%;
         gap: 12px;
     }
+    .rx-fix-large{
+        font-size: 1.3rem;
+     }
+     .rx-cardleftsupport, .rx-cardrightsupport{
+        flex: 100%;
+     }
     .v-heroheadercompany{
         display: flex;
         flex-direction: column;
@@ -128,6 +134,26 @@
         background: var(--bg-backoption);
         position: relative;
     }
+
+.v-herosectionbodymainv4{
+    height: auto;
+    padding-bottom: 2rem;
+    padding-bottom: 12px;
+    width: 100%;
+    background: var(--bg-backoption);
+    position: relative;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+.footer-v-cron  a, .footer-v-cron  Link{
+    font-size: 14px;
+    font-weight: 500;
+}
+.footer-v-cron{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 100%;
+}
     .v-hero-rightside{
         position: absolute;
         right: 0;
@@ -192,9 +218,16 @@
         margin-left: 0.5rem;
         margin-right: 0.5rem;
     }
-    .vconright, .vconleft{
-        flex: 100%;
+    .vconleft, .vconright{
+        flex: 100%!important;
+        text-align: center;
+        align-items: initial;
+        justify-content: center!important;
     }
+    /* .vconright{
+        display: flex;
+        justify-content: center!important;
+    } */
     .herostagefirst, .herostagesecond{
         flex: 100%;
         height: auto;

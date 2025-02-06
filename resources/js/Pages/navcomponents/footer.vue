@@ -22,7 +22,9 @@
                       <span class="text-main fs-5 text-main">Mealxpress.ng </span>
                    </div>
                    <div class="d-flex flex-column">
-                     <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis velit sapiente hic at voluptas assumenda porro? Tempore et aliquid sed, harum atque deleniti perspiciatis aperiam tenetur nobis? Quam, alias neque.</span>
+                     <span>
+                      Mealxpress.ng is a verse platform giving users the leverage to pay for different sorts of foods at the users will.
+                     </span>
                   </div>
      
                  </div>
@@ -31,10 +33,9 @@
                           <div class="footer-v-cron">
                              <div class="p-4 d-flex flex-column gap-2">
                                  <h1>Products</h1>
-                                  <Link href="/" class="footer-autolink">Drivers</Link>
-                                  <Link href="/" class="footer-autolink">Vendors</Link>
-                                  <Link href="/" class="footer-autolink">Live stocks</Link>
-                                  <Link href="/" class="footer-autolink">Rates</Link>
+                                  <Link href="/occupation/drivers" class="footer-autolink">Drivers</Link>
+                                  <Link href="/occupation/vendors" class="footer-autolink">Vendors</Link>
+                                  <Link href="/store/home" class="footer-autolink">Live stocks</Link>
                              </div>
                              <div class="p-4 d-flex flex-column gap-2">
                                  <h1>Resources</h1>
@@ -43,13 +44,16 @@
                                   <Link href="/" class="footer-autolink">Our team</Link>
                              </div>
                              <div class="p-4 d-flex flex-column gap-2">
-                                 <h1>Contact</h1>
-                                  <Link href="/">
-                                 <i class="fas fa-facebook"></i>
-                                  </Link>
-                                  <Link href="/" class="footer-autolink">Stock</Link>
-                                  <Link href="/" class="footer-autolink">Stock</Link>
-                                  <Link href="/" class="footer-autolink">Stock</Link>
+                                 <h1>Follow us</h1>
+                                 <a  href="/">
+                                  <span>Facebook</span>
+                                   </a>
+                                  <a  href="/">
+                                    <span>Twitter</span>
+                                     </a>
+                                     <a  href="/">
+                                      <span>Instagram</span>
+                                       </a>
                              </div>
                           </div>
                        </div>

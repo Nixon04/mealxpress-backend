@@ -63,6 +63,8 @@
     width: 100%;
     background: var(--bg-backoption);
     position: relative;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .bg-flexsection-v1{
@@ -86,6 +88,7 @@
 .flexsectionright{
     flex: 60%;
     height: auto;
+    padding-left: 12px;
 }
 .flexleftpad{
     padding-left: 30px;
@@ -95,7 +98,10 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     width: 100%;
-
+}
+.footer-v-cron  a, .footer-v-cron  Link{
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .v3-cardlookout{
@@ -351,6 +357,23 @@ padding: 12px;
     align-items: center;
     
 }
+
+.rx-cardleftsupport{
+    flex: 50%;
+   height: auto;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    
+}
+.rx-cardrightsupport{
+    flex: 50%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
 .rx-cardright{
     flex: 50%;
     height: 20vh;
@@ -490,6 +513,9 @@ padding: 12px;
 
 .vconleft{
     flex: 50%;
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
 }
 .vconright{
     gap: 12px;
@@ -544,6 +570,26 @@ padding: 12px;
     align-items: center;
     text-align: start;
  }
+ .rx-maildirect{
+    padding: 10px;
+    text-decoration: none;
+    background: var(--bg-primary-main);
+    width: 160px;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ .rx-maildirect > span{
+   color: #fff;
+ }
+ .rx-fix-large{
+    font-size: 2rem;
+ }
+.v-rx-overcolor{
+    background: var(--bg-secondary-meal);
+    border-radius: 14px;
+}
 
  .rx-highlight{
     width: 100%;

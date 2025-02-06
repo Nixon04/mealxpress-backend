@@ -4,6 +4,8 @@ import Footer from '../navcomponents/footer.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { usePackageStore } from './supporthelper/changeindex';
 import { storeToRefs } from 'pinia';
+import Navbarv from '../navcomponents/navbarv.vue';
+
 
 // Initialize the store inside setup
 const packagestore = usePackageStore();
@@ -13,6 +15,14 @@ const { changeIndex } = packagestore;
 // Image methods
 const getImages = (filename) => `/infosets/${filename}`;
 const LandingImages = (filename) => `/landingimages/${filename}`;
+
+defineProps({
+    components:{
+        Navbarv,
+        Footer,
+        Link,
+    }
+})
 </script>
 
 <template>
@@ -45,17 +55,24 @@ const LandingImages = (filename) => `/landingimages/${filename}`;
             <div class="v-column-bridge position-relative">
               <div class="bg-circlebody"></div>
               <div class="v-flex flex-column text-start v-bg-gridcard">
-                <h1 class="fs-1 fw-bold text-main mb-3 text-main">Our Vision And Guidelines</h1>
+                <h6 class="text-main fs-6 mb-3">Need help immediately?</h6>
+
+                    <a href="mailto:info@mealxpress.ng" class="rx-maildirect mb-4">
+                        <span>Contact support</span>
+                    </a>
+
+       
                 <h6 class="mb-4">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?
+                    <h1 class="fs-1 fw-bold text-main text-main me-2 mb-3">Faqs About Mealxpress</h1>
+                    <span>Swap through  👋</span>
                 </h6>
                 <div class="rx-card-light mb-3 position-relative">
                   <div class="rx-faqs-contents">
                     <div v-for="(item, index) in packages" :key="index"
-                    :class="[ activeIndex == index ? 'rx-faqscard' :  'rx-highlight']"
-                    @click="changeIndex(index)">
-                      <span>{{ item }}</span>
-                    </div>
+                        :class="[ activeIndex === null && index === 0 ? 'rx-highlight' : (activeIndex === index ? 'rx-faqscard' : 'rx-highlight')]"
+                        @click="changeIndex(index)">
+                          <span>{{ item }}</span>
+                        </div>
                   </div>
                 </div>
 
@@ -72,21 +89,63 @@ const LandingImages = (filename) => `/landingimages/${filename}`;
               </div>
             </div>
 
-            <div class="v-column-bridge">
+            <div class="v-column-bridge v-rx-overcolor">
               <div class="v-flex flex-column v-bg-gridcard" data-aos="fade-left" data-aos-anchor-placement="center-bottom">
-                <div class="rx-package-details" v-if="activeIndex == null || activeIndex == 0 ">
-                    <h2>{{ packages[activeIndex] }} Details</h2>
-                     <h1>Why are we this good</h1>
+                <div class="rx-package-details" v-if="activeIndex == null &&  activeIndex == 0 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
                   </div>
-                  
+                  <div class="rx-package-details" v-else-if="activeIndex == 0 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
+                  </div>
+
+                  <div class="rx-package-details" v-else-if="activeIndex == 1 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
+                  </div>
+
+                  <div class="rx-package-details" v-else-if="activeIndex == 2 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
+                  </div>
+
+                  <div class="rx-package-details" v-else-if="activeIndex == 3 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
+                  </div>
+
+                  <div class="rx-package-details" v-else-if="activeIndex == 4 ">
+                    <h2 class="fs-1 text-white fw-bold mb-5 py-3">{{ packages[activeIndex] }}</h2>
+                    <h4 class="rx-fix-large text-white">Chowdeck wallet is a safe feature on the app where you can put in money for later use.
+                         The money in the Chowdeck wallet can be used to make payments for orders placed on the app.
+                          When an order gets rejected due to various reasons, the payment made initially when the order was placed 
+                        'automatically goes into your Chowdeck wallet which is accessible to make payments for future orders.</h4>
+                  </div>
+
               </div>
             </div>
+            
 
           </div>
         </div>
       </div>
     </section>
-
     <Footer />
   </div>
 </template>
