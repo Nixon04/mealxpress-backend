@@ -97,11 +97,6 @@ import '../assets/css/stageindex.css';
 import  Footer from '../navcomponents/footer.vue';
 
 export default{
-  data () {
-    return {
-        
-    }
-  },
     name: 'Company',
     components:{
       NavBar,

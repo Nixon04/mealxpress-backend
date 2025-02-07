@@ -17,7 +17,7 @@
                         <img :src="getImages('qrcodex.png')" width="40" height="40" alt="">
                     </div>
                     <div class="v-hero-rightside">
-                        <div class="position-relative d-flex gap-1 text-center">
+                        <div class="position-relative d-flex gap-2 text-center">
                         <div class="btn-activedownload">
                             <div class="v-flex-column d-flex flex-start">
                                 <img :src="LandingImages('google.png')" class="me-2" width="30" height="30" alt="">

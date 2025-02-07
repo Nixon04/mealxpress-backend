@@ -4,32 +4,33 @@
         <div class="bg-navbarflex">
                 <div class="bg-navbarlogo v-flex">
                    <Link href="/newhome">
-                    <span>Mealxpress</span>
+                    <img :src="LandingImages('logo.png')" width="30" height="30" alt="">
                   </Link>
-                </div>
+                </div>  
                 <div class="v-flex v-navbarcontents-container">
                     <ul class="v-listmodel">
-                      <Link href="/about">
+                      <Link href="/about" preserve-state preserve-scroll>
                         <li class="v-listmodel-links" :style="colorbond">Products</li>
                       </Link>
-                      <Link href="/occupations/drivers">
+                      <Link href="/occupations/drivers" preserve-state preserve-scroll>
                         <li class="v-listmodel-links" :style="colorbond">Drivers</li>
                       </Link>
-                      <Link href="/occupations/vendors">
+                      <Link href="/occupations/vendors" preserve-state preserve-scroll>
                         <li class="v-listmodel-links" :style="colorbond">Vendors</li>
                       </Link>
-                      <Link href="/support/faqs">
+                      <Link href="/support/faqs" preserve-state preserve-scroll >
                         <li class="v-listmodel-links" :style="colorbond">Faqs</li>
                       </Link>
-                      <Link href="/support/contact">
+                      <Link href="/support/contact" preserve-state preserve-scroll>
                         <li class="v-listmodel-links" :style="colorbond">Contact</li>
                       </Link>
                        
                     </ul>
                 </div>
-                <div class="v-flex">
-                    <span>View Store</span>
-                </div>
+                <div class="v-flex" @click="NavOpen"
+                 style="z-index: 1000; position: relative; cursor:pointer">
+                  <i class="fas fa-bars fs-2 text-white"></i>           
+               </div>
         </div>
     </div>
     </div>
@@ -37,12 +38,15 @@
 <script>
 import { Link } from '@inertiajs/inertia-vue3';
 import '../assets/css/newlanding.css';
+
 export default{
   components:{
     Link,
   },
   data () {
     return {
+      isvisible: false,
+      height: '0', // default height
       topPosition: 0, // initial position of the nav
       backgroundColor: '#2D2942', // default background color
       backdropBlur: 'blur(0px)', // initial backdrop blur
@@ -59,6 +63,7 @@ export default{
     },
     navigationstyle(){
     return{
+       height: this.navbarHeight,
         top: `${this.topPosition}px`,
         backgroundColor: this.backgroundColor,
         backdropFilter: this.backdropFilter,
@@ -70,6 +75,14 @@ export default{
   },
   },
   methods: {
+
+    NavOpen() {
+      this.navbarHeight = this.navbarHeight === '100vh' ? '30vh' : '100vh'; // Change height on click
+    }, 
+        LandingImages(filename){
+        return `http://192.168.89.149:9000/landingimages/${filename}`;
+       },
+
         handleScroll() {
       const scrollPosition = window.scrollY;
       if (scrollPosition > 100) { // Change on scroll

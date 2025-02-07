@@ -33,15 +33,15 @@
                           <div class="footer-v-cron">
                              <div class="p-4 d-flex flex-column gap-2">
                                  <h1>Products</h1>
-                                  <Link href="/occupation/drivers" class="footer-autolink">Drivers</Link>
-                                  <Link href="/occupation/vendors" class="footer-autolink">Vendors</Link>
+                                  <Link href="/occupations/drivers" class="footer-autolink">Drivers</Link>
+                                  <Link href="/occupations/vendors" class="footer-autolink">Vendors</Link>
                                   <Link href="/store/home" class="footer-autolink">Live stocks</Link>
                              </div>
                              <div class="p-4 d-flex flex-column gap-2">
                                  <h1>Resources</h1>
-                                  <Link href="/" class="footer-autolink">About</Link>
+                                  <Link href="/about" class="footer-autolink">About</Link>
                                   <Link href="/" class="footer-autolink">Careers</Link>
-                                  <Link href="/" class="footer-autolink">Our team</Link>
+                                  <Link  class="footer-autolink">Our team</Link>
                              </div>
                              <div class="p-4 d-flex flex-column gap-2">
                                  <h1>Follow us</h1>
