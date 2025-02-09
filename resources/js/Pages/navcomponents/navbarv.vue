@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
   <div class="navbar-design-container" :style="{ backgroundColor: backgroundColor, boxShadow: boxShadow, transition: 'top 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease' }">
     <div class="navdex" :style="{ top: `${topPosition}px` }">
      <Link href="/newhome">
-      <div class="navnewlogo v-flex gap-2">
+      <div class="navnewlogo v-flex gap-2 mm">
         <img :src="landingimages('logo.png')" width="30" height="40" alt="">
       </div>
     </Link>
