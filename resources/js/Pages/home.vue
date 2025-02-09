@@ -1,328 +1,279 @@
 <template>
   <div>
-  <Head>
-    <title>Mealxpress | Rich in content, Deliverying with no hassle </title>
-    <meta name="description" content="Discover extreme cheap services on our plattform, Order foods at your home and get it delivered right at your home with no hassle whatsoever, mealxpress is here to stay">
-   <link rel="icon" :href="getImageUrl('logo.png')" type="image/*" width="4">
-  </Head>
-
-    <MainIndex />
-    <section class="hero-section-header bg-main-colo position-relative">
-      <div class="hero-section-container bg-set-body ">
-        <div class="d-flex flex-column align-items-center text-center bg-flex-medium mb-4 ">
-          <h4 class="bg-f-1 fw-bold text-white mb-3" >
-            MealXpress<span class="bg-font-note bg-secondarycolor">.ng</span>
-          </h4>
-          <h6 class="text-white mb-5">
-            order that food wey dey sweet you wella make we bring am for your
-            doormot
-          </h6>
-
-            <div class="d-flex gap-4 justify-content-center">
-              <Link href="/" class="cursor-pointer mb-5">
-                <div class="bg-button-submit  rounded-lg  align-items-center d-flex gap-1 py-2" style="width: auto">
-                 <img :src="getImageUrl('google.png')" alt="" width="60">
-                  <span class="text-white">Google Playstore</span>
-                </div>
-              </Link>
-  
-  
-              <Link href="/" class="cursor-pointer mb-5">
-                <div class="bg-button-submit  rounded-lg  align-items-center d-flex gap-1 py-1" style="width: auto">
-                 <img :src="getImageUrl('apple.png')" alt="" width="55">
-                  <span class="text-white">Google Playstore</span>
-                </div>
-              </Link>
-            </div>
-
-
-        </div>
-        <div class="bg-overlay"></div>
-
-      </div>
-
-      <img :src="getImageUrl('wavecomponent.png')" class="move-side">
-      <img :src="getImageUrl('RiderDelivering.png')" class="move-rider">
-    
-    </section>
-
-<!-- 
-    <section id="companies-associates py-3">
-      <Vue3Marquee :pause-on-hover="true">
-        <img v-for="(image, index) in imagesarray" :key="index" :src="image" class="me-3 rounded-lg" style="height:400px!important; width:400px"/>
-      </Vue3Marquee>
-    </section> -->
-
-
-    <!-- <section class="mealxpress-custompackages py-5 mb-12">
-       <div class="c-container">
-        <div class="c-header">
-          <h1 class="c-colorbody">Boost <span class="c-italian">Revenue</span>
-          using our suite of seamless & secure payment solution
-          </h1>
-        </div>
-
-        <div class="bg-container-all">
-          <div class="d-flex flex-wrap gap-2">
-            <div class="flex-right flex-column position-relative bg-flexsecondary">
-              <h1 class="text-white fs-3 mb-5">Branches</h1>
-              <h1 class="text-white fs-2 mb-2 fw-bold">Multiple outlets, one payment dashboard</h1>
-              <h1 class="text-white fs-7 mb-5">Doesn't matter where your business is located,
-                 you can manage collections and settlements from a single dashboard</h1>
-
-                 <div class="d-flex justify-content-between p-y-7 p-height-suit">
-                  <div class="d-flex">
-                   <div class="c-hover-card">
-                    <span class="c-color">Getting the best of all we </span>
-                   </div>
-
-                   <div class="c-hover-card-second">
-                    <span class="c-color">Getting the best of all we </span>
-                   </div>
-
+      <NavBar/>
+        <section id="herosectionpage" class="v-herosectionbody">
+              <div class="v-herohedertop">
+                  <span class="v-xtralarge-txt text-white">Mealxpress.<span class="bg-sec-color">ng</span></span>
+                  <span class=" text-white v-stralarge-txt">order from any where and lets deliver to your doorstep asap</span>
+                  <Link href="/" class="btn v-btnoutline">
+                      <span>View Market Records</span>
+                  </Link>
+               </div>
+                   <div class="v-hero-bottom">
+                      <img :src="getImages('info4.png')" class="v-image-stage v-hero-left" alt="_images">
+                      <img :src="getImages('info1.png')" class="v-image-stage v-hero-right" alt="_images">
                   </div>
-                  <div class="c-rounded-box">
-                  <div class="bg-button-submit w-40 align-items-center 
-                  justify-content-center d-flex rounded-xl cursor-pointer shadow-inner">
-                    <span class="text-white">Get Started</span>
-                    </div>
+                  <div class="v-hero-leftside">
+                      <img :src="getImages('qrcodex.png')" width="40" height="40" alt="">
                   </div>
-                 </div>
-            </div>
-            <div class="flex-left bg-flexprimary"></div>
-          </div>
-        </div>
-       </div>
-    </section> -->
+                  <div class="v-hero-rightside">
+                      <div class="position-relative d-flex gap-2 text-center">
+                      <div class="btn-activedownload">
+                          <div class="v-flex-column d-flex flex-start">
+                              <img :src="LandingImages('google.png')" class="me-2" width="30" height="30" alt="">
+                               <div class="d-flex flex-column text-start">
+                                  <span class="v-sm-txt">Get on Apple Store</span>
+                                  <span>Google Store</span>
+                             </div>
+                            </div>
+                      </div>
+                      <div class="btn-activedownload">
+                          <div class="v-flex-column d-flex flex-start">
+                              <img :src="LandingImages('apple.png')" class="me-2" width="30" height="30" alt="">
+                               <div class="d-flex flex-column text-start">
+                                  <span class="v-sm-txt">Get on Apple Store</span>
+                                  <span>Apple Store</span>
+                             </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+       </section>
 
-    <section class="h-auto p-4 bg-info-background ">
-      <div class="d-flex justify-content-end px-3">
-        <div class="bg-white py-3 rounded-xl p-2 my-4">
-          <h1 class="c-colorbody fw-bold">Co Values</h1>
-        </div>
-        </div>
-
-        <div class="bg-corevalues">
-         <div class="d-flex flex-wrap">
-          <div class="flex-left-state h-auto bg-transparent" data-aos="fade-left" data-aos-anchor-placement="center-bottom">
-            <h1 class="bg-f-1 fw-bold c-colorbody mb-4 ">
-              Set up, sell & scale with Quick Shop, it's that easy!
-            </h1>
-            <h6 class="fw-bold fs-4">
-              We make it effortless for you to create an online store, sell to a vast customer base,
-               seamlessly accept payments from all corners of the globe, and grow your business.
-            </h6>
-          </div>
-
-           <div class="flex-right-state h-lv bg-transparent h-auto" data-aos="fade-right">
-            <img src="../../../public/landingimages/corevalues.png" class="img-fluid" alt="">
-           </div>
-         </div>
-        </div>
-    </section>
-
-
-    <section class="h-auto p-4 bg-info-background ">
-      <div class="d-flex justify-content-end px-3">
-        <div class="bg-white py-3 rounded-xl p-2 my-4">
-          <h1 class="c-colorbody fw-bold">Co Values</h1>
-        </div>
-        </div>
-
-        <div class="bg-corevalues">
-         <div class="d-flex flex-wrap">
-       
-
-           <div class="flex-right-state h-lv bg-transparent h-auto" data-aos="fade-right">
-            <img src="../../../public/landingimages/corevalues.png" class="img-fluid" alt="">
-           </div>
-
-           <div class="flex-left-state h-auto bg-transparent" data-aos="fade-left" data-aos-anchor-placement="center-bottom">
-            <h1 class="bg-f-1 fw-bold c-colorbody mb-4 ">
-              Set up, sell & scale with Quick Shop, it's that easy!
-            </h1>
-            <h6 class="fw-bold fs-4">
-              We make it effortless for you to create an online store, sell to a vast customer base,
-               seamlessly accept payments from all corners of the globe, and grow your business.
-            </h6>
-          </div>
-
-         </div>
-        </div> 
-    </section>
-    
-
-    <section class="mealxpress-custompackages">
-      <div class="c-header flex-column align-items-center">
-        <h1 class="c-colorbody mb-5">See <span class="c-italia">Packages</span>
-        from us
-        </h1>
-        <div class="d-flex">
-          <h1 class="fs-6 text-center">Getting to work along with us a team enjoying exclusive discount working with us</h1>
-        </div>
-      </div>
-
-     <div class="bg-container-all mb-0 p-0" style="margin-bottom:-50px!important;">
-      <div class="d-flex flex-wrap gap-2 p-3  ">
-       <div class="flex-info-left flex-column flex-info-background ">
-        <h1 class="fs-3 fw-bold c-colorbody mb-1 py-3">Payout</h1>
-        <img :src="getGeneralImages('fredkitchen.png')" alt="" class=" mb-5 w-50">
-          <div class="bg-content-fillable">
-            <h4 class="c-colorbody mb-3 text-spacing">Manage your funds efficiently with mealxpres's instant payouts, keeping your business fluid and dynamic. With our innovative platform, you can effortlessly manage bulk and instant payouts to your recipients, saving time and streamlining your financial operations.</h4>
-          </div>
-          <div class="bg-pad py-3">
-            <Link href="/" class="cursor-pointer">
-              <div class="bg-button-submit text-center rounded-xl py-3" style="width: 150px;">
-                <span class="text-white">Learn more</span>
+       <section id="herosectionpage2" class="v-herosectionbodymain ">
+          <div class="bg-circlebody1 position-absolute"></div>
+          <div class="bg-circlebody2 position-absolute"></div>
+          <div class="bg-circlebody3 position-absolute"></div>
+          <div class="hero-paddingtop">
+              <div class="d-flex justify-content-center">
+                  <div class="patch-circlebody">
+                      <span>Security</span>
+                  </div>
               </div>
-            </Link>
-          </div>
-       </div>
-       <!-- flex right -->
-       <div class="flex-info-right flex-info-background flex-column">
-        <h1 class="fs-3 fw-bold c-colorbody mb-1 py-1">Payout</h1>
-        <video autoplay loop playsinline  :src="getGeneralImages('checkout.webm')"  class=" mb-5 w-50"/>
-          <div class="bg-content-fillable">
-            <h4 class="c-colorbody mb-3 text-spacing">Manage your funds efficiently with mealxpres's instant payouts, keeping your business fluid and dynamic. With our innovative platform, you can effortlessly manage bulk and instant payouts to your recipients, saving time and streamlining your financial operations.</h4>
-          </div>
-          <div class="bg-pad py-1">
-            <Link href="/" class="cursor-pointer">
-              <div class="bg-button-submit text-center rounded-xl py-3" style="width: 150px;">
-                <span class="text-white">Learn more</span>
+              <div class="hero-contentpad">
+                  <h1 class="v-large-text text-center">Regulated, with the highest security standard</h1>
               </div>
-            </Link>
-          </div>
-       </div>
-      </div>
-    </div>
+          <div class="v-col-cente">
+              <div class="col-rate-column">
+                  <div class="v-column-bridge position-relative">
+                      <div class="bg-circlebody"></div>
+                      <div class="v-flex flex-column text-start v-bg-gridcard">
+                          <div class="bg-icon-body1">
+                              <i class="fas fa-home"></i>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <h1 class="fs-3 fw-bold text-main mb-3 text-main" data-aos="fade-left" data-aos-anchor-placement="center-bottom">Your assets is insured</h1>
+                              <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                          </div>
+                      </div>
+                  </div>
 
-    <div class="bg-container-all ">
-      <div class="d-flex flex-wrap gap-2 p-3">
-       <div class="flex-info-left flex-column flex-info-background ">
-        <h1 class="fs-3 fw-bold c-colorbody mb-1 py-3">Payout</h1>
-        <video autoplay loop playsinline  :src="getGeneralImages('checkout.webm')"  class=" mb-5 w-50"/>
-          <div class="bg-content-fillable">
-            <h4 class="c-colorbody mb-3 text-spacing">Manage your funds efficiently with mealxpres's instant payouts, keeping your business fluid and dynamic. With our innovative platform, you can effortlessly manage bulk and instant payouts to your recipients, saving time and streamlining your financial operations.</h4>
-          </div>
+                  <div class="v-column-bridge">
+                      <div class="v-flex flex-column v-bg-gridcard">
+                          <div class="bg-icon-body2">
+                              <i class="fas fa-home"></i>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <h1 class="fs-3 fw-bold text-main mb-3 text-main">We are fully regulated</h1>
+                              <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                          </div>
+                      </div>
+                  </div>
 
-          <div class="bg-pad py-3">
-            <Link href="/" class="cursor-pointer">
-              <div class="bg-button-submit text-center rounded-xl py-3" style="width: 150px;">
-                <span class="text-white">Learn more</span>
+                  <div class="v-column-bridge">
+                      <div class="v-flex flex-column v-bg-gridcard">
+                          <div class="bg-icon-body3">
+                              <i class="fas fa-home"></i>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <h1 class="fs-3 fw-bold text-main mb-3 text-main">We deliver intentionally</h1>
+                              <h6>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                          </div>
+                      </div>
+                  </div>
+
               </div>
-            </Link>
           </div>
        </div>
-       <!-- flex right -->
-       <div class="flex-info-right flex-info-background flex-column">
-        <h1 class="fs-3 fw-bold c-colorbody mb-1 py-3">Payout</h1>
-        <video autoplay loop playsinline  :src="getGeneralImages('checkout.webm')"  class=" mb-5 w-50"/>
-          <div class="bg-content-fillable">
-            <h4 class="c-colorbody mb-3 text-spacing fw-normal">Manage your funds efficiently with mealxpres's instant payouts, keeping your business fluid and dynamic. With our innovative platform, you can effortlessly manage bulk and instant payouts to your recipients, saving time and streamlining your financial operations.</h4>
-          </div>
-          <div class="bg-pad py-3">
-            <Link href="/" class="cursor-pointer">
-            <div class="bg-button-submit text-center rounded-xl py-3" style="width: 150px;">
-              <span class="text-white">Learn more</span>
-            </div>
-          </Link>
-          </div>
-       </div>
-      </div>
-    </div>
+   </section>
 
+
+
+   <section id="herosectionpage2" class="v-herosectionbodymain ">
+      <div class="bg-circlebody1 position-absolute"></div>
+      <div class="bg-circlebody2 position-absolute"></div>
+      <div class="bg-circlebody3 position-absolute"></div>
+      <div class="hero-paddingtop">
+          <div class="d-flex justify-content-center">
+              <div class="patch-circlebody">
+                  <span>Security</span>
+              </div>
+          </div>
+          <div class="hero-contentpad">
+              <h1 class="v-large-text text-center">Vendors are the backbond of our products</h1>
+          </div>
+      <div class="v-col-cente">
+          <div class="col-rate-column-twosides">
+
+              <div class="v-column-bridge position-relative">
+                  <div class="bg-circlebody"></div>
+                  <div class="v-flex flex-column text-start v-bg-gridcard">
+                      <div class="bg-icon-body1">
+                          <i class="fas fa-home"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <h1 class="fs-1  fw-bold text-main mb-3 text-main">Get More from Vendors stores</h1>
+                          <h6 class="mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt ab sapiente est ipsa unde harum sit, dolor ullam provident quisquam aliquam tempora impedit corporis reiciendis odit pariatur iure vitae id?</h6>
+                              <div class="rx-card-light mb-3 position-relative">
+                                  <div class="rx-cardcontainer-light">
+                                      <div class="rx-cardleft">
+                                        <h1 class="fs-1 fw-bold text-main">Get Fast Delivery on Time</h1>
+                                      </div>
+                                      <div class="rx-cardright">
+                                          <img :src="LandingImages('clockrecord.png')" class="rx-shape-box"  alt="">
+                                      </div>
+                                  </div>
+                           
+                              </div> 
+
+                          <div class="rx-card-light">
+                              <div class="rx-cardcontainer-light">
+                                  <div class="rx-cardleft">
+                                    <h1 class="fs-1 fw-bold text-main">Our Couriers are upto Date</h1>
+                                  </div>
+                                  <div class="rx-cardright" data-aos="fade-top" data-aos-duration="3000">
+                                      <img :src="LandingImages('deliveryride.png')" class="rx-shape-box"  alt="">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="v-column-bridge">
+                  <div class="v-flex flex-column v-bg-gridcard" data-aos="fade-left" data-aos-anchor-placement="center-bottom">
+                     <img :src="getImages('info1.png')" alt="">
+                  </div>
+              </div>
+
+          </div>
+      </div>
+   </div>
 </section>
 
-<Hookstage/>
-  <Footer/>
 
+
+   <section id="herosectionpage2" class="v-herosectionapp mb-5">
+      <div class="herosectionappflex">
+          <div class="herostagefirst">
+              <div class="herostagefirstcontainer">
+              <div class="text-center py-1 ">
+                  <h1 class="text-white fw-500 fs-1 mb-5">Order with ease</h1>
+                  <Link href="/" class="btn v-btnoutline">
+                      <span>View Market Records</span>
+                  </Link>
+              </div>
+              <div class="herodowninput">
+                  <img :src="getImages('info2.png')" class="img-fluidcontext" alt="">
+              </div>
+             </div>
+          </div>
+          <div class="herostagesecond px-3">
+              <div class="rx-col-as">
+                  <div class="rx-card d-flex justify-content-center align-items-center w-100 mb-3 bg-rx-light">
+                     <div class="d-flex align-items-center">
+                          <div class="d-flex flex-column text-start px-2">
+                              <h1 class="fs-1 fw-bold text-main">Get All Drinks In One List</h1>
+                              <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptates, maiores dicta eveniet ex nesciunt alias at ducimus rem, nam doloremque nihil dolorem delectus natus et nisi iusto quos minus!</h6>
+                           </div>
+                         </div>
+                      </div>
+                  <div class="rx-card w-100 p-2 bg-bg_main_color">
+                     <div class="rx-col-row">
+                        <div class="rx-set-card bg-card-lady" :style="{backgroundImage:`url(${LandingImages('delivery3.png')})`,
+                         backgroundRepeat: 'no-repeat',
+                         backgroundPosition: 'center',
+                         backgroundSize: 'cover',
+                      }"></div>
+                        <div class="rx-set-card-outline">
+                              <div class="rx-set-card mb-2">
+                                  <div class="rx-setbodycard mb-1">
+                                      <div class="rx-notifiercard mb-4">
+                                         <div class="d-flex justify-content-between">
+                                           <div class="d-flex align-items-center">
+                                              <div class="bg-circleround">
+                                                  <img :src="LandingImages('logo.png')" width="50" height="50" alt="">
+                                                </div>
+                                                 <div class="d-flex flex-column">
+                                                  <h1 class="fw-bold text-main fs-5">Hey your goods in close by</h1>
+                                                  <h6 class="fs-6">Share your id code with the courier for confirmation of your goods. Thanks.</h6>
+                                                </div>
+                                           </div>
+                                         </div>
+                                      </div>
+
+                                      <div class="rx-notifiercard">
+                                          <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                               <div class="bg-circleround">
+                                                   <img :src="LandingImages('logo.png')" width="50" height="50" alt="">
+                                                 </div>
+                                                  <div class="d-flex flex-column">
+                                                   <h1 class="fw-bold text-main fs-5">Hey your goods in close by</h1>
+                                                   <h6 class="fs-6">Share your id code with the courier for confirmation of your goods. Thanks.</h6>
+                                                 </div>
+                                            </div>
+                                          </div>
+                                       </div>
+
+                                  </div>
+                                  <div class="rx-setbodycard position-relative">
+                                      <h1 class="text-white fw-bold text-center  mb-0">We are just a few steps away</h1>
+                                      <img :src="LandingImages('frontcar.png')" class="position-absolute bg-rx-bottom" alt="">
+                                  </div>
+                              </div>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    
+
+   </section>
+
+   <Footer/>
   </div>
 </template>
 
-
 <script>
-import MainIndex from "./components/frontend_comp/navigation_bar.vue";
-import Footer from './components/frontend_comp/footer.vue';
-import { Link } from "@inertiajs/inertia-vue3";
-import { Head } from "@inertiajs/vue3";
-import { Vue3Marquee } from "vue3-marquee";
-import "./assets/mealxpresscustom/landingapp.css";
-import Hookstage from "./components/frontend_comp/hookstage.vue";
+import NavBar from './navcomponents/navbarv.vue';
+import {Link} from '@inertiajs/inertia-vue3';
+import  './assets/css/newlanding.css';
+import   './assets/css/vmedia.css';
+import  Footer from './navcomponents/footer.vue';
+import './assets/css/stageindex.css';
 
-export default {
-  name: "Example",
-  components: {
-    MainIndex,
-    Hookstage,
+export default{
+  name: 'HomePage',
+  components:{
+    NavBar,
     Link,
-    Head,
-    Vue3Marquee,
     Footer,
+ },
+ methods:{
+  check() {
+const imagePath = this.getImages('logo.png');
+console.log('Image Path:', imagePath);
+},
+  getImages(filename){
+  return `/infosets/${filename}`;
   },
-  data() {
-    return {
-      imagesarray: [
-        "http://127.0.0.1:9000/landingimages/delivery1.png",
-        "http://127.0.0.1:9000/landingimages/delivery2.png",
-        "http://127.0.0.1:9000/landingimages/delivery3.png",
-        "http://127.0.0.1:9000/landingimages/delivery4.png",
-      ],
-      items: ["For Vendors  ", "Couriers", "Consumers(You)"],
-      // Track the selected item by index
-      selectedItem: null,
-    };
-  },
-  computed: {
-    // Display content based on the selected item
-    selectedItemContent() {
-      if (this.selectedItem !== null) {
-        return `Content for ${this.items[this.selectedItem]}`;
-      }
-      return 'Select an eatery to view details.';
-    },
-  },
-  methods: {
-    selectItem(index) {
-      this.selectedItem = index;
-    },
-    getImageUrl(filename) {
-    return `/landingimages/${filename}`;
-  },
-
-     getGeneralImages(filename){
-      return `/mealxpress_storesprofile/${filename}`;
-     },
-  beforeEnter(el) {
-      el.style.opacity = 0;
-    },
-    enter(el, done) {
-      // Trigger the transition (fade in)
-      el.offsetHeight; // trigger reflow
-      el.style.transition = "opacity 0.5s ease";
-      el.style.opacity = 1;
-      done();
-    },
-    leave(el, done) {
-      // Trigger the transition (fade out)
-      el.style.transition = "opacity 0.5s ease";
-      el.style.opacity = 0;
-      done();
-    },
-  },
-};
+  LandingImages(filename){
+  return `/landingimages/${filename}`;
+  }
+ }
+ 
+ 
+}
 </script>
-<style scoped>
-.highlight {
-  color: #ff6347; /* Highlight color (e.g., tomato red) */
-  font-weight: normal;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0;
-}
-</style>

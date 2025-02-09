@@ -9,7 +9,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 const navbarcheck = useRefNav();
 const { navItems, isVisible, navbarHeight, topPosition, backgroundColor, backdropFilter, boxShadow, color } = storeToRefs(navbarcheck);
 const { toggle, handleScroll } = navbarcheck;
-const landingimages = (filename) => `http://192.168.0.100:9000/landingimages/${filename}`;
+const landingimages = (filename) => `https://mealxpress.ng/landingimages/${filename}`;
 
 // Watch for scroll events
 onMounted(() => {
@@ -28,7 +28,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="navbar-design-container" :style="{ backgroundColor: backgroundColor, boxShadow: boxShadow, transition: 'top 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease' }">
     <div class="navdex" :style="{ top: `${topPosition}px` }">
-     <Link href="/newhome">
+     <Link href="/">
       <div class="navnewlogo v-flex gap-2 mm">
         <img :src="landingimages('logo.png')" width="30" height="40" alt="">
       </div>
