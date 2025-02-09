@@ -23,7 +23,10 @@
                             type="text"
                             class="py-3 form-control"
                             v-model="accountnumber"
+                            @input="sanitizeAccountNumber"
                             maxlength="10"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
                             placeholder="Account Number"
                         />
                     </div>
@@ -41,6 +44,8 @@
                             type="text"
                             class="py-3 form-control"
                             :value="formattedAmount"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
                             maxlength="10"
                             placeholder="Amount"
                             @input="UpdatedAmount"
@@ -112,15 +117,22 @@ export default {
         },
     },
     watch: {
-        accountnumber: _.debounce(function(newVal) {
-            if (newVal.length === 10 && !this.fetching) {
-                this.fetching = true;
-                this.fetchAccountName(newVal);
-            }
-        }, 3000),
-    },
+    accountnumber: _.debounce(function(newVal) {
+        // Ensure the account number is exactly 10 digits before making the API call
+        if (/^\d{10}$/.test(newVal) && !this.fetching) {
+            this.fetching = true;
+            this.fetchAccountName(newVal);
+        }
+    }, 3000),
+},
     methods: {
 
+
+        sanitizaAccountNumber(event){
+         const cleanedValue = event.target.value.replace(/[^0-9]/g, "");
+         this.accountnumber = cleanedValue;
+         event.target.value = cleanedValue;
+        },
         // Method to show toast notification
         showToast() {
             const toast = useToast();
@@ -205,6 +217,7 @@ export default {
         // Method to update the amount
         UpdatedAmount(event) {
             const inputValue = event.target.value.replace(/,/g, "").replace(/[^0-9]/g, "");
+            event.target.value = inputValue;
             if (!isNaN(inputValue) && inputValue !== "") {
                 this.amount = parseInt(inputValue, 10);
             } else if (inputValue === "") {

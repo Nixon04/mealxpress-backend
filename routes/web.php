@@ -25,6 +25,8 @@ Route::get('/occupations/drivers', 'Drivers');
 Route::get('/occupations/vendors', 'Vendors');
 Route::get('/support/contact', 'Contact');
 Route::get('/support/faqs', 'Faqs');
+Route::get('/getright', 'GetRight');
+Route::get('/navdesign', 'NavDesign');
 });
 
 

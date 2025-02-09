@@ -12,13 +12,13 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-flex flex-column">
                     <h1 class="fs- bg-textmain bg-f-1">Dashboard</h1>
-                     <h6>Here's your dashboard sales details overview</h6>
+                     <h6 class="fs-small">Here's your dashboard sales details overview</h6>
                    </div>
                   <div class="d-flex">
                     <Button @click="showcharts" class="bg-button-submit btn p-3 m-3 py-2 bg-display-charts">
                       Charts
                     </Button>
-                    <Button  @click="showtransfermodel" class="bg-button-submit btn p-3 m-3 py-2 ">
+                    <Button  @click="showtransfermodel" class="bg-button-submit btn  m-3 ms-2 py-2 ">
                       Transfer
                     </Button>
                   </div> 
@@ -149,7 +149,7 @@
                         <tr v-if="paginatedData.length === 0">
                             <td colspan="8" class="text-center">No Recent Order made </td>
                         </tr>
-                        <tr v-for="(item, index) in paginatedData" :key="item.id" >
+                        <tr v-for="(item, index) in paginatedData" :key="index" >
                           <td >{{ item.username }}</td>
                           <td>{{ item.marketid }}</td>
                           <td>{{ item.price }}</td>
@@ -262,7 +262,6 @@
       isBalanceVisible.value =! isBalanceVisible.value;
       localStorage.setItem('balanceVisibility', isBalanceVisible.value ?'visible' : 'hidden' );
     }
-
       // Method to format the currency (example formatting)
       const formatCurrency = (amount) => {
       return new Intl.NumberFormat().format(amount); // Simple number formatting
@@ -283,11 +282,6 @@
     watch(mainbalance, (newValue) => {
       console.log("Balance updated:", newValue);
     });
-
-
-
-
-
 
    const  fetchallbanks = async () => {
     const response = await axios.get('/vendorspath/populatebanks', {

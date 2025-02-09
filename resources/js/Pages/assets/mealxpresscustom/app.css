@@ -454,9 +454,8 @@ textarea{
 
 .mealxpress-main{
     flex: 1;
-    padding: 20px;
+    padding: 10px;
     overflow-y: auto;
-    
 }
 .card-main-first{
     background-color: var(--bg-border-first);
@@ -654,6 +653,9 @@ textarea{
     padding: 20px;
     border-radius: 15px;
 }
+.fs-small{
+   font-size: 1rem; 
+}
 .fas-sm{
     font-size: 10px;
 }
@@ -684,17 +686,17 @@ textarea{
     color: var(--bg-primary-light);
 }
 ::-webkit-scrollbar-thumb {
-    background-color: var(--bg-secondary-meal); /* Color of the scrollbar thumb */
+    /* background-color: var(--bg-secondary-meal);  */
     border-radius: 4px; /* Roundness of the scrollbar thumb */
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--bg-secondary-meal); /* Color when hovered */
-}
+/* ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--bg-secondary-meal);
+} */
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-primary-main); /* Background of the scrollbar track */
-    border-radius: 4px; /* Roundness of the scrollbar track */
+    background: var(--bg-hover-main); 
+    border-radius: 4px; 
 }
 
 /* For Firefox */

@@ -72,17 +72,22 @@
         display: flex;
         flex-direction: row!important;
     }
-
+    .fs-small{
+        font-size: 0.8rem; 
+     }
   
     .bg-flex-1, .bg-flex-2{
         flex: 100%!important;
        
       }
-     
+      .bg-f-1{
+        font-size: 2rem;
+        font-weight: 500;
+    }
     
     
     .bg-transfer-padding-all{
-        width: 80%;
+        width: 95%;
     }
     .bg-dynamic-image{
         width: 60%;

@@ -62,10 +62,10 @@ defineProps({
                     </a>
 
        
-                <h6 class="mb-4">
+                <div class="mb-4">
                     <h1 class="fs-1 fw-bold text-main text-main me-2 mb-3">Faqs About Mealxpress</h1>
                     <span>Swap through  👋</span>
-                </h6>
+                </div>
                 <div class="rx-card-light mb-3 position-relative">
                   <div class="rx-faqs-contents">
                     <div v-for="(item, index) in packages" :key="index"

@@ -1,0 +1,54 @@
+:root{
+    --bg-primary-main: #2D2942;
+    --bg-primary-light: #443D65;
+    --bg-secondary-meal: #E26900;
+    --bg-hover-main: #f1f1f1;
+    --bg-backoption: #f9f9f9;
+    --bg-border-first: #E6F5F9;
+    --bg-border-second: #EFFCEF;
+    --bg-border-third: #EFF6FC;
+    --bg-info-background: #F9FAFB;  
+    --bg-state-background: #fff1ee
+}
+
+.mobilescene{
+    display: none;
+}
+
+.navbar-design-container{
+   overflow: hidden;
+}
+.navdex{
+    display: flex;
+    background: var(--bg-primary-main);
+    justify-content: space-between;
+    height:60px;
+    align-items: center;
+    padding-left:12px;
+    padding-right: 12px;
+}
+.navnewcontents{
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+.newmobile{
+    background-color: var(--bg-primary-main);
+    height: 100vh;
+}
+
+
+/* media query */
+@media(max-width:991px){
+  .navnewcontents{
+    display: none;
+  }  
+  .desktopscene{
+    display: none;
+  }
+  .mobilescene{
+    display: block;
+  }
+}
+
