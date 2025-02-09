@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\vendorsCredentials;
+use App\Models\VendorsCredentials;
 use App\Models\Stores;
 use App\Models\VendorsWallet;
 use App\Models\BankLists;
@@ -23,7 +23,7 @@ class VendorsController extends Controller
 {
    public function UpdateUserImage(Request $request){
     $request->validate(
-        ['image' => 'required'],
+        ['image' => 'required']
     );
 
     try{
@@ -111,7 +111,7 @@ class VendorsController extends Controller
         "state" => 'required',
        ]);
 
-      $queryvendors = vendorsCredentials::where('vendorsMarketId', Session::get('userid'))->first();
+      $queryvendors = VendorsCredentials::where('vendorsMarketId', Session::get('userid'))->first();
       if($queryvendors){
         $queryvendors->update([
             'contact' => $request->input('contact'),
