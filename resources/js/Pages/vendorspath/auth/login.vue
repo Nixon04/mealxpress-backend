@@ -136,7 +136,7 @@ methods:{
         hideProgressBar: true,
         icon:false,
        });
-       Inertia.reload();
+      //  Inertia.reload();
     }finally{
       this.loading = false;
     }

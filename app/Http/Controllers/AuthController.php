@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
-declare(strict_types=1);
 
 use App\Mail\VerificationEmail;
 use Inertia\Inertia;
