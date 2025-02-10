@@ -1,20 +1,22 @@
 import './bootstrap';
 import '../css/app.css';
 import '../css/demoassets/applayouts.css';
-import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
 import "vue-toastification/dist/index.css";
-import Toast  from "vue-toastification";
+import Toast from "vue-toastification";
 import PrimeVue from 'primevue/config';
 import Skeleton from 'primevue/skeleton';
 import Aura from '@primevue/themes/aura';
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import Vue3Marquee from 'vue3-marquee';
-import {createPinia} from 'pinia';
+import { createPinia } from 'pinia';
+
+// Import vue-multiselect
+import VueMultiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css'; // Make sure to include the CSS file
 
 const pinia = createPinia();
 
@@ -57,9 +59,9 @@ const vuetify = createVuetify({
 
 createInertiaApp({
   resolve: name => {
-    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
     const page = pages[`./Pages/${name}.vue`];
-    if(!page){
+    if (!page) {
       console.error(`Page component not found ${name}`);
     }
     return page;
@@ -71,12 +73,14 @@ createInertiaApp({
       .use(Vue3Marquee)
       .use(pinia)
       .use(PrimeVue, {
-        theme:{
-          preset: Aura
+        theme: {
+          preset: Aura,
         }
-      }).component('Skeleton',Skeleton)
-      // .component('vue-multiselect', window.VueMultiselect.default)
+      })
+      .component('Skeleton', Skeleton)
+      // Register vue-multiselect globally
+      .component('vue-multiselect', VueMultiselect)
       .use(vuetify)
-      .mount(el)
+      .mount(el);
   },
-})
+});

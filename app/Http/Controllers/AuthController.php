@@ -71,6 +71,7 @@ class AuthController extends Controller
           $excluded = $getsubcategory->pluck('categoryname');
           $excluded->push('all');
           $getcategory = Category::whereNotIn('categoryname', $excluded)->orderBy("id","DESC")->get();
+          
         return Inertia::render('vendorspath/dashboard/addcategories', ['data' => $getcategory, 'vendorcat' => $getsubcategory]);
     }
 
@@ -109,6 +110,8 @@ class AuthController extends Controller
           }
         return Inertia::render('vendorspath/dashboard/transactions');
     }
+
+    
     public function VendorsInvoices(){
         if(!Session::has('userid')){
             return Inertia::render('vendorspath/auth/login');

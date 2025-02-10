@@ -307,11 +307,18 @@
     "file": "assets/vue-demi-Dq6ymT-8.js",
     "name": "vue-demi"
   },
-  "_vue-multiselect-KEfLwAXO.js": {
-    "file": "assets/vue-multiselect-KEfLwAXO.js",
+  "_vue-multiselect-!~{00O}~.js": {
+    "file": "assets/vue-multiselect-DIn9qltL.css",
+    "src": "_vue-multiselect-!~{00O}~.js"
+  },
+  "_vue-multiselect-uY_OOrxy.js": {
+    "file": "assets/vue-multiselect-uY_OOrxy.js",
     "name": "vue-multiselect",
     "imports": [
       "_@vue-CrcgRG9i.js"
+    ],
+    "css": [
+      "assets/vue-multiselect-DIn9qltL.css"
     ]
   },
   "_vue-toastification-!~{00P}~.js": {
@@ -2609,7 +2616,7 @@
     "src": "resources/js/Pages/assets/vendor/fonts/fontawesome/fa-solid-900.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BL0WMWBZ.js",
+    "file": "assets/app-BRC2Ph8J.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -2622,7 +2629,7 @@
       "_chart.js-DloOFh9D.js",
       "_axios-DXsv3KKR.js",
       "_vue-toastification-CaGmZglp.js",
-      "_vue-multiselect-KEfLwAXO.js",
+      "_vue-multiselect-uY_OOrxy.js",
       "_underscore-BI39n_-E.js",
       "_bootstrap-BdlpLzpZ.js",
       "_primevue-BjmJELmc.js",
@@ -2658,7 +2665,7 @@
       "_fflate-EnPhvkmS.js"
     ],
     "css": [
-      "assets/app-BB5Gux3V.css",
+      "assets/app-BS1mGml2.css",
       "assets/app-D54DUJVc.css"
     ],
     "assets": [

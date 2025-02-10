@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
         <title>Mealxpress | Product Lists</title>
     </Head> 
@@ -9,27 +10,27 @@
         <div class="mealxpress-content">
           <HeaderDashboard :userid="userid"/>
           <div class="mealxpress-mai">
-            <div class="card-general-container card p-2">
+            <div class="card-general-containe p-1">
                         <div class="card">
                             <h5 class="card-header"></h5>
-                            <div class="d-flex justify-content-between px-6">
+                            <div class="d-flex justify-content-between px-4">
                                 <div class="d-flex">
                                     <div class="form-input">
                                         <input type="text" class="form-control py-2" v-model="searchQuery"  placeholder="Search...">
                                     </div>
                                 </div>
-                                <div class="d-flex gap-4">
+                                <div class="d-flex gap-1">
                                     <div class="form-input">
                                         <select v-model="rowsPerPage"  class="form-select py-2" @change="changevaluestate" >
                                             <option v-for="option in dropOption" :key="option" :value="option">{{ option }}</option>
                                         </select>
                                     </div>
                                     <div class="meal-form-button">
-                                        <button @click="ShowCenterModel(item)" class="togglebutton btn bg-button-submit py-3 text-sm">Add Category</button>
+                                        <button @click="ShowCenterModel(item)" class="togglebutton btn bg-button-submit  text-sm">Add Category</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-bod ">
                             <div class="table-responsive text-nowrap">
                               <table class="table">
                                <thead>
@@ -46,7 +47,7 @@
                                 <tr v-if="paginatedData.length  === 0" class="text-center">
                                   <td colspan="6">No Category selected Added</td>
                                 </tr>
-                                  <tr v-for="(item, index) in paginatedData" :key="item.id">
+                                  <tr v-for="(item, index) in paginatedData" :key="index.id">
                                     <td v-if="noResults">No data found  </td>
                                     <td>{{(item.marketid)}}</td>
                                     <td>{{item.categoryid}}</td>
@@ -81,13 +82,12 @@
             <!-- end of pagination -->
             </div>
         </div>
-        <!--/ Bordered Table -->
-
-                
+        <!--/ Bordered Table -->   
             </div>
          </div>
         </div>
     </div>  
+    </div>
 
 </template>
 

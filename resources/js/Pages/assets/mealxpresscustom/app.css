@@ -95,6 +95,10 @@
     right: 0;
     left: 0;
 }
+.rx-primecard{
+    background: #f1f1f1!important;
+    width: 100%;
+}
 .bg-dark-grey{
     background-color: var(--bg-hover-main);
     font-size: 14px;
@@ -105,7 +109,7 @@
     padding: 20px;
 }
 .container-scrollable{
-    height: 80%;
+    height: 50%;
     overflow-y: auto;
 }
 .drag-content-container{
@@ -132,7 +136,7 @@
     top: 20%;
     left: 50%;
     transform: translate(-50%, -20%);
-    height: 90vh;
+    height: 60vh;
     width: 40%;
     border-radius: 15px;
 }
@@ -217,7 +221,7 @@ body{
     background: var(--bg-primary-main);
     color: #fff;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
 }
 .pos-first{
     position: absolute;
@@ -652,6 +656,9 @@ textarea{
     height:70vh;
     padding: 20px;
     border-radius: 15px;
+}
+.text-sm{
+    font-size: 14px!important;
 }
 .fs-small{
    font-size: 1rem; 

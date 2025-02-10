@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://unpkg.com/vue-multiselect"></script>
-    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect/dist/vue-multiselect.min.css"> 
     <link rel="icon" type="image/*" href="../../landingimages/favicon.png"/>
     <meta name="description" content="We are No 1 leading in various states such as delta, bayelsa and portharcourt, leading in delivery of foods ordering to various clients. we are fast and reliable">
     <meta name="author" content="Mealxpress.ng">
