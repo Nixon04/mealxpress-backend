@@ -1,4 +1,4 @@
-import{c as K}from"./@inertiajs-DC8iB5q7.js";import{r as Q}from"./jspdf-YLdJIY27.js";var Z={exports:{}};/*!
+import{c as K}from"./@inertiajs-4fc1lwu3.js";import{r as Q}from"./jspdf-BYCz-k--.js";var Z={exports:{}};/*!
  * 
  *               jsPDF AutoTable plugin v3.8.4
  *
