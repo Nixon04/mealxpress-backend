@@ -6,7 +6,9 @@ use App\Models\OrderTotal;
 use App\Models\PayoutMethods;
 use App\Models\storesubcategory;
 use App\Models\UserOrderList;
+
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -21,33 +23,47 @@ use Carbon\Carbon;
 
 class VendorsController extends Controller
 {
-   public function UpdateUserImage(Request $request){
-    $request->validate(
-        ['image' => 'required']
-    );
+    public function UpdateUserImage(Request $request){
+        $request->validate(
+            ['image' => 'required|mimes:jpg,png,jpeg|max:2048']
+        );
+    
+        try {
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagename = time() . '.' . uniqid() . '.' . $image->getClientOriginalExtension();
+                
+                // Save the image in the 'mealxpress_storesprofile' folder under the 'public' disk (storage/app/public)
+                // $path = Storage::disk('public')->putFileAs('mealxpress_storesprofile', $image, $imagename);
 
-    try{
-
-    if($request->hasFile('image')){
-        $image = $request->file('image');
-        $imagename = time() .'.'. uniqid(). '.'. $image->getClientOriginalExtension();
-        $image->move(public_path('mealxpress_storesprofile'), $imagename);
-        
-        $userid = Session::get('userid');
-        $querystore = Stores::where('marketstoreid', $userid)->first();
-        if($querystore){
-            $querystore->update(['marketstoreprofile' => $imagename]);
-            return response()->json(['message' => 'Image Updated successfully']);
-        }else{
-            return response()->json(['message' => 'Info Not found']);
+                $path = $request->file('image')->storeAs('mealxpress_storesprofile', $imagename, 'local');
+                
+                if (!$path) {
+                    return response()->json(['message' => 'Image not saved', 'path' => $path]);
+                }
+    
+                // Retrieve the user ID from session
+                $userid = Session::get('userid');
+                
+                // Query the store associated with the user
+                $querystore = Stores::where('marketstoreid', $userid)->first();
+                
+                if ($querystore) {
+                    // Update the store's profile image with the new image name
+                    $querystore->update(['marketstoreprofile' => $imagename]);
+                    
+                    return response()->json(['message' => 'Image updated successfully']);
+                } else {
+                    return response()->json(['message' => 'Store info not found']);
+                }
+            } else {
+                return response()->json(['message' => 'Image request failed']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-    }else{
-        return response()->json(['message' => 'image request failed']);
     }
-    }catch(\Exception $e){
-        return response()->json($e->getMessage());
-    }
-   }
+    
      public function AddCategory(Request $request) {
        $request->validate(['value' => 'required']);
        $jsonarray = json_decode($request->input('value'), true);

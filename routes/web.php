@@ -6,6 +6,8 @@ use App\Http\Controllers\VendorsController;
 use App\Http\Controllers\GeneralView;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostAdminController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 
@@ -14,6 +16,18 @@ Route::get('/vendorspath/auth/forgotpassword',[AuthController::class,'ForgotPass
 
 
 Route::get('/route/home',[AuthController::class,'EmailRoute']);
+
+// for storeprofiles 
+Route::get('/mealxpress_storesprofile/{filename}', function($filename){
+if(!Session::has('userid')){
+  abort(403, 'UnAuthorized Access' );
+}
+ $path = storage_path('app/private/mealxpress_storesprofile/' .$filename);
+   if(!file_exists($path)){
+    abort(404, 'Image not found');
+  }
+ return response()->file($path);
+})->name('mealxpress_storesprofile');
 
 
 Route::controller(GeneralView::class)->group(function(){
@@ -42,6 +56,7 @@ Route::get('/vendorspath/dashboard/payouts', [AuthController::class,'VendorsPayo
 Route::get('/vendorspath/dashboard/listproducts', [AuthController::class,'ListProducts'])->name('ListProducts');
 Route::get('/vendorspath/dashboard/addcategories', [AuthController::class,'AddCategory'])->name('AddCategory');
 Route::get('/vendorspath/dashboard/fetchrecord', [AuthController::class,'FetchRecord'])->name('FetchRecord');
+Route::get('/vendorspath/dashboard/logout', [AuthController::class, 'VendorsLogout'])->name('VendorsLogout');
 
 
 Route::get('/vendorspath/dashboard/indexhome', [AuthController::class, 'HomeIndexCall']);

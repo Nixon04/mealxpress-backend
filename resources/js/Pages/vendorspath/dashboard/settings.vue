@@ -3,7 +3,7 @@
         <NavbarComponent />
         <div class="mealxpress-content">
           <HeaderDashboard/>
-          <div class="mealxpress-mai p-1 m-0">
+          <div class="mealxpress-mai  m-0">
             <!-- {{ data == "" ? 'empty' : data }} -->
             <Tabs value="0" class="custom-tab-class p-1 m-0" scrollable >
               <TabList>
@@ -119,8 +119,7 @@
                         </div>
                         <div class="col-lg-12 col-12">
                           <label for="">Bio</label>
-                          <textarea rows="3" class="form-control mb-4">
-                            {{ data.marketstorebio }}
+                          <textarea rows="3" class="form-control mb-4" v-model="data.marketstorebio">
                           </textarea>
                         </div>
                       </div>
@@ -318,8 +317,6 @@ export default{
    const password = ref('');
    const confirm = ref('');
    const datacall = ref('');
-
-
 
    const uploadprofile = async (event) => {
      const file = event.target.files[0];

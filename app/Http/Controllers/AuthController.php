@@ -39,6 +39,11 @@ class AuthController extends Controller
     //         ], 500);  // 500 Internal Server Error
     //     }
     // }
+
+    public  function VendorsLogout(){
+        session::pull('userid');
+        Inertia::render('vendorspath/auth/login');
+    }
     
     public function FetchRecord(){
         $monthlyData = DB::table('user_order_lists')
@@ -128,9 +133,11 @@ class AuthController extends Controller
           city, state FROM stores
              LEFT JOIN vendors_credentials ON stores.marketstoreid = vendors_credentials.vendorsMarketid');
                 $storeslist = collect($storeslist)->transform(function ($item) {
-                    $item->marketstoreprofile = "http://127.0.0.1:9000/mealxpress_storesprofile/" . $item->marketstoreprofile;
+                    $item->marketstoreprofile = route('mealxpress_storesprofile', ['filename' => $item->marketstoreprofile ]);
+                    // $item->marketstoreprofile = "http://192.168.0.101:9000/mealxpress_storesprofile/" . $item->marketstoreprofile;
                     return $item;
                 })->first();
+
         return Inertia::render('vendorspath/dashboard/settings', ['data' => $storeslist]);
     }
     public function VendorsDelivery(){
@@ -206,7 +213,7 @@ class AuthController extends Controller
 
         if($getallmarkets->isNotEmpty()){
             $getallmarkets->transform(function($entry){
-            $entry->marketimage = "http://127.0.0.1:9000/mealxpress_images/".$entry->marketimage;
+            $entry->marketimage = "http://192.168.0.101:9000//mealxpress_images/".$entry->marketimage;
             return $entry;
             });
         }

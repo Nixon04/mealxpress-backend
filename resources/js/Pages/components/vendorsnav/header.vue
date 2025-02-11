@@ -63,6 +63,13 @@
                     </li>
                 </Link>
 
+                <Link href="/vendorspath/dashboard/logout" class="mb-4">
+                  <li :class="['mealxpress-navlink', { active: $page.url === '/vendorspath/dashboard/logout' } ]">
+                      <i class="fa fa-sign-out-alt mealxpress-icons" ></i>
+                     Logout
+                  </li>
+              </Link>
+
 
             </ul>
         </div>
@@ -125,6 +132,14 @@
                        settings
                     </li>
                 </Link>
+
+                <Link href="/vendorspath/dashboard/logout" class="mb-4">
+                  <li :class="['mealxpress-navlink', { active: $page.url === '/vendorspath/dashboard/logout' } ]">
+                      <i class="fa fa-sign-out-alt mealxpress-icons" ></i>
+                     Logout
+                  </li>
+              </Link>
+
 
 
             </ul>

@@ -1,7 +1,7 @@
 <template>
     <div v-if="isVisible" class="bg-dialog-modal-container">
         <div class="bg-dialog-pad m-1">
-            <div class="bg-scrollable">
+            <div class="bg-scrollabl">
             <div class="header ms-4 me-4 py-3 d-flex justify-content-between">
                 <h1 class="fs-3 fw-bold">Product List</h1>
                 <div class="bg-circle" @click="$emit('close')">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div v-else-if="ModalData" class="meal-details mb-5">
-                    <div v-for="(item, index) in ModalData" :key="item.id" class="mb-4">
+                    <div v-for="(item, index) in ModalData" :key="index.id" class="mb-4">
                         <div class="d-flex justify-content-between mb-3 align-items-center">
                             <span>Meal:</span>
                             <div class="d-flex gap-3 align-items-center">
@@ -57,11 +57,11 @@
             </div>
       <!-- button -->
 
-      <div :class="[loadingstate ? 'bg-lazyloading text-center  py-5 cursor-not-allowed mb-3 opacityloading' : 'bg-button-submit-secondary text-center py-5 cursor-pointer mb-3']"  @click=" !loadingstate && approveOrder(approveOrder(ModalData[0]?.cartrefcode))">
+      <div :class="[loadingstate ? 'bg-lazyloading text-center  p-3 cursor-not-allowed mb-3 opacityloading' : 'bg-button-submit-secondary text-center p-3 cursor-pointer mb-3']"  @click=" !loadingstate && approveOrder(approveOrder(ModalData[0]?.cartrefcode))">
         <span class="text-white">{{loadingstate ? 'Loading....' : 'Accept Order'}}</span>
       </div>
 
-      <div :class="[isLoading ? 'bg-lazyloading  text-center py-5 cursor-pointer' : 'bg-button-light text-center py-5 cursor-pointer']"  @click="submitrequest( !isLoading &&  submitrequest(ModalData[0]?.cartrefcode))" :disable="loadingstate">
+      <div :class="[isLoading ? 'bg-lazyloading  text-center p-3 cursor-pointer' : 'bg-button-light text-center  p-3 cursor-pointer']"  @click="submitrequest( !isLoading &&  submitrequest(ModalData[0]?.cartrefcode))" :disable="loadingstate">
         <span class="text-white">{{isLoading ? 'Loading....' : 'Reject Order'}}</span>
       </div>
       <!-- end of button -->

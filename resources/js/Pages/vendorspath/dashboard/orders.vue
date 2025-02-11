@@ -55,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in data" :key="item.id" >
+                <tr v-for="(item, index) in data" :key="index.id" >
                   <td >{{ item.username }}</td>
                   <td>{{ item.cartreference }}</td>
                   <td>{{ item.price }}</td>
@@ -131,7 +131,7 @@
                         No pending orders available.
                       </td>
                     </tr>
-                    <tr v-for="(item, index) in pendingtable" :key="item.id" >
+                    <tr v-for="(item, index) in pendingtable" :key="index.id" >
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>
@@ -208,7 +208,7 @@
                         No Completed orders available.
                       </td>
                     </tr>
-                    <tr v-for="(item, index) in deliveredtable" :key="item.id" >
+                    <tr v-for="(item, index) in deliveredtable" :key="index.id" >
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>
@@ -285,7 +285,7 @@
                         No Returns made available.
                       </td>
                     </tr>
-                    <tr v-for="(item, index) in returnstable" :key="item.id" >
+                    <tr v-for="(item, index) in returnstable" :key="index.id" >
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>

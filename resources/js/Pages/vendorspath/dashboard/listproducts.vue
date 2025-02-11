@@ -1,7 +1,9 @@
 <template>
+  <div>
     <Head>
         <title>Mealxpress | Product Lists</title>
     </Head> 
+
     <div class="main-board-mealxpress">
      <Newproducts :isVisible="isVisible"   @close="disclosemodel" :ModalData="ModalData" @submit="updateproducts" @file-change="handleFileChange" :isLoadingUpdate="isLoadingUpdate"/>
      <Addproducts :addVisible="addVisible" :isLoadingProduct="isLoadingProduct" :isLoadingUpdate="isLoadingUpdate" :cat="cat" @close="CloseCenterModel"  @submitmodal="UploadProducts"/>
@@ -45,7 +47,7 @@
                                 <tr v-if="paginatedData.length  === 0" class="text-center">
                                   <td colspan="4">No Product Added</td>
                                 </tr>
-                                  <tr v-for="(item, index) in paginatedData" :key="item.id">
+                                  <tr v-for="(item, index) in paginatedData" :key="index.id">
                                   
                                     <td v-if="noResults">No data found  </td>
                                     <td> <img :src="item.marketimage" alt="" srcset="" class="image-format-small"> <span class="fw-medium">{{item.marketproductname}}</span></td>
@@ -90,10 +92,11 @@
          </div>
         </div>
     </div>  
+    </div>
 
 </template>
 
-<script >
+<script  >
   import { useToast } from 'vue-toastification';
   import {Inertia} from '@inertiajs/inertia';
   import { ref, computed } from 'vue';

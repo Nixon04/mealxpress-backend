@@ -80,6 +80,12 @@
 .bg-corevalues{
     padding-left: 20px;
 }
+.overlay-topcardspad{
+    padding-top: 40px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom: 20px ;
+}
 .text-spacing{
     letter-spacing: 1px;
 }
@@ -95,9 +101,50 @@
     right: 0;
     left: 0;
 }
+.p-multiselect-chip{
+    color: #fff;
+    background: var(--bg-primary-main)!important;
+}
+.p-multiselect-chip-icon{
+    color: blue!important;
+}
+.p-multiselect-label-container{
+    border: 1px solid var(--bg-primary-main)!important;
+}
+.p-multiselect-label-container:focus, .p-multiselect-label-container:hover{
+    border: 1px solid var(--bg-primary-main)!important;
+}
+.p-multiselect{
+    background: var(--bg-primary-main)!important;
+}
+.p-multiselect-overlay{
+    background: var(--bg-primary-main)!important;
+}
+
+ .p-multiselect-filter{
+    background-color: #fff!important;
+    color: #000!important;
+}
+.p-multiselect-filter-container:focus, .p-multiselect-filter:focus{
+    border: 1px solid var(--bg-primary-main)!important;
+}
+.p-multiselect-option-checkbox{
+    background-color: var(--bg-secondary-meal)!important;
+}
+.p-multiselect-label{
+    color: var(--bg-primary-main)!important;
+}
+
+  
+  /* Add hover effect for the filter container */
+  .pc-filter-container:hover {
+    background-color: #e2e2e2;
+  }
+  
 .rx-primecard{
     background: #f1f1f1!important;
     width: 100%;
+    color: var(--bg-primary-main)!important;
 }
 .bg-dark-grey{
     background-color: var(--bg-hover-main);
@@ -108,8 +155,18 @@
 .bg-drawer-header{
     padding: 20px;
 }
+.bg-drawer-center-container{
+    position: absolute;
+    background: #fff;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    height: auto;
+    width: 40%;
+    border-radius: 15px;
+}
 .container-scrollable{
-    height: 50%;
+    height: 60vh;
     overflow-y: auto;
 }
 .drag-content-container{
@@ -130,16 +187,7 @@
 .form-select:hover , .form-select:focus{
     border: 1px solid var(--bg-primary-main)!important;
 }
-.bg-drawer-center-container{
-    position: absolute;
-    background: #fff;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -20%);
-    height: 60vh;
-    width: 40%;
-    border-radius: 15px;
-}
+
 .transfercontainer{
     position: fixed;
     top: 0;
@@ -635,28 +683,8 @@ textarea{
 }
 /* modal dialog image */
 
-.bg-dialog-modal-container{
- height: auto;
- background: rgba(0, 0, 0, 0.5);
- z-index: 9999;
- position: fixed;
- top:0;
- left: 0;
- right: 0;
- bottom: 0;
- display: block;
-}
-.bg-dialog-pad{
-    position: absolute;
-    background: #fff;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: 30%;
-    height:70vh;
-    padding: 20px;
-    border-radius: 15px;
-}
+
+
 .text-sm{
     font-size: 14px!important;
 }
@@ -676,12 +704,37 @@ textarea{
     justify-content: center;
     cursor: pointer;
 }
+
+.bg-dialog-modal-container{
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+   }
+
 .bg-scrollable-meal{
     overflow-y: auto;
     padding: 10px; 
-    height: 300px;
     scroll-behavior: smooth;
     scrollbar-width: 2px;
+    position: relative;
+}
+
+.bg-dialog-pad{
+    position: absolute;
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 30%;
+    height:auto;
+    padding: 20px;
+    border-radius: 15px;
 }
 
 ::-webkit-scrollbar{

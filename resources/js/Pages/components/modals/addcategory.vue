@@ -1,18 +1,19 @@
 <template>
   <div class="bg-drawer-center" v-if="addVisible">
     <div class="bg-drawer-center-container">
-      <div class="d-flex justify-content-between px-2 py-5">
+      <div class="d-flex justify-content-between overlay-topcardspad">
         <h1 class="fs-5 text-main fw-bold">Add Category</h1>
         <div class="bg-circle" @click="$emit('close')">
           <i class="fas fa-x"></i>
         </div>
       </div>
-      <div class="container-scrollable px-2">
+      <div class="container-scrollable overlay-topcardspad">
         <!-- PrimeMultiSelect Dropdown for Categories -->
         <PrimeMultiSelect 
           :options="options" 
           display="chip"
           :maxSelectedLabels="3"
+           placeholder="Choose your own category"
           v-model="value" 
           optionLabel="name"
           filter
@@ -37,6 +38,7 @@ import axios from 'axios';
 import { ref, watch } from 'vue';
 import { useToast } from 'vue-toastification';
 import { Inertia } from '@inertiajs/inertia';
+
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
