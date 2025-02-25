@@ -56,15 +56,24 @@
               </thead>
               <tbody>
                 <tr v-for="(item, index) in data" :key="index.id" >
-                  <td >{{ item.username }}</td>
-                  <td>{{ item.cartreference }}</td>
-                  <td>{{ item.price }}</td>
-                  <td>{{ item.portion }}</td>
-                  <td>{{ item.cartdrink }}</td>
-                      <td class="rounded position-relative shift-body"  :class="[item.cartstatus === 'delivered' ? 'text-success stat-border' : 'text-info']">
-                        <span class="position-absolute bg-label-success rounded-md p-2 shift-call">{{ item.cartstatus }}</span>
+                    <td >{{ item.username }}</td>
+                    <td>{{ item.cartreference }}</td>
+                    <td>{{ item.price }}</td>
+                  <td class="rounded position-relative shift-body">
+                    <span class="position-absolute bg-label-info rounded-md p-2 mx-2 me-3 shift-call">{{ item.portion }}</span>
+                  </td>
+                  <td>{{ item.cartdrink? item.cartdrink : 'No Drinks' }}</td>
+                      <td class="rounded position-relative shift-body">
+                        <span :class="{
+                          'position-absolute bg-rx-success rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                          'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                          'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                          'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
+                         }">
+                         {{ item.cartstatus }}</span>
                       </td>
-                  <td>{{ item.created_at }}</td>
+
+                  <td>{{ item.cartpurchasedate }}</td>
                   <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                     <i class="fa-solid fa-ellipsis"></i>
                   </td>
@@ -135,12 +144,26 @@
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>
-                      <td>{{ item.portion }}</td>
-                      <td>{{ item.cartdrink }}</td>
-                        <td :class="[item.cartstatus === 'delivered' ? 'text-success' : 'text-danger']">
-                          {{ item.cartstatus }}
-                        </td>
-                      <td>{{ item.created_at }}</td>
+                      <td class="rounded position-relative shift-body">
+                        <span class="position-absolute bg-label-info rounded-md p-2 mx-2 me-3 shift-call">{{ item.portion }}</span>
+                      </td>
+    
+                      <td>{{ item.cartdrink? item.cartdrink : 'No Drinks' }}</td>
+                          <td class="rounded position-relative shift-body"
+                          
+                            >
+                            <span :class="{
+                              'position-absolute bg-rx-success rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                              'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                              'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                              'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
+                             }">
+                             
+                             {{ item.cartstatus }}</span>
+                          </td>
+    
+    
+                      <td>{{ item.cartpurchasedate }}</td>
                       <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                         <i class="fa-solid fa-ellipsis"></i>
                       </td>
@@ -212,12 +235,26 @@
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>
-                      <td>{{ item.portion }}</td>
-                      <td>{{ item.cartdrink }}</td>
-                        <td :class="[item.cartstatus === 'delivered' ? 'text-success' : 'text-danger']">
-                          {{ item.cartstatus }}
-                        </td>
-                      <td>{{ item.created_at }}</td>
+                      <td class="rounded position-relative shift-body">
+                        <span class="position-absolute bg-label-info rounded-md p-2 mx-2 me-3 shift-call">{{ item.portion }}</span>
+                      </td>
+    
+                      <td>{{ item.cartdrink? item.cartdrink : 'No Drinks' }}</td>
+                          <td class="rounded position-relative shift-body"
+                          
+                            >
+                            <span :class="{
+                              'position-absolute bg-rx-succes rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                              'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                              'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                              'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
+                             }">
+                             
+                             {{ item.cartstatus }}</span>
+                          </td>
+    
+    
+                      <td>{{ item.cartpurchasedate }}</td>
                       <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                         <i class="fa-solid fa-ellipsis"></i>
                       </td>
@@ -227,9 +264,7 @@
                 <div v-if="noResults" class="text-center py-4 bg-textmain">
                   Mealxpress couldn't find any query data of this such {{ searchQuery }}
                 </div>
-              </div>
-    
-         
+              </div>         
     
               <!-- Pagination Controls -->
               <div class="pagination mb-2 py-2 px-4">
@@ -289,11 +324,25 @@
                       <td >{{ item.username }}</td>
                       <td>{{ item.cartreference }}</td>
                       <td>{{ item.price }}</td>
-                      <td>{{ item.portion }}</td>
-                      <td>{{ item.cartdrink }}</td>
-                        <td :class="[item.cartstatus === 'delivered' ? 'text-success' : 'text-danger']">
-                          {{ item.cartstatus }}
-                        </td>
+                      <td class="rounded position-relative shift-body">
+                        <span class="position-absolute bg-label-info rounded-md p-2 mx-2 me-3 shift-call">{{ item.portion }}</span>
+                      </td>
+    
+                      <td>{{ item.cartdrink? item.cartdrink : 'No Drinks' }}</td>
+                          <td class="rounded position-relative shift-body"
+                          
+                            >
+                            <span :class="{
+                              'position-absolute bg-rx-success rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                              'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                              'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                              'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
+                             }">
+                             
+                             {{ item.cartpurchasedate }}</span>
+                          </td>
+    
+    
                       <td>{{ item.created_at }}</td>
                       <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                         <i class="fa-solid fa-ellipsis"></i>
@@ -368,7 +417,7 @@
                   </div>
                   <div class="d-flex flex-column gap  -1">
                     <h4>Delivered</h4>
-                    <h1 class="fs-1">Total {{delivered ? delivered : '0'}}</h1>
+                    <h1 class="fs-1">Total {{Delivered ? Delivered : '0'}}</h1>
                   </div>
               </div>
             </div>
@@ -435,7 +484,7 @@ export default {
     const { props } = usePage();
     const data = ref(props.data || []);
     const orders = ref(props.orders || '');
-    const delivered = ref(props.delivered || '');
+    const Delivered = ref(props.Delivered || '');
     const returns = ref(props.returns || '');
     const Cancelled = ref(props.Cancelled || '');
 
@@ -450,7 +499,7 @@ export default {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const pendingtable = ref(props.datareturns.pending);
-    const deliveredtable = ref(props.datareturns.delivered || []);
+    const deliveredtable = ref(props.datareturns.Delivered || []);
     const returnstable = ref(props.datareturns.returns || []);
    
     const openModal = async (item) => {
@@ -540,7 +589,7 @@ export default {
       ModalData,
       loading,
       orders,
-      delivered,
+      Delivered,
       Cancelled,
       returns,
       datarefcall,

@@ -26,7 +26,6 @@
               <i :class="showPassword? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
             </span>
            <span></span>
-          
           </div>
           <div class="form-inputs mb-3">
             <button type="submit" :class="loading ? 'mealxpress-main-button btn' : 'btn mealxpress-main-button' ">

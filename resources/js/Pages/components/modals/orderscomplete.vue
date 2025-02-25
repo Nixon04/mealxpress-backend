@@ -1,15 +1,16 @@
 <template>
     <div v-if="isVisible" class="bg-dialog-modal-container">
         <div class="bg-dialog-pad m-1">
-            <div class="bg-scrollabl">
-            <div class="header ms-4 me-4 py-3 d-flex justify-content-between">
-                <h1 class="fs-3 fw-bold">Product List</h1>
+            <div class="bg-scrollable">
+            <div class="header ms-2 me-2 py-3 d-flex justify-content-between">
+                <h1 class="fs-3 fw-bold text-main">Product List</h1>
                 <div class="bg-circle" @click="$emit('close')">
                         <div class="fas fa-x fas-sm" ></div>
                     </div>
             </div>
             <div class="bg-scrollable-meal mb-4">
                 <div  v-if="loading" class="d-flex ">
+                    <div style="background:#f1f1f1; height:12px; width:100%"></div>
                     <div class="rounded">
                         <div class="flex mb-4 w-100">
                             <Skeleton shape="circle" size="4rem" class="mr-2 shimmer-color"></Skeleton>
@@ -27,33 +28,36 @@
                             <span>Meal:</span>
                             <div class="d-flex gap-3 align-items-center">
                                 <img :src="item.cartimage" alt="Meal Image" style="width:40px;height:40px" class="mb-2 "/>
-                                <h2>{{ item.productname }}</h2>
+                                <h2 class="fw-bold fs-5 text-main">{{ item.productname }}</h2>
                             </div>
-  
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Price:</span>
-                            <p>{{ formattedPrice(item.price) }}</p>
+                            <p class="fw-bold fs-5 text-main">₦{{ formattedPrice(item.price) }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
                             <span>Total:</span>
-                            <p class="fw-bold">{{ item.total }}</p>
+                            <p class="fw-bold fs-5 text-main">₦{{ formattedPrice(item.ntotal) }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
                             <span>Weight:</span>
-                            <p class="">{{ item.cartweight }}</p>
+                            <p class="fw-bold fs-5 text-main">{{ item.cartweight }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
                             <span>Drink </span>
+                          <div v-if="item.option != ''">
                             <img :src="item.option" alt="Meal Image" style="width:40px;height:40px" class="mb-2 "/>
+                          </div>
+                          <div v-else>
+                            <span class="fw-bold fs-5 text-main">No Drinks Selected</span>
+                          </div>
                         </div>
                         <hr />
                       </div>
                   </div>
-
             </div>
       <!-- button -->
 
@@ -61,8 +65,8 @@
         <span class="text-white">{{loadingstate ? 'Loading....' : 'Accept Order'}}</span>
       </div>
 
-      <div :class="[isLoading ? 'bg-lazyloading  text-center p-3 cursor-pointer' : 'bg-button-light text-center  p-3 cursor-pointer']"  @click="submitrequest( !isLoading &&  submitrequest(ModalData[0]?.cartrefcode))" :disable="loadingstate">
-        <span class="text-white">{{isLoading ? 'Loading....' : 'Reject Order'}}</span>
+      <div :class="[isLoading ? 'bg-lazyloading  text-center p-3  cursor-not-allowed' : 'bg-button-light text-center  p-3 cursor-pointer']"  @click="submitrequest( !isLoading &&  submitrequest(ModalData[0]?.cartrefcode))" :disable="loadingstate">
+        <span class="text-white">{{isLoading ? 'Loading....' : 'Reject If Not Available'}}</span>
       </div>
       <!-- end of button -->
         </div>
@@ -150,10 +154,13 @@ export default{
 
     const submitrequest = async (cartrefcode) => {
     try {
+        if(isLoading.value){
+            console.log('Is already loading');
+            return;
+        }
       isLoading.value = true;
-        await delay(300);
         const payload = {
-            itemupdate: "returns",
+            itemupdate: "accepted",
             cartref: cartrefcode, // Use the first cartrefcode
         };
         const response = await axios.post('/vendorspath/rejectorder', payload, {

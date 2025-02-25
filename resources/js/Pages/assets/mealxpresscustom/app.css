@@ -649,6 +649,19 @@ textarea{
 .bg-lazyloading{
     background: var(--bg-primary-light);
 }
+.bg-rx-success{
+    background: #E5FBF3;
+}
+.bg-rx-pending{
+    background: #DFEBF7;
+}
+.bg-rx-warning{
+    background: #FFF5C0;
+}
+.bg-rx-returns{
+    background: #DFEBF7;
+}
+
 .bg-lightgrey{
     background: var(--bg-hover-main);
 }
@@ -723,6 +736,7 @@ textarea{
     scroll-behavior: smooth;
     scrollbar-width: 2px;
     position: relative;
+    height: 40vh;
 }
 
 .bg-dialog-pad{
@@ -732,7 +746,7 @@ textarea{
     top: 50%;
     transform: translate(-50%,-50%);
     width: 30%;
-    height:auto;
+    height:70vh;
     padding: 20px;
     border-radius: 15px;
 }

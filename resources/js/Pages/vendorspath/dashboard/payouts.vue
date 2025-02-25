@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
         <title>Mealxpress | Product Lists</title>
     </Head>
@@ -7,13 +8,13 @@
         <div class="mealxpress-content">
           <HeaderDashboard/>
           <div class="mealxpress-mai">
-            <div class="card-general-container card p-2">
+            <div class="card-general-containe card p-2">
             <div class="row">
-                <div class="col-lg-12">
-                <h1 class="fs-3 ms-2 py-2">Payouts</h1>
-                    <div class="card">
+                <div class="col-lg-12 bg-white">
+                <h1 class="fs-3 ms-2 py-2 text-main">Payouts</h1>
+                    <div class="card m-0 p-0">
                         <h5 class="card-header"></h5>
-                        <div class="d-flex justify-content-between px-6">
+                        <div class="d-flex justify-content-between px-3">
                             <div class="d-flex">  
                                 <div class="form-input">
                                     <input type="text" class="form-control py-2" v-model="searchQuery"  placeholder="Search...">
@@ -30,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-bod">
                         <div class="table-responsive text-nowrap">
                           <table class="table">
                            <thead>
@@ -51,7 +52,7 @@
                                 </td>
                               </tr>
 
-                              <tr v-for="(item, index) in paginatedData" :key="item.id">
+                              <tr v-for="(item, index) in paginatedData" :key="index.id">
                                 <td v-if="noResults">No data found  </td>
                                 <td>{{item.payout}}</td>
                                 <td>{{item.recipient}}</td>
@@ -92,7 +93,7 @@
          </div>
         </div>
     </div>  
-  
+  </div>
   </template>
   
   <script>

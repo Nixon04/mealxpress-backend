@@ -22,7 +22,7 @@
             </div>
            
             <div class="form-inputs mb-3">
-              <button type="submit" :class="loading ? 'mealxpress-main-button btn' : 'btn mealxpress-main-button' ">
+              <button type="submit" :class="loading ? 'mealxpress-main-button btn text-white' : 'text-white btn mealxpress-main-button' ">
                 {{ loading ? 'Loading...' : 'Recover' }}
               </button>
             </div>
@@ -53,15 +53,11 @@
   import { Head } from '@inertiajs/inertia-vue3';
   import {Link} from '@inertiajs/inertia-vue3';
   import { useToast } from 'vue-toastification';
-  import {InertiaLink} from '@inertiajs/inertia-vue3';
   
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   
   export default{
-  
-    setup(){
-    const toast = useToast();
-    },
+
     data() {
       return {
        emailID:'',
@@ -72,7 +68,6 @@
     components:{
       Link,
       Head,
-      InertiaLink,
     },
     computed:{
       passwordfield(){
@@ -107,40 +102,33 @@
       }
       try{
         this.loading = true;
-        await this.delay(2000);
-        const response = await axios.post('/vendorspath/vendorslogin', payload, {
+        const response = await axios.post('/vendorspath/verifyemail', payload, {
           method: 'POST',
           headers: {'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken,
           }, 
         });
         if(response.data.status == "success"){
-         toast.success('Login successfully',{
+         toast.success(response.data.status,{
           timeout:3000,
           hideProgressBar: true,
           icon:false,
          });
-         window.location.href = '../dashboard/home';
+         window.location.href = 'confirmtoken';
         }else{
-          toast.error("Email or password not correct",{
+          toast.error(response.data.message,{
           timeout:3000,
           hideProgressBar:true,
           icon:false,
          });
         }
-      }catch(error){
-        toast.error(`Oops something went wrong try again later ${error}`,{
-          timeout:3000,
-          hideProgressBar: true,
-          icon:false,
-         });
+      
       }finally{
         this.loading = false;
       }
     }
   },
   };
-  
   
   </script>
   

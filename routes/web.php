@@ -13,22 +13,23 @@ use Kreait\Firebase\Messaging\Notification;
 
 Route::get('/vendorspath/auth/login', [AuthController::class, 'LoginPage'])->name('LoginPage');
 Route::get('/vendorspath/auth/forgotpassword',[AuthController::class,'ForgotPassword']);
+Route::get('/vendorspath/auth/confirmtoken', [AuthController::class,'VendorsConfirmToken'])->name('VendorsConfirmToken');
+Route::get('/vendorspath/auth/changepassword', [AuthController::class,'VendorsChangePassword'])->name('VendorsChangePassword');
 
 
 Route::get('/route/home',[AuthController::class,'EmailRoute']);
 
 // for storeprofiles 
 Route::get('/mealxpress_storesprofile/{filename}', function($filename){
-if(!Session::has('userid')){
-  abort(403, 'UnAuthorized Access' );
-}
+// if(!Session::has('userid')){
+//   abort(403, 'UnAuthorized Access' );
+// }
  $path = storage_path('app/private/mealxpress_storesprofile/' .$filename);
    if(!file_exists($path)){
     abort(404, 'Image not found');
   }
  return response()->file($path);
 })->name('mealxpress_storesprofile');
-
 
 Route::controller(GeneralView::class)->group(function(){
 Route::get('/', 'HomeIndex');
@@ -81,6 +82,12 @@ Route::controller(VendorsController::class)->group(function(){
     Route::post('/vendorspath/updatetrackgoods', 'PostUpdateGoods');
     Route::post('/vendorspath/addcategory', 'AddCategory');
     Route::post('/vendorspath/updateprofileimage', 'UpdateUserImage');
+
+    // verification sender
+    Route::post('/vendorspath/verifyemail', 'VendorEmailVerification');
+    Route::post('/vendorspath/verifyemailtoken', 'VendorEmailToken');
+    Route::post('/vendorspath/vendorschangepassword', 'VendorChangePassword');
+
    
 });
 
@@ -92,7 +99,6 @@ Route::controller(AdminController::class)->group(function(){
   Route::get('/prisent/dashboard/regusers', 'AdminUsers');
   Route::get('/prisent/dashboard/vendors', 'AdminVendors');
   Route::get('/prisent/dashboard/category', 'AdminCategory');
-  Route::get('/prisent/dashboard/drivers', 'AdminDrivers');
   Route::get('/prisent/dashboard/drivers', 'AdminDrivers');
   Route::get('/prisent/dashboard/sendappnotification', 'AdminAppNotification');
   Route::get('/prisent/dashboard/drinks', 'AddDrinks');

@@ -1,6 +1,8 @@
-import './bootstrap';
+import './bootstrap'; // Import your Laravel bootstrap.js setup
 import '../css/app.css';
 import '../css/demoassets/applayouts.css';
+
+// Vue 3 setup
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import "vue-toastification/dist/index.css";
@@ -14,12 +16,34 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import Vue3Marquee from 'vue3-marquee';
 import { createPinia } from 'pinia';
 
-// Import vue-multiselect
-import VueMultiselect from 'vue-multiselect';
-import 'vue-multiselect/dist/vue-multiselect.css'; // Make sure to include the CSS file
+// Importing Echo and Pusher
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
+// Access environment variables from Vite
+const appKey = import.meta.env.VITE_PUSHER_APP_KEY;
+const appCluster = import.meta.env.VITE_PUSHER_APP_CLUSTER;
+
+// Debugging output to ensure variables are loaded correctly
+console.log('Pusher App Key:', appKey);
+console.log('Pusher App Cluster:', appCluster);
+
+// Initialize Echo with Pusher
+const echo = new Echo({
+    broadcaster: 'pusher',
+    key: appKey,
+    cluster: appCluster,
+    forceTLS: true
+});
+
+// Import vue-multiselect for usage across your app
+import VueMultiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css';
+
+// Create Pinia store instance
 const pinia = createPinia();
 
+// Vuetify configuration
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
@@ -57,6 +81,7 @@ const vuetify = createVuetify({
   },
 });
 
+// Inertia.js setup for your Vue 3 app
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
@@ -66,7 +91,7 @@ createInertiaApp({
     }
     return page;
   },
-  setup({ el, App, props, plugin }) { 
+  setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(Toast)
@@ -78,7 +103,6 @@ createInertiaApp({
         }
       })
       .component('Skeleton', Skeleton)
-      // Register vue-multiselect globally
       .component('vue-multiselect', VueMultiselect)
       .use(vuetify)
       .mount(el);

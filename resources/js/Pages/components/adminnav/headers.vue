@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div class="mealxpress-header">
       <div class="d-flex justify-content-between">
         <div class="d-flex gap-3">
@@ -104,12 +105,7 @@
   
               </ul>
           </div>
-          <div class="aside-footer">
-              <div class="aside-centered">
-                  <h1 class=" fs-2 text-white">Having troubles</h1>
-                  <h6 class="fs-7 text-white">We are active 24/7</h6>
-              </div>
-          </div>
+         
       </div>
     </aside>
   
@@ -206,12 +202,12 @@
   
               </ul>
           </div>
-          <div class="aside-footer">
+          <!-- <div class="aside-footer">
               <div class="aside-centered">
                   <h1 class=" fs-2 text-white">Having troubles</h1>
                   <h6 class="fs-7 text-white">We are active 24/7</h6>
               </div>
-          </div>
+          </div> -->
       </div>
     </aside>
   
@@ -219,6 +215,7 @@
     <!-- <aside class="aside-mealxpresscontent" :class="{ 'is-visible': isSidebarVisible }">
       <p>Sidebar Content</p>
     </aside> -->
+  </div>
   </template>
   
   <script>

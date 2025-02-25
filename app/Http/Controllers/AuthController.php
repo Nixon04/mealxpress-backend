@@ -24,7 +24,13 @@ class AuthController extends Controller
         return view('route.home');
     }
 
-   
+    public function VendorsChangePassword(){
+        return Inertia::render('vendorspath/auth/changepassword');
+    }
+    public function VendorsConfirmToken(){
+        return Inertia::render('vendorspath/auth/confirmtoken');
+    }
+
     // public function Filament(){
     //     try {
     //         $username = "nixon";
@@ -153,28 +159,27 @@ class AuthController extends Controller
         if (!Session::has('userid')) {
             return Inertia::render('vendorspath/auth/login');
         }
-        // Fetch data for the market
-        $querydata = UserOrderList::where('marketid', Session::get('userid'))
+    
+        // Fetch and filter data to ensure unique cart references, sorted by ID
+        $fetch = UserOrderList::where('marketid', Session::get('userid'))
             ->orderBy('id', 'DESC')
             ->get();
     
-        // Fetch and filter data to ensure unique cart references
-        $fetch = UserOrderList::where('marketid', Session::get('userid'))->get();
-    
+        // Filter out duplicate cart references
         $filteredResults = $fetch->unique('cartreference')->values();
-            $filcollection = collect($filteredResults);
     
-        $filcount = $filcollection->countBy(function ($entry) {
+        // Group by cart status and count occurrences
+        $filcount = $filteredResults->countBy(function ($entry) {
             return $entry->cartstatus;
         });
     
-        // Counters for statuses
+        // Counters for statuses (with default values)
         $orders = $filcount->get('pending', 0);
         $delivered = $filcount->get('delivered', 0);
         $returns = $filcount->get('returns', 0);
         $cancelled = $filcount->get('cancelled', 0);
     
-        // Fetch data grouped by cart status
+        // Data grouped by cart status
         $data = [
             'pending' => $filteredResults->where('cartstatus', 'pending')->values(),
             'delivered' => $filteredResults->where('cartstatus', 'delivered')->values(),
@@ -192,6 +197,7 @@ class AuthController extends Controller
             'cancelled' => $cancelled,
         ]);
     }
+        
     
     public function VendorsPayout(){
         if(!Session::has('userid')){

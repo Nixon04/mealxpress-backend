@@ -348,7 +348,7 @@ class DriverController extends Controller
     $request->validate([
             'contact' => 'required|numeric',
             'password' => 'required',
-            'fcm_token' => 'required',
+            'fcm_token',
         ]);
     try{
    Log::info('Server', ['server' => $request['contact']]);

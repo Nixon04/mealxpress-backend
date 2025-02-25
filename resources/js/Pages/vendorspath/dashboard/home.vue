@@ -10,6 +10,9 @@
             <div class="col-lg-12 ">
               <div class="col-lg-12 col-12 mb-5">
                 <div class="d-flex justify-content-between align-items-center">
+                  <!-- <div v-if="payment" class="notification">
+                    <p>Payment of ${{ payment.amount }} was made by {{ payment.vendor }}.</p>
+                  </div> -->
                   <div class="d-flex flex-column">
                     <h1 class="fs- bg-textmain bg-f-1">Dashboard</h1>
                      <h6 class="fs-small">Here's your dashboard sales details overview</h6>
@@ -40,14 +43,14 @@
                     <div class="col-lg-12 col-md-12 bg-display-flex">
                         <div class="row">
                             <div class="col-lg-6 col-12 ">
-                                <div class="card  gap-1 shadow-none card-outline mb-3">
-                                   <div class="d-flex justify-content-between mb-2 px-5 p-2">
+                                <div class="card  gap-1 shadow-none card-outline mb-3 py-2">
+                                   <div class="d-flex justify-content-between mb-2 px-3 p-2">
                                     <h1 class="fs-4 fw-bold bg-textmain">Total Sales</h1>
                                       <div class="bg-circle border-circle">
                                         <i class="fa-solid fa-ellipsis"></i>
                                       </div>
                                    </div>
-                                   <div class="div-centered mb-3 px-5 p-2">
+                                   <div class="div-centered mb-3 px-3 p-2">
                                     <h1 class="fs-4 fw-bold mb-3 bg-textmain"> ₦{{ formatCurrency(totalsum) }} </h1>
                                     <div class="d-flex">
                                       <div class="bg-auto-rate me-2">
@@ -70,14 +73,14 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                              <div class="card  gap-1 shadow-none card-outline mb-3">
-                                 <div class="d-flex justify-content-between mb-2 px-5 p-2">
+                              <div class="card  gap-1 shadow-none card-outline mb-3 py-2">
+                                 <div class="d-flex justify-content-between mb-2 px-3 p-2">
                                   <h1 class="fs-4 bg-textmain fw-bold">Total Orders</h1>
                                     <div class="bg-circle border-circle">
                                       <i class="fa-solid fa-ellipsis"></i>
                                     </div>
                                  </div>
-                                 <div class="div-centered mb-3 px-5 p-2">
+                                 <div class="div-centered mb-3 px-3 p-2">
                                   <h1 class="fs-4 fw-bold mb-3 bg-textmain"> {{formatCurrency(salescount)}}</h1>
                                   <div class="d-flex">
                                     <div class="bg-auto-rate me-2">
@@ -120,7 +123,7 @@
                 </div>
                 <div class="card bg-border-card px-3 py-3">
                   <div class="d-flex justify-content-between card">
-                    <h5 class="card-header fw-bold bg-textmain">Recent PurChase</h5>
+                    <h5 class="card-heade fw-bold bg-textmain">Recent PurChase</h5>
                     <div class="form-bod">
                       <input
                         type="text"
@@ -131,7 +134,7 @@
                     </div>
                   </div>
         
-                  <div class="card-datatable text-nowrap table-responsive">
+                  <div class="card-datatable  m-0 text-nowrap table-responsive">
                     <table class="dt-fixedcolumns table  ">
                       <thead>
                         <tr>
@@ -209,8 +212,7 @@
   import BarChart from './../../components/charts/chartview.vue';
   import { Link, usePage } from '@inertiajs/vue3';
   import { useToast } from "vue-toastification";
-  import {ref, computed,onMounted, watch} from 'vue';
-  import { Button } from 'bootstrap';
+  import {ref, computed,onMounted, watch, onUnmounted} from 'vue';
   
   export default {
     components: {
@@ -234,9 +236,6 @@
       },
     },
 
-
-
-
     setup(){
     const {props} = usePage();
     const searchQuery = ref('');
@@ -251,8 +250,22 @@
     const stablevisible = ref(false);
     const isBalanceVisible = ref(false);
     const chartvisible = ref(false);
+    const payment = ref('');
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 // algorithms for table contents
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('7efbf9a2ea7d9a47dea1', {
+  cluster: 'eu'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+  app.messages.push(JSON.stringify(data));
+});
+
 
     const iconClass = computed(() => {
       return isBalanceVisible.value ? 'fa-eye' : 'fa-eye-slash';
@@ -272,12 +285,13 @@
       const savedVisibility = localStorage.getItem('balanceVisibility');
       isBalanceVisible.value = savedVisibility === 'visible';
     };
-
     // Lifecycle hook: onMounted equivalent in the Composition API
     onMounted(() => {
+     
       loadVisibilityState(); // Check localStorage on mount
     });
-
+    // destroy hook circle 
+ 
     // Watch the mainbalance if it's updated dynamically (optional)
     watch(mainbalance, (newValue) => {
       console.log("Balance updated:", newValue);

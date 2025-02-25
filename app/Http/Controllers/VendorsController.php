@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\VerificationEmail;
 use App\Models\AllMarkets;
 use App\Models\OrderTotal;
 use App\Models\PayoutMethods;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\VendorsCredentials;
@@ -19,10 +21,62 @@ use App\Models\Stores;
 use App\Models\VendorsWallet;
 use App\Models\BankLists;
 use Carbon\Carbon;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 
 class VendorsController extends Controller
 {
+
+    public function VendorChangePassword(Request $request){
+        $request->validate(['password' => 'required']);
+        try{
+        $useridentityemail = Session::get( 'vendorid'); //finally we call vendorid to verify unique id
+        $hashed = Hash::make(value: $request->input(key: 'password'));
+        $queryvendors  = VendorsCredentials::where('email_address', $useridentityemail);
+        if($queryvendors){
+            $queryvendors->update(['password' => $hashed]);
+            return response()->json(['message' => 'Password Updated Successfully', 'status' => 'success']);
+        }
+        return response()->json(['message' => 'Vendor ID not identity, please restart again']);
+       }
+       catch(\Exception $e){
+        return response()->json(['message' => 'Oops seems something went wrong']);
+       }
+    }
+
+    public function VendorEmailToken(Request $request){
+        $request->validate([
+            'token' => 'required|numeric',
+        ]);
+        // Session::get('vendorid'); we will add this 2fa security in the future
+        $querycode = VendorsCredentials::where('code', $request->input('token'))->first();
+        if($querycode){
+            return response()->json(['message' => 'Confirmation successfully', 'status' => 'success']);
+        }
+        return response()->json(['message' => 'Token invalid', 'status' => 'error']);
+    }
+
+    public function VendorEmailVerification(Request $request){
+      $request->validate([
+        'email' => 'required|email',
+      ]);
+      try{
+      $queryvendors = VendorsCredentials::where('email_address', $request->input('email'))->first();
+      if($queryvendors){
+       $email =  $request->input('email');
+       $username = explode('@', $email)[0];
+       $token = rand(999999, 111111);
+        Session::put('vendorid', $email);
+        Mail::to($email)->send( new VerificationEmail($username, $token));
+        $queryvendors->update(['code' => $token]);
+         return response()->json(['message' => 'Message Delivered successfully', 'status' => 'success']);
+       }
+       return response()->json(['message' =>  'This isn\'t registered with us', 'status' => 'error']);
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Oops seems something went wrong, try again']);
+      }
+    }
     public function UpdateUserImage(Request $request){
         $request->validate(
             ['image' => 'required|mimes:jpg,png,jpeg|max:2048']
@@ -32,16 +86,13 @@ class VendorsController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imagename = time() . '.' . uniqid() . '.' . $image->getClientOriginalExtension();
-                
                 // Save the image in the 'mealxpress_storesprofile' folder under the 'public' disk (storage/app/public)
                 // $path = Storage::disk('public')->putFileAs('mealxpress_storesprofile', $image, $imagename);
-
                 $path = $request->file('image')->storeAs('mealxpress_storesprofile', $imagename, 'local');
                 
                 if (!$path) {
                     return response()->json(['message' => 'Image not saved', 'path' => $path]);
                 }
-    
                 // Retrieve the user ID from session
                 $userid = Session::get('userid');
                 
@@ -89,6 +140,9 @@ class VendorsController extends Controller
     public function PostUpdateGoods(Request $request){
       $request->validate(['cartstatusreport' => 'required', 'cartrefparam' => 'required']);
       $orderquery = OrderTotal::where('delivery_code',  $request->input('cartrefparam'))->first();
+        
+      $delivery_id = $request->input('cartrefparam');
+
       if($orderquery->approvestat == "accepted"){
         return response()->json(['message' => 'You cant order a request twice, Thanks']);
       }
@@ -99,6 +153,10 @@ class VendorsController extends Controller
         }
        $status =  $orderquery->update(['approvestat'=> $request->input('cartstatusreport')]);
             if($status && $queryuserpackage){
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('topic', "all_drivers")
+                ->withNotification(notification: Notification::create("New Request", body: "Vendor Currently Accepted A New Request $delivery_id, Good Luck"));
+                $messaging->send($message);          
                 return response()->json(['message' => 'Request Approved']);
             }else{
                 return response()->json(['message' => 'Request not approved']);
@@ -154,7 +212,33 @@ class VendorsController extends Controller
     public function RejectOrder(Request $request){
        $request->validate(['itemupdate' => 'required', 'cartref' =>'required']);
        $orderlist = UserOrderList::where('cartrefcode', $request->input('cartref'))->first();
-       try{
+       $orderquery = OrderTotal::where('delivery_code',  $request->input('cartref'))->first();
+    
+    try{
+    //    if($orderquery->approvestat == "accepted"){
+    //     return response()->json(['message' => 'You cant order a request twice, Thanks']);
+    //   }
+      $delivery_id = $request->input('cartref');
+
+      if($orderquery){
+        $queryuserpackage = UserOrderList::where('cartrefcode',$request->input('cartref') )->get();
+        foreach ($queryuserpackage as $entry){
+            $entry->update(['cartpremit' => '_non_initiated']);
+        }
+       $status =  $orderquery->update(['approvestat'=> $request->input('itemupdate')]);
+            if($status && $queryuserpackage){
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('topic', "all_drivers")
+                ->withNotification(notification: Notification::create("Goods Not Available", body: "Currently this good isn\'t available,
+                 please it will be better if you look for other alternative, Thanks, Product ID is $delivery_id"));
+                $messaging->send($message);          
+                // return response()->json(['message' => 'Request Approved']);
+            }else{
+                // return response()->json(['message' => 'Request not approved']);
+        }
+      }
+
+
        if($orderlist){
         $stats =  $orderlist->update(['cartstatus' =>  $request->input('itemupdate')]);
         if($stats){
@@ -355,8 +439,8 @@ class VendorsController extends Controller
     $session_holder = Session::get('userid') ?? '' ;
         $image = $request->file('productImage');
         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('mealxpress_images'), $imageName);
-        $catenate  = $request->input('productWeight') . $request->input('kg');
+        $request->file('productImage')->storeAs('mealxpress_image', $imageName, 'local');
+        $catenate  = $request->input('productWeight') . $request->input('kgcall');
  
     $update = new AllMarkets([
         'marketproductid' => $session_holder,
@@ -432,7 +516,7 @@ public function UpdateCurrentProductList(Request $request)
       $request->validate(['itemid' => 'required']);
 
         $select = DB::select('SELECT marketid, productname, price,
-        COALESCE(`portion`, 0), option, cartimage, cartweight, fullname, cartweight,
+        COALESCE(`portion`, 0), option, cartimage, cartweight, fullname, cartweight, total as ntotal,
         cartrefcode,
         email FROM  `user_order_lists` LEFT JOIN  `user_models` ON 
         user_order_lists.username = user_models.username WHERE

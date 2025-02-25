@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
       <title>Mealxpress | Send Notification</title>
     </Head>
@@ -9,7 +10,7 @@
           <HeaderDashboard/>
           <div class="mealxpress-mai">
             <div class="card-general-container card p-1">
-                <div class="card mx-3 px-3 p-3">
+                <div class="card mx-1 px-3 p-3">
                     <h5 class="card-header"></h5>
                       <div class="form-input mb-3">
                         <input type="text" class="form-control py-3" placeholder="Title of your message" v-model="statevalue.title">
@@ -27,6 +28,7 @@
          </div>
    </div>
     </div>
+  </div>
   </template>
   
   <script>
