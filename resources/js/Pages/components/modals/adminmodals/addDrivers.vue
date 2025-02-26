@@ -48,7 +48,7 @@
           <div class="form-input mb-3">
             <label for="contact">Contact</label>
             <input
-              type="number"
+              type="text"
               v-model="contact"
               id="last"
               class="form-control py-3"
@@ -157,7 +157,7 @@
 
       validateNumber(){
         if (this.kincontact.length > 11) {
-        this.kincontact = this.kincontact.slice(1, 11);
+        this.kincontact = this.kincontact.slice(0, 11);
       }
       },
 

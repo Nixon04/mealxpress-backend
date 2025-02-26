@@ -28,6 +28,33 @@ use Kreait\Firebase\Messaging\Notification;
 class VendorsController extends Controller
 {
 
+
+    public function GetCurrentStatus(){
+        $querystores = Stores::where('marketstoreid', Session::get('userid'))->first();
+        if($querystores){
+            return response()->json(['status' => $querystores->marketstatus]);
+        }
+    }
+
+    public function UpdateStoreStatus(Request $request){
+        $request->validate(
+            [
+                'status' => 'required|String'
+            ]);
+          try{
+            $querystores = Stores::where('marketstoreid', Session::get('userid'))->first();
+            if($querystores){
+                $querystores->update(['marketstatus' => $request->input('status')]);
+                if($request->input('active')){
+                    return response()->json(['message' =>'Store Opened']);
+                }
+                return response()->json(['message' =>'Store Closed']);
+            }
+            return response()->json(['message' =>'StoreId Wasnt Found']);
+        }catch(\Exception $e){
+            return response()->json(['message' =>'Oops, please try again later', $e->getMessage()]);
+        }
+    }
     public function VendorChangePassword(Request $request){
         $request->validate(['password' => 'required']);
         try{
@@ -89,7 +116,6 @@ class VendorsController extends Controller
                 // Save the image in the 'mealxpress_storesprofile' folder under the 'public' disk (storage/app/public)
                 // $path = Storage::disk('public')->putFileAs('mealxpress_storesprofile', $image, $imagename);
                 $path = $request->file('image')->storeAs('mealxpress_storesprofile', $imagename, 'local');
-                
                 if (!$path) {
                     return response()->json(['message' => 'Image not saved', 'path' => $path]);
                 }
@@ -240,7 +266,7 @@ class VendorsController extends Controller
 
 
        if($orderlist){
-        $stats =  $orderlist->update(['cartstatus' =>  $request->input('itemupdate')]);
+        $stats =  $orderlist->update(['cartstatus' =>  'pending']);
         if($stats){
             return response()->json(['status' => 'success', 'message' => 'Order rejected succesfully']);
         }else{
@@ -261,12 +287,14 @@ class VendorsController extends Controller
             'recipient_id' => 'required',
         ]);
 
+
+
         $reference = Carbon::now()->setTimezone('Africa/Lagos')->format('Ymdhis');
         $currentdate = Carbon::now()->setTimezone(new \DateTimeZone('Africa/Lagos'))->format('Y-m-d H:i:s');
 
         $check_amount = VendorsWallet::where('username', Session::get('userid'))->first();
 
-        if($check_amount->accountbalance < $request['amount']  || 0 == $request['amount'] || $request['amount'] > $check_amount->accountbalance ){
+        if($check_amount->accountbalance < $request['amount']  || 0 == $request['amount'] ){
          return response()->json(['message' => 'Insufficient Balance', 'status' => 'error']);
         } 
         else{
@@ -278,10 +306,22 @@ class VendorsController extends Controller
             'Authorization' => "Bearer ".env('TEST_PAYSTACK_KEY'),
             'accept' => 'application/json',
         ];
+
+        // charges occurres for 50 Naira instant charge
+         $initial_m = $request->input('amount');
+         $mealxpress_charge =  50;
+         $current_amount = 0;
+        // charges greater than 10,000
+        if($initial_m >=  10000){
+         $current_amount = $initial_m - $mealxpress_charge;
+        }
+
+       $current_amount = $initial_m;
+    
         $requeststatus = Http::withHeaders($headers)->post($url, [
             "source" => "balance", 
             "reason" => $request->input('reason') ?? '', 
-            "amount" => $request->input('amount'), 
+            "amount" => $current_amount, 
             "reference" => $reference,
             "recipient" => $request->input('recipient_id'),
         ]);
@@ -289,8 +329,7 @@ class VendorsController extends Controller
         if($querydata){
             $marketname = $querydata->marketstorename;
         }
-        // $sessionget =  $requeststatus->json();
-        // return response()->json(['message_status' => $sessionget ]);
+    
      try{
        if($requeststatus->successful()){
        
@@ -299,7 +338,7 @@ class VendorsController extends Controller
             'payout' => $currentdate,
             'recipient' => $marketname,
             'amount' => $request->input('amount'),
-            'settleamount' => $request->input('amount'),
+            'settleamount' => $current_amount,
             'referencecode' => $reference,
             'status' => 'inactive',
          ]);
@@ -439,7 +478,7 @@ class VendorsController extends Controller
     $session_holder = Session::get('userid') ?? '' ;
         $image = $request->file('productImage');
         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-        $request->file('productImage')->storeAs('mealxpress_image', $imageName, 'local');
+        $request->file('productImage')->storeAs('mealxpress_images', $imageName, 'local');
         $catenate  = $request->input('productWeight') . $request->input('kgcall');
  
     $update = new AllMarkets([

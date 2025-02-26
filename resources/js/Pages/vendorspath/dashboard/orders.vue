@@ -4,7 +4,7 @@
     <OrdersComplete :isVisible="isVisible"  @close="closeModal" :ModalData="ModalData" :loading="loading"/>
     <NavbarComponent />
     <div class="mealxpress-content">
-      <HeaderDashboard />
+      <HeaderDashboard :imageref="imageref" />
       <div class="mealxpress-mai">
      <!-- card figures to venture -->
 
@@ -501,6 +501,7 @@ export default {
     const pendingtable = ref(props.datareturns.pending);
     const deliveredtable = ref(props.datareturns.Delivered || []);
     const returnstable = ref(props.datareturns.returns || []);
+    const imageref = ref(props.image || []);
    
     const openModal = async (item) => {
       isVisible.value = true;
@@ -572,6 +573,7 @@ export default {
     };
 
     return {
+      imageref,
       searchQuery,
       rowsPerPage,
       currentPage,

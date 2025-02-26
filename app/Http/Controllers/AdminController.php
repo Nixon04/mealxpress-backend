@@ -24,9 +24,11 @@ class AdminController extends Controller
         $drinkslist = DrinkList::orderBy('id','DESC')->get();
         if($drinkslist->isNotEmpty()){
             $drinkslist->transform(function($url){
-                $url->drinkimage = "http://127.0.0.1:9000/mealxpress_drinks/" .$url->drinkimage;
+                // $url->drinkimage = "http://127.0.0.1:9000/mealxpress_drinks/" .$url->drinkimage;
+                $url->drinkimage = route('mealxpress_drinks', ['filename' => $url->marketstoreprofile ?? '']);
                 return $url;
             });
+
         }
         return Inertia::render('prisent/dashboard/drinks',['data' => $drinkslist]);
      }

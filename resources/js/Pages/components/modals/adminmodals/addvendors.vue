@@ -12,15 +12,13 @@
           <div class="form-input mb-3">
             <label for="contactname">Contact(Digits)</label>
               <input
-                type="number"
-                v-model="Contact"
+                type="text"
+                v-model="contact"
                 id="contactname"
                 class="form-control py-3"
                 placeholder="Enter Contact"
               />
-             
           </div>
-
 
           <div class="form-input mb-3">
             <label for="password">Password</label>
@@ -88,11 +86,9 @@
             />
           </div>
 
-          
-  
      <div class="d-flex mb-2 bg-align-center">
         <div class="highlight"></div>
-           <span>Stores</span>
+           <span class="mx-3">Stores</span>
         <div class="highlight"></div>
     </div>
 
@@ -272,7 +268,7 @@
         // Prepare the form data to send to the backend
         const formData = new FormData();
         formData.append('vendorId', this.vendorId)
-        formData.append('vendorContact', this.Contact);
+        formData.append('vendorContact', this.contact);
         formData.append('vendorEmail', this.vendorEmail);
         formData.append('vendorSenderMail', this.vendorSenderMail);
         formData.append('vendorBusiness', this.vendorBusiness);

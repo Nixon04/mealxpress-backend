@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
         <title>Mealxpress | Current Sales</title>
     </Head>
@@ -50,7 +51,7 @@
                             No Current Sale found yet
                           </td>
                         </tr>
-                          <tr v-for="(item, index) in paginatedData" :key="item.id">
+                          <tr v-for="(item, index) in paginatedData" :key="index.id">
                             <td v-if="noResults">No data found  </td>
                             <td>  <span class="fw-medium">{{item.marketid}}</span></td>
                             <td>  <span class="fw-medium">{{item.productname}}</span></td>
@@ -93,6 +94,7 @@
         </div>
         </div>
     </div>
+  </div>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
       <NavbarComponent />
       <div class="mealxpress-content">
         <HeaderDashboard/>
-        <div class="mealxpress-main">
+        <div class="mealxpress-main me-2 ms-2">
            <div class="row">
             <div class="col-lg-12 ">
               <div class="col-lg-12 col-12 mb-5">

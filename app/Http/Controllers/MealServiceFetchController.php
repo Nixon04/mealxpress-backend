@@ -538,13 +538,16 @@ class MealServiceFetchController extends Controller
                 'delivery_code' => $delivery_code_main,
             ]);
 
+
             // adding total sum to vendors balance for easier recognition
             $queryvendorsbalance = VendorsWallet::where('username',$request->input('cart')[0]['marketid'])->first();
             $initialamount = $queryvendorsbalance->accountbalance;
+
             $totalsum = $request->input('sumtotal') + $initialamount;
             if($queryvendorsbalance){
                 $queryvendorsbalance->update(['accountbalance' => $totalsum]);
             }
+
             Log::info("Logging totalsum", ["statuscode" => $totalsum]);
             Log::info("Logging username", ["username" => $queryvendorsbalance->username]);
             $username = $request->input('username');
@@ -621,12 +624,8 @@ class MealServiceFetchController extends Controller
             $message = CloudMessage::withTarget('topic', "all_drivers")
             ->withNotification(notification: Notification::create("New Request!!'", body: "Order request is $cartreference"));
              $notifier =  $messaging->send($message);
-
             DB::commit();  // Commit transaction if everything is successful
-
             broadcast(new PurchaseMade($orderTotal));
-
-
             return response()->json(['message' => 'success', 'status' => 'success','refcode' => $cartreference], 200);
         } catch (\Exception $e) {
             DB::rollBack();  // Rollback transaction if any operation fails
@@ -649,6 +648,7 @@ class MealServiceFetchController extends Controller
             'useramount' => 'required|numeric',
             'cart' => 'required|array',
         ]);
+
     
         DB::beginTransaction();  // Start Transaction
         try {
@@ -694,29 +694,14 @@ class MealServiceFetchController extends Controller
                 'delivery_code' => $delivery_code_main,
             ]);
 
-            // adding total sum to vendors balance for easier recognition
-            $queryvendorsbalance = VendorsWallet::where('username',$request->input('cart')[0]['marketid'])->first();
-            $initialamount = $queryvendorsbalance->accountbalance;
-            $totalsum = $request->input('sumtotal') + $initialamount;
-            if($queryvendorsbalance){
-                $queryvendorsbalance->update(['accountbalance' => $totalsum]);
-            }
-            Log::info("Logging totalsum", ["statuscode" => $totalsum]);
-            Log::info("Logging username", ["username" => $queryvendorsbalance->username]);
-            $username = $request->input('username');
-            $amount  = $request->input('total');
-            $dateissued = $datecollection;
-            $token = $delivery_code_main;
-
-            $reference = $rand_ref;
-            Mail::to($email_address)->send(new SalesReceipt($username,$amount,$reference, $dateissued, $token));
-
            $setstatus =  $orderTotal->save();
             // Insert each item in the cart into UserOrderList
             if(!$setstatus){
                 return response()->json('couldnt save');
             }
+            $totalprice = 0;
             foreach ($request->input('cart') as $entry) {
+                $totalprice += $entry['price'];
                 $orderItem = new UserOrderList([
                     'username' => $entry['username'] ?? '',
                     'marketid' => $entry['marketid'],
@@ -736,6 +721,24 @@ class MealServiceFetchController extends Controller
                 ]);
                 $orderItem->save();
             }
+       
+            // adding total sum to vendors balance for easier recognition
+            $queryvendorsbalance = VendorsWallet::where('username',$request->input('cart')[0]['marketid'])->first();
+            $initialamount = $queryvendorsbalance->accountbalance;
+            $totalsum = $totalprice + $initialamount;
+            if($queryvendorsbalance){
+                $queryvendorsbalance->update(['accountbalance' => $totalsum]);
+            }
+            Log::info("Logging totalsum", ["statuscode" => $totalsum]);
+            Log::info("Logging username", ["username" => $queryvendorsbalance->username]);
+          
+            $username = $request->input('username');
+            $amount  = $request->input('total');
+            $dateissued = $datecollection;
+            $token = $delivery_code_main;
+            $reference = $rand_ref;
+            Mail::to($email_address)->send(new SalesReceipt($username,$amount,$reference, $dateissued, $token));
+
             // Deduct the total amount from user's balance
             $userAccount->main_balance -= $request->input('total');
             $status = $userAccount->save();
@@ -784,10 +787,11 @@ class MealServiceFetchController extends Controller
 
             return response()->json(['message' => 'success', 'status' => 'success','refcode' => $cartreference], 200);
         } catch (\Exception $e) {
+            Log::info('status', ['error' => $e->getMessage()]);
             DB::rollBack();  // Rollback transaction if any operation fails
             return response()->json([
                 'message' => 'Transaction failed: ' . $e->getMessage(),
-            ], 500);
+            ],);
         }
     }
     

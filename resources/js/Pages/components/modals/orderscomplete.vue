@@ -160,7 +160,7 @@ export default{
         }
       isLoading.value = true;
         const payload = {
-            itemupdate: "accepted",
+            itemupdate: "pending",
             cartref: cartrefcode, // Use the first cartrefcode
         };
         const response = await axios.post('/vendorspath/rejectorder', payload, {
@@ -184,6 +184,7 @@ export default{
                 });
                 closeModal();
             }
+            Inertia.reload();
         } else {
             console.log('Unexpected status code:', response.status);
         }

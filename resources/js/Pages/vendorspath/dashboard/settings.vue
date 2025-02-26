@@ -2,7 +2,7 @@
     <div class="main-board-mealxpress">
         <NavbarComponent />
         <div class="mealxpress-content">
-          <HeaderDashboard/>
+          <HeaderDashboard :imageref="imageref"/>
           <div class="mealxpress-mai  m-0">
             <!-- {{ data == "" ? 'empty' : data }} -->
             <Tabs value="0" class="custom-tab-class p-1 m-0" scrollable >
@@ -254,6 +254,10 @@ export default{
       data:{
         type:Object,
         required:false,
+      },
+      imageref:{
+        type:Object,
+        required:false,
       }
     },
     methods:{
@@ -309,7 +313,7 @@ export default{
 
   setup(){
    const props = usePage();
-   const dataprofile = reactive(props.storelist || {});
+   const dataprofile = reactive(props.data || {});
    const isloading = ref(false);
    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
    const toast = useToast();
@@ -317,6 +321,8 @@ export default{
    const password = ref('');
    const confirm = ref('');
    const datacall = ref('');
+  //  const imageref = ref(props.image || {});
+
 
    const uploadprofile = async (event) => {
      const file = event.target.files[0];
@@ -405,6 +411,7 @@ export default{
 
    return {
     dataprofile,
+    // imageref,
     password,
     confirm,
     updatePassword,

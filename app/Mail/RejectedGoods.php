@@ -13,32 +13,15 @@ class RejectedGoods extends Mailable
 {
     use Queueable, SerializesModels;
 
+   public $username;
+   public $item;
+
     /**
      * Create a new message instance.
      */
     public function __construct()
     {
         //
-    }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Rejected Goods',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
     }
 
     /**

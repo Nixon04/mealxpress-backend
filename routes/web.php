@@ -31,6 +31,36 @@ Route::get('/mealxpress_storesprofile/{filename}', function($filename){
  return response()->file($path);
 })->name('mealxpress_storesprofile');
 
+
+Route::get( '/mealxpress_images/{filename}', function($filename){
+  $path = storage_path('app/private/mealxpress_images/' .$filename);
+  if(!file_exists($path)){
+    abort(404, 'Image Not Found');
+  }
+  return response()->file($path);
+})->name('mealxpress_images');
+  
+
+Route::get( '/mealxpress_drinks/{filename}', action: function($filename){
+  $path = storage_path('app/private/mealxpress_drinks/' .$filename);
+  if(!file_exists($path)){
+    abort(404, 'Image Not Found');
+  }
+  return response()->file($path);
+})->name('mealxpress_drinks');
+
+
+Route::get( '/mealxpress_riders_image/{filename}', function($filename){
+  $path = storage_path('app/private/mealxpress_riders_image/' .$filename);
+  if(!file_exists($path)){
+    abort(404, 'Image Not Found');
+  }
+  return response()->file($path);
+})->name('mealxpress_riders_image');
+  
+  
+
+
 Route::controller(GeneralView::class)->group(function(){
 Route::get('/', 'HomeIndex');
 Route::get('/newhome', 'NewHome');
@@ -43,6 +73,8 @@ Route::get('/support/faqs', 'Faqs');
 Route::get('/getright', 'GetRight');
 Route::get('/navdesign', 'NavDesign');
 });
+
+
 
 
 
@@ -87,6 +119,10 @@ Route::controller(VendorsController::class)->group(function(){
     Route::post('/vendorspath/verifyemail', 'VendorEmailVerification');
     Route::post('/vendorspath/verifyemailtoken', 'VendorEmailToken');
     Route::post('/vendorspath/vendorschangepassword', 'VendorChangePassword');
+
+
+    Route::post('/vendorspath/dashboard/updatestoreactivity', 'UpdateStoreStatus');
+    Route::get('/vendorspath/dashboard/getcurrentsatus', action: 'GetCurrentStatus');
 
    
 });

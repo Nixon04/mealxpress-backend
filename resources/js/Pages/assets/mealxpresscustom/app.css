@@ -604,7 +604,8 @@ textarea{
 
   .form-input .form-control:-webkit-autofill{
     border: 1px solid var(--bg-primary-main);
-    box-shadow: 0 0 0px 1000px lightgray inset; /* Override default autofill style */
+    color: var(--bg-primary-light) inset;
+    box-shadow: 0 0 0px 1000px var(--bg-primary-main) inset; /* Override default autofill style */
   }
 
   .form-input .form-control{
@@ -910,4 +911,50 @@ textarea{
     top: 4px;
     position:absolute;
 }
+
+.switch-label{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+  height: 34px;
+}
+
+.switch-label input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: var(--bg-primary-main);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
 

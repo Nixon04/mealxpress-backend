@@ -61,6 +61,10 @@
                         />
                     </div>
 
+                    <div class="p-1 mx-0 bg-label-success mb-5">
+                        <span>Note: (V.A.T) Charges are applied with a capped of 50 at ₦10,000, and you are limited just ₦50,000 per Transfer.</span>
+                    </div>
+
                     <!-- <button @click="showToast" class="btn bg-button-submit mb-3">Toast me</button> -->
 
                     <div class="form-input">

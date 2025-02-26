@@ -6,7 +6,7 @@
     <div class="main-board-mealxpress">
         <NavbarComponent />
         <div class="mealxpress-content">
-          <HeaderDashboard/>
+          <HeaderDashboard :imageref="imageref"/>
           <div class="mealxpress-mai">
             <div class="card-general-containe card p-2">
             <div class="row">
@@ -149,6 +149,7 @@ export default {
     const currentPage = ref(1);
     const dropOption = [5, 20, 50, 100];
     const isLoading = ref(false);
+    const imageref = ref(props.image || []);
 
     const formattedPrice = (price) => {
     if (price === null || price === undefined) return '';
@@ -247,7 +248,7 @@ export default {
       formattedSettledPrice,
       dropOption,
       formattedPrice,
-      
+      imageref,
       currentPage,
       data,
       downloadPDF,

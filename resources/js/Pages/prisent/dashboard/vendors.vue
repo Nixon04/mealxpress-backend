@@ -1,4 +1,5 @@
 <template>
+  <div>
   <Head>
     <title>Mealxpress | Vendors Information and Registration</title>
   </Head>
@@ -49,7 +50,7 @@
                         <tr v-if="paginatedData.length == 0" class="text-center">
                           <td colspan="9">No Registered Vendors Found</td>
                         </tr>
-                        <tr v-for="(item, index) in paginatedData" :key="item.id">
+                        <tr v-for="(item, index) in paginatedData" :key="index.id">
                           <td v-if="noResults">No data found  </td>
                           <td>  <span class="fw-medium">{{item.vendorsMarketId}}</span></td>
                           <td>  <span class="fw-medium">{{item.contact}}</span></td>
@@ -86,6 +87,7 @@
   </div>
  </div>
   </div>
+</div>
 </template>
 
 <script>

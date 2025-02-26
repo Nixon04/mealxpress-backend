@@ -8,7 +8,7 @@
       <DeleteModel :deleteVisible="deleteVisible" :deleteloading="deleteloading" :identifier="identifier" @close="deleteclear" @deletesubmit="deleteproductbutton"/>  
       <NavbarComponent/>
         <div class="mealxpress-content">
-          <HeaderDashboard :userid="userid"/>
+          <HeaderDashboard :userid="userid" :imageref="imageref"/>
           <div class="mealxpress-mai">
             <div class="card-general-containe p-1">
                         <div class="card">
@@ -162,6 +162,7 @@ export default {
     const isLoadingProduct = ref(false);
     const deleteVisible = ref(false);
     const deleteloading = ref(false);
+    const imageref = ref(props.image || []);
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
  
@@ -457,6 +458,7 @@ export default {
       deleteproductbutton,
       identifier,
       deleteloading,
+      imageref,
     };
   },
 };

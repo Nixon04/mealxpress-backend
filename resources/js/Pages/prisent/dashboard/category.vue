@@ -9,7 +9,9 @@
       <EditVendors/>
         <NavbarComponent />
         <div class="mealxpress-content">
-          <HeaderDashboard/>
+          <HeaderDashboard />
+
+
           <div class="mealxpress-mai">
             <div class="card-general-container card p-2">
                 <div class="card">
@@ -20,6 +22,7 @@
                                 <input type="text" class="form-control py-2" v-model="searchQuery"  placeholder="Search...">
                             </div>
                         </div>
+               
                         <div class="d-flex gap-4">
                             <div class="form-input">
                                 <select v-model="rowsPerPage"  class="form-select py-2" @change="changevaluestate" >
@@ -104,6 +107,7 @@
   import AddCategory from './../../components/modals/adminmodals/addCategory.vue';
   import DeleteModel from './../../components/modals/adminmodals/deletecategory.vue';
   
+  
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
   
   export default {
@@ -139,6 +143,9 @@
     const isOptionLoading = ref(false); 
     const deleteVisible = ref(false);
     const deleteloading = ref(false);
+    const imageref = ref(props.image || []);
+
+    console.log('console reg', imageref);
 
     const identifier = ref({
       targetitem : '',
@@ -304,6 +311,7 @@
       identifier,
       deleteclear,
       deleteloading,
+      imageref,
     }
     }
   }

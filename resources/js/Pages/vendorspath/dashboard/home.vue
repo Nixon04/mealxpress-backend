@@ -4,7 +4,7 @@
       <VisibleCharts :chartvisible="chartvisible" :totalsum="totalsum" :salescount="salescount" @close="dismisscharts"/>
       <NavbarComponent />
       <div class="mealxpress-content">
-        <HeaderDashboard/>
+        <HeaderDashboard :imageref="imageref"/>
         <div class="mealxpress-main">
            <div class="row">
             <div class="col-lg-12 ">
@@ -13,6 +13,7 @@
                   <!-- <div v-if="payment" class="notification">
                     <p>Payment of ${{ payment.amount }} was made by {{ payment.vendor }}.</p>
                   </div> -->
+
                   <div class="d-flex flex-column">
                     <h1 class="fs- bg-textmain bg-f-1">Dashboard</h1>
                      <h6 class="fs-small">Here's your dashboard sales details overview</h6>
@@ -60,7 +61,7 @@
                                       <span>Vs Last Month</span>
                                     </div>
                                    </div>
-                                  <Link href="">
+                                  <Link href="/vendorspath/dashboard/orders">
                                     <div class="card bg-lightgrey px-4 p-1 m-0">
                                       <div class="d-flex justify-content-between align-items-center p-3">
                                         <h6>View More</h6>
@@ -90,7 +91,7 @@
                                     <span>Vs Last Month</span>
                                   </div>
                                  </div>
-                                <Link href="">
+                                <Link href="/vendorspath/dashboard/orders">
                                   <div class="card bg-lightgrey px-4 p-1 m-0 shadow-none">
                                     <div class="d-flex justify-content-between align-items-center p-3">
                                       <h6>View More</h6>
@@ -156,12 +157,21 @@
                           <td >{{ item.username }}</td>
                           <td>{{ item.marketid }}</td>
                           <td>{{ item.price }}</td>
-                          <td>{{ item.portion }}</td>
-                          <td>{{ item.cartdrink }}</td>
-                            <td :class="[item.cartstatus === 'delivered' ? 'text-success' : 'text-danger']">
-                              {{ item.cartstatus }}
-                            </td>
-                          <td>{{ item.created_at }}</td>
+                          <td class="rounded position-relative shift-body">
+                            <span class="position-absolute bg-label-info rounded-md p-2 mx-2 me-3 shift-call">{{ item.portion }}</span>
+                          </td>
+                          <td>{{ item.cartdrink? item.cartdrink : 'No Drinks' }}</td>
+                          <td class="rounded position-relative shift-body">
+                            <span :class="{
+                              'position-absolute bg-rx-success rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                              'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                              'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                              'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
+                             }">
+                             {{ item.cartstatus }}</span>
+                          </td>
+    
+                          <td>{{ item.cartpurchasedate }}</td>
                           <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                             <i class="fa-solid fa-eye"></i>
                           </td>
@@ -251,21 +261,21 @@
     const isBalanceVisible = ref(false);
     const chartvisible = ref(false);
     const payment = ref('');
+    const imageref = ref(props.image || []);
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-// algorithms for table contents
-
+// algorithms for table contents'
+console.log('Image state',imageref);
 // Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+    Pusher.logToConsole = true;
 
-var pusher = new Pusher('7efbf9a2ea7d9a47dea1', {
-  cluster: 'eu'
-});
+    var pusher = new Pusher('7efbf9a2ea7d9a47dea1', {
+      cluster: 'eu'
+    });
 
-var channel = pusher.subscribe('my-channel');
-channel.bind('my-event', function(data) {
-  app.messages.push(JSON.stringify(data));
-});
-
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      app.messages.push(JSON.stringify(data));
+    });
 
     const iconClass = computed(() => {
       return isBalanceVisible.value ? 'fa-eye' : 'fa-eye-slash';
@@ -335,8 +345,6 @@ channel.bind('my-event', function(data) {
        stablevisible.value = false;
      };
 
-
-
     const filteredData = computed(() => {
       if (!data.value) return [];
       if (!searchQuery.value) return data.value;
@@ -391,7 +399,8 @@ channel.bind('my-event', function(data) {
       mainbalance,
       isBalanceVisible,
       iconClass,
-      formatCurrency
+      formatCurrency,
+      imageref,
     }
 
     }

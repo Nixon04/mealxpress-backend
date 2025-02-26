@@ -152,7 +152,8 @@ class PostAdminController extends Controller
             }
             $image = $request->file('drinkimage');
             $getimagename = time() . '.' . uniqid() . '.'.  $image->getClientOriginalExtension();
-            $image->move(public_path('mealxpress_drinks'), $getimagename);
+            $path = $image->storeAs('mealxpress_drinks', $getimagename, 'local');
+        
             $queryinsert = new DrinkList(
             [
                 'drinkname' => $request->input('drinkname'),
@@ -226,8 +227,10 @@ class PostAdminController extends Controller
 
         $getName = $request->file('imageprofile');
         $getImageName = time() . '.'. uniqid() .'.'.  $getName->getClientOriginalExtension(); 
-        $getName->move(public_path('mealxpress_images'), $getImageName);
-        
+
+        $path = $getName->storeAs('mealxpress_images', $getImageName, 'local');
+        // $getName->move(public_path('mealxpress_images'), $getImageName);
+    
         // or new drivers console 
         $insertdata = new DriversPersonalInfo([
             'firstname' => $request->input('firstname'),
@@ -236,6 +239,7 @@ class PostAdminController extends Controller
             'contact' => $request->input('contact'),
             'password' => $request->input('password'),
             'nextofkin' => $request->input('kin'),
+            'fcm_token' => '',
             'kincontact' => $request->input('kincontact'),
             'trackerid' => $uniqueID,
             'image' => $getImageName,
@@ -281,8 +285,10 @@ class PostAdminController extends Controller
         }
         $imageproduct = $request->file('productImage');
         $imagestamp = time() .'.'. uniqid() .'.'. $imageproduct->getClientOriginalExtension();
-        $imageproduct->move(public_path('mealxpress_storesprofile'), $imagestamp);
-
+        $path = $imageproduct->storeAs('mealxpress_storesprofile', $imagestamp, 'local');
+         if(!$path){
+            return response()->json(['null']);
+         }
        try{
         $randid = rand(999999, 111111);
         $uniqueID = 'MLXPV-'.$randid;

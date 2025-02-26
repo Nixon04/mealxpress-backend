@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Mail\VerificationEmail;
+use App\Models\Stores;
+use App\Models\UserModel;
 use Inertia\Inertia;
 use App\Models\UserOrderList;
 use App\Models\AllMarkets;
@@ -51,28 +53,38 @@ class AuthController extends Controller
         Inertia::render('vendorspath/auth/login');
     }
     
-    public function FetchRecord(){
+    public function FetchRecord() {
+        // Get the current year dynamically
+        $currentYear = now()->year;
+    
         $monthlyData = DB::table('user_order_lists')
-      ->selectRaw('MONTHNAME(created_at) as month, SUM(total) as total')
-      ->groupByRaw('MONTHNAME(created_at), MONTH(created_at)')
-      ->orderByRaw('MONTH(created_at)')
-      ->get();
-  
-      // Ensure all months are present with zero values if no data exists
-      $months = [
-          'January', 'February', 'March', 'April', 'May', 'June',
-          'July', 'August', 'September', 'October', 'November', 'December'
-      ];
-  
-      $formattedData = array_map(function ($month) use ($monthlyData) {
-          $data = $monthlyData->firstWhere('month', $month);
-          return [
-              'month' => $month,
-              'total' => $data->total ?? 0
-          ];
-      }, $months);
-       return response()->json(['returns' => $formattedData]);
-      }
+            ->selectRaw('MONTHNAME(created_at) as month, SUM(total) as total')
+            ->whereYear('created_at', $currentYear) 
+            // Filter by the current year
+            ->where('marketid', Session::get('userid'))
+            ->groupByRaw('MONTHNAME(created_at), MONTH(created_at)')
+            ->orderByRaw('MONTH(created_at)')
+            ->get();
+    
+        // Ensure all months are present with zero values if no data exists
+        $months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        
+        $formattedData = array_map(function ($month) use ($monthlyData) {
+            $data = $monthlyData->firstWhere('month', $month);
+            return [
+                'month' => $month,
+                'total' => $data->total ?? 0
+            ];
+        }, $months);
+    
+        return response()->json(['returns' => $formattedData]);
+    }
+    
+
+
     public function AddCategory(){
         
         if(!Session::has('userid')){
@@ -81,9 +93,11 @@ class AuthController extends Controller
           $getsubcategory = storesubcategory::Where('marketid',Session::get('userid'))->whereNotIn('categoryname',['all'])->orderBy("id","DESC")->get();
           $excluded = $getsubcategory->pluck('categoryname');
           $excluded->push('all');
+          $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
+          $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
           $getcategory = Category::whereNotIn('categoryname', $excluded)->orderBy("id","DESC")->get();
           
-        return Inertia::render('vendorspath/dashboard/addcategories', ['data' => $getcategory, 'vendorcat' => $getsubcategory]);
+        return Inertia::render('vendorspath/dashboard/addcategories', ['image' => $imagefetch,'data' => $getcategory, 'vendorcat' => $getsubcategory]);
     }
 
     public function HomeIndex(){
@@ -101,14 +115,19 @@ class AuthController extends Controller
         }
         $username = Session::get('userid');
         $fetch = UserOrderList::where('marketid',$username)->get();
+        $imagequery = Stores::where('marketstoreid', $username)->first();
+        $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
+
         $getamount = VendorsWallet::where('username',$username)->first();
         $useramount = $getamount->accountbalance;
         $datacall = $fetch->where('marketid', $username)->take(4)->values();
-        $totalsum = $fetch->sum('total');
+        $totalsum = $fetch->sum('price');
         $salescount = $fetch->count();
         $vendoramount = $getamount->accountbalance;
-        return Inertia::render('vendorspath/dashboard/home', ['data' => $datacall, 'accountbalance' => $vendoramount, 'totalsum' => $totalsum, 'salescount' => $salescount, 'useramount' => $useramount]);
+        return Inertia::render('vendorspath/dashboard/home', ['image' => $imagefetch, 'data' => $datacall, 'accountbalance' => $vendoramount, 'totalsum' => $totalsum, 'salescount' => $salescount, 'useramount' => $useramount]);
     }
+
+
     public function VendorsProducts(){
         if(!Session::has('userid')){
             return Inertia::render('vendorspath/auth/login');
@@ -144,8 +163,12 @@ class AuthController extends Controller
                     return $item;
                 })->first();
 
-        return Inertia::render('vendorspath/dashboard/settings', ['data' => $storeslist]);
+        $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
+        $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
+        return Inertia::render('vendorspath/dashboard/settings', ['imageref' => $imagefetch, 'data' => $storeslist]);
     }
+
+
     public function VendorsDelivery(){
         if(!Session::has('userid')){
             return Inertia::render('vendorspath/auth/login');
@@ -186,9 +209,13 @@ class AuthController extends Controller
             'returns' => $filteredResults->where('cartstatus', 'returns')->values(),
             'cancelled' => $filteredResults->where('cartstatus', 'cancelled')->values(),
         ];
+
+        $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
+        $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
     
         // Return data to the view
         return Inertia::render('vendorspath/dashboard/orders', [
+            'image' => $imagefetch,
             'data' => $filteredResults,
             'orders' => $orders,
             'delivered' => $delivered,
@@ -203,8 +230,12 @@ class AuthController extends Controller
         if(!Session::has('userid')){
             return Inertia::render('vendorspath/auth/login');
           }
+
+        $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
+        $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
+    
         $payoutmethodstype = PayoutMethods::Where('username', Session::get('userid'))->orderBy('id', 'DESC')->get();
-       return Inertia::render('vendorspath/dashboard/payouts',["data" => $payoutmethodstype]);
+       return Inertia::render('vendorspath/dashboard/payouts',['image' => $imagefetch,  "data" => $payoutmethodstype]);
     }
 
     public function ListProducts(){
@@ -219,7 +250,8 @@ class AuthController extends Controller
 
         if($getallmarkets->isNotEmpty()){
             $getallmarkets->transform(function($entry){
-            $entry->marketimage = "http://192.168.0.101:9000//mealxpress_images/".$entry->marketimage;
+            // $entry->marketimage = "http://192.168.0.101:9000//mealxpress_images/".$entry->marketimage;
+            $entry->marketimage = route('mealxpress_images', ['filename' =>  $entry->marketimage]);
             return $entry;
             });
         }
@@ -227,12 +259,14 @@ class AuthController extends Controller
 
         $excluded = $getallmarkets->pluck('categoryname');
         $excluded->push('all');
+        $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
+        $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);
 
         $getcategory = storesubcategory::where('marketid', Session::get('userid'))->whereNotIn('categoryname',['all'])->orderBy("id","DESC")->get();
 
-
         return Inertia::render('vendorspath/dashboard/listproducts',
         ['userid' => $user_session,
+        'image' => $imagefetch,
         'data' => $getallmarkets,
         'cat'=> $getcategory,
     ]);
