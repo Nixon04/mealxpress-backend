@@ -52,7 +52,8 @@ class PostAdminController extends Controller
             }
             $image = $request->file('productImage');
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('mealxpress_images'), $imageName);
+            $path = $image->storeAs('mealxpress_images', $imageName, 'local');
+            // $image->move(public_path('mealxpress_images'), $imageName);
             $catenate  = $request->input('productWeight') . $request->input('kg');
      
         $update = new Ads([
