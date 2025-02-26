@@ -352,7 +352,7 @@ class MealServiceFetchController extends Controller
      ON user_order_lists.marketid = stores.marketstoreid WHERE user_order_lists.username = :username AND user_order_lists.cartstatus = :cartstatus ORDER BY user_order_lists.id DESC', ['username' => $request['username'], 'cartstatus' => $request['statusfetch']]);
     if(!empty($getallgoods)){
         $getallgoods = collect($getallgoods)->transform(function($entry){
-            $entry->marketprofile = "http://192.168.26.149:9000/mealxpress_images/".$entry->marketprofile;
+            $entry->marketprofile = "https://mealxpress.ng/mealxpress_images/".$entry->marketprofile;
             return $entry;
         });
         return response()->json(['data' => $getallgoods]);
@@ -376,7 +376,7 @@ class MealServiceFetchController extends Controller
          WHERE trackers.tracker_code = :trackerid ', ['trackerid' => $request['trackerid']]);
         if(!empty($getinfo)){
           $getinfo = collect($getinfo)->transform(function($entry){
-            $entry->trackerimage = "http://192.168.26.149:9000/mealxpress_riders_image/".$entry->trackerimage;
+            $entry->trackerimage = "https://mealxpress.ng/mealxpress_riders_image/".$entry->trackerimage;
             return $entry;
           })->first();
           return response()->json(['data' => $getinfo]);
@@ -416,7 +416,7 @@ class MealServiceFetchController extends Controller
           if($indexfetch == "all"){
             if($validate->isNotEmpty()){
                 $validate->transform(function ($entry){
-                    $entry->marketimage =  "http://192.168.26.149:9000/mealxpress_images/". $entry->marketimage;
+                    $entry->marketimage =  "https://mealxpress.ng/mealxpress_images/". $entry->marketimage;
                     return $entry;
                 });
                 return response()->json(['data' => $validate]);
@@ -426,7 +426,7 @@ class MealServiceFetchController extends Controller
             $singlefetcher =AllMarkets::where('marketproductid', $marketid)->where('marketproductoption',$indexfetch)->get();
             if($singlefetcher->isNotEmpty()){
                 $singlefetcher->transform(function ($entry){
-                    $entry->marketimage =  "http://192.168.26.149:9000/mealxpress_images/". $entry->marketimage;
+                    $entry->marketimage =  "https://mealxpress.ng/mealxpress_images/". $entry->marketimage;
                     return $entry;
                 });
                 return response()->json(['data' => $singlefetcher]);
@@ -821,7 +821,7 @@ class MealServiceFetchController extends Controller
     $selectedrinks = DrinkList::orderBy('id')->get();
     if($selectedrinks->isNotEmpty()){
        $selectedrinks->transform(function($entrycall){
-       $entrycall->drinkimage = "http://192.168.26.149:9000/mealxpress_drinks/".$entrycall->drinkimage;
+       $entrycall->drinkimage = "https://mealxpress.ng/mealxpress_drinks/".$entrycall->drinkimage;
        return $entrycall; 
        });
     }
@@ -840,8 +840,8 @@ class MealServiceFetchController extends Controller
        $responsedata =  DB::select('SELECT marketproductid, marketproductweight, marketproductoption, marketstoreaddress, marketimage, marketproductprice, marketproductname, marketproductrequired, marketstorename, marketstorebio, marketstorelinks, marketstorebadge, marketreg, marketstoreprofile FROM `all_markets` LEFT JOIN `stores`  ON all_markets.marketproductid = stores.marketstoreid ');
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "http://192.168.26.149:9000/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/". $url->marketstoreprofile;
+             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
+              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -854,8 +854,8 @@ class MealServiceFetchController extends Controller
         $responsedata =  DB::select('SELECT marketproductid, marketproductweight, marketproductoption, marketstoreaddress, marketimage, marketproductprice, marketproductname, marketproductrequired, marketstorename, marketstorebio, marketstorelinks, marketstorebadge, marketreg, marketstoreprofile FROM `ads` LEFT JOIN `stores`  ON ads.marketproductid = stores.marketstoreid ');
          if(!empty($responsedata)){
             $responsedata = collect($responsedata)->transform(function($url){
-              $url->marketimage = "http://192.168.26.149:9000/mealxpress_images/". $url->marketimage;
-               $url->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/". $url->marketstoreprofile;
+              $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
+               $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
               return $url;
             });
              return response()->json(['data' => $responsedata]);
@@ -881,8 +881,8 @@ class MealServiceFetchController extends Controller
                  ON all_markets.marketproductid = stores.marketstoreid ');
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "http://192.168.26.149:9000/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/". $url->marketstoreprofile;
+             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
+              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -901,8 +901,8 @@ class MealServiceFetchController extends Controller
             ['selectedvalue' => $request['filtercode']]);
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "http://192.168.26.149:9000/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/". $url->marketstoreprofile;
+             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
+              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -919,7 +919,7 @@ class MealServiceFetchController extends Controller
         try{
          if($allstores->isNotEmpty()){
             $allstores->transform(function ($entry){
-                $entry->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/" .$entry->marketstoreprofile;
+                $entry->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/" .$entry->marketstoreprofile;
                 return $entry;
             });
          }
@@ -933,7 +933,7 @@ class MealServiceFetchController extends Controller
         $allstores = Stores::where('marketstorecollection', 'supermarket')->get();
          if($allstores->isNotEmpty()){
             $allstores->transform(function ($entry){
-                $entry->marketstoreprofile = "http://192.168.26.149:9000/mealxpress_storesprofile/" .$entry->marketstoreprofile;
+                $entry->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/" .$entry->marketstoreprofile;
                 return $entry;
             });
          }

@@ -25,7 +25,7 @@ class AdminController extends Controller
         if($drinkslist->isNotEmpty()){
             $drinkslist->transform(function($url){
                 // $url->drinkimage = "http://127.0.0.1:9000/mealxpress_drinks/" .$url->drinkimage;
-                $url->drinkimage = route('mealxpress_drinks', ['filename' => $url->marketstoreprofile ?? '']);
+                $url->drinkimage = route('mealxpress_drinks', ['filename' => $url->drinkimage ?? '']);
                 return $url;
             });
 

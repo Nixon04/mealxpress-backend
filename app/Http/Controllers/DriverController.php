@@ -190,7 +190,7 @@ class DriverController extends Controller
             $selectedvalues = Stores::where('marketstoreid', $request->input('reference'))->first();
         if ($selectedvalues) {
              
-            $selectedvalues->marketstoreimage = "http://192.168.213.149:9000/mealxpress_storesprofile/" . $selectedvalues->marketstoreprofile;
+            $selectedvalues->marketstoreimage = "https://mealxpress.ng/mealxpress_storesprofile/" . $selectedvalues->marketstoreprofile;
             // Return the data as a JSON response
             return response()->json(['data' => $selectedvalues]);
         } else {
@@ -328,7 +328,7 @@ class DriverController extends Controller
 
     if(!empty($validate)){
         $validate = collect($validate)->transform(function($entry){
-        $entry->image = "http://192.168.23.149:9000/mealxpress_riders_image/".$entry->Images;
+        $entry->image = "https://mealxpress.ng/mealxpress_riders_image/".$entry->Images;
          return $entry;
         })->first();
     }
