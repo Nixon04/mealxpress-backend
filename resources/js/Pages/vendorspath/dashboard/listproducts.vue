@@ -217,14 +217,15 @@ export default {
         isLoadingProduct.value = true;
       }, 4000);
 
-      const response = await axios.post('/vendorspath/postproducts', data, {
+
+       try{
+       isLoadingProduct.value = true;
+       
+       const response = await axios.post('/vendorspath/postproducts', data, {
       headers: {
         'X-CSRF-TOKEN': csrfToken,
       },
       });
-
-       try{
-       isLoadingProduct.value = true;
       if(response.status == 200){
          const toast  = useToast();
         toast.success("Uploaded successfully", {

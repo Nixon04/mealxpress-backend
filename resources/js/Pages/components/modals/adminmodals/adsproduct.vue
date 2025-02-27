@@ -49,7 +49,7 @@
             <label for="inputCategory">Category</label>
             <div v-if="cat.length == 0">Please add category to be liable to post <Link class="bg-button-submit py-2 ms-2 rounded-3xl" href="/vendorspath/dashboard/addcategories">Add Category</Link></div>
             <div v-else>
-              <select id="inputCategory"  v-model="category"class="form-select py-3 w-100">
+              <select id="inputCategory"  v-model="category" class="form-select py-3 w-100">
                 <option v-for="(item, index) in cat" :key="index">
                     {{ item.categoryname }}
                 </option>

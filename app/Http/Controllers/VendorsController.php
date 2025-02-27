@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 use App\Mail\VerificationEmail;
 use App\Models\AllMarkets;
 use App\Models\OrderTotal;
-use App\Models\PayoutMethods;
+use App\Models\PayoutMethods;   
 use App\Models\storesubcategory;
 use App\Models\UserOrderList;
-
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +22,9 @@ use App\Models\BankLists;
 use Carbon\Carbon;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
+
+use Intervention\Image\Laravel\Facades\Image;
+
 
 
 class VendorsController extends Controller
@@ -354,7 +356,7 @@ class VendorsController extends Controller
             }
         }catch(\Exception $e){
             return response()->json(['message' => $e->getMessage()]);
-        }
+    }
 }
 
 
@@ -470,6 +472,7 @@ class VendorsController extends Controller
         'productPrice' => 'required',
         'productWeight' => 'required|numeric',
         'productCategory' => 'required',
+        'ProductDescription' => 'required',
         'kgcall' => 'required',
         'productImage' => 'required|mimes:jpeg,png,webp,jpg,gif,svg|max:2048', // Validate the image if provided
     ]);
@@ -478,7 +481,22 @@ class VendorsController extends Controller
     $session_holder = Session::get('userid') ?? '' ;
         $image = $request->file('productImage');
         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-        $request->file('productImage')->storeAs('mealxpress_images', $imageName, 'local');
+        // $img = Image::read($image);
+
+        // $img->resize(1200, 800, function($constraint){
+        //     $constraint->aspectRatio();
+        //     $constraint->upsize();
+        // });
+
+        // if($imageName === "jpg" || $imageName === "jpeg"){
+        //     $img->encodeByExtension($imageName, 85);
+        // }else if($imageName === "png"){
+        //     $img->encodeByExtension($imageName, 9);
+        // }else{
+        //     $img->encodeByExtension($imageName, 85);
+        // }
+
+        $image->storeAs('mealxpress_images', $imageName, 'local');
         $catenate  = $request->input('productWeight') . $request->input('kgcall');
  
     $update = new AllMarkets([
@@ -492,7 +510,7 @@ class VendorsController extends Controller
         'marketproductrequired' => 'active',
         'marketproducttotal_portion' => '0',
         'marketproductorder_date' => '',
-        'marketproductlink' => ' '
+        'marketproductlink' => $request->input('ProductDescription'),
     ]);
     $update->save();
     return response()->json(['status' =>'success', 'message' => 'Product Added successfully']);
@@ -513,7 +531,8 @@ public function UpdateCurrentProductList(Request $request)
     if ($request->hasFile('ProductImage')) {
         $image = $request->file('ProductImage');
         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('mealxpress_images'), $imageName);
+        $image->storeAs('mealxpress_images', $imageName,'local');
+        // $image->move(public_path('mealxpress_images'), $imageName);
     }
 
     $allmarkets = AllMarkets::where('marketproductid', $request['ProductID'])->first();

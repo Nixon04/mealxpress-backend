@@ -1,7 +1,7 @@
 <template>
     <div class="bg-drawer-center" v-if="addVisible">
       <div class="bg-drawer-center-container">
-        <div class="d-flex justify-content-between px-5 py-5">
+        <div class="d-flex justify-content-between px-3 py-2">
           <h1 class="fs-5 fw-bold">Add Product</h1>
           <div class="bg-circle" @click="$emit('close')">
             <i class="fas fa-x"></i>
@@ -30,6 +30,13 @@
               class="form-control py-3"
               placeholder="Enter Product Price"
             />
+          </div>
+
+          <div class="form-input mb-3">
+            <label for="InputDescription">Product Description</label>
+            <textarea name="" v-model="inputdescription" rows="4" class="form-control" placeholder="Brief Description not more than 60 words in total">
+
+            </textarea>
           </div>
 
          <div class="form-input mb-3">
@@ -96,7 +103,7 @@
         </div>
   
         <!-- Submit Button -->
-        <div class="py-4 px-5">
+        <div class="py-2 px-3">
           <button :class="[ isLoadingProduct ? 'bg-button-submit btn py-3 cursor-not-allowed' :  'bg-button-submit btn py-3' ]" @click="submitProduct">
             {{ isLoadingProduct ? '....' : 'Add Product' }}
           </button>
@@ -117,6 +124,7 @@
     data() {
       return {
         inputname: '',
+        inputdescription: '',
         inputprice: '',
         inputweight: '',
         kgcall: '',
@@ -168,13 +176,14 @@
       // Handle the form submission
       submitProduct() {
 
-        if (!this.inputname || !this.inputprice || !this.inputweight || !this.image || !this.kgcall) {
+        if (!this.inputname || !this.inputprice || !this.inputdescription || !this.inputweight || !this.image || !this.kgcall) {
           console.log('Please fill out all fields and upload an image.');
           return;
         }
         // Prepare the form data to send to the backend
         const formData = new FormData();
         formData.append('productName', this.inputname);
+        formData.append('ProductDescription', this.inputdescription);
         formData.append('productPrice', this.inputprice);
         formData.append('productWeight', this.inputweight);
         formData.append('productCategory', this.category);

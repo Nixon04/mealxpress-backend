@@ -16,7 +16,6 @@ Route::get('/vendorspath/auth/forgotpassword',[AuthController::class,'ForgotPass
 Route::get('/vendorspath/auth/confirmtoken', [AuthController::class,'VendorsConfirmToken'])->name('VendorsConfirmToken');
 Route::get('/vendorspath/auth/changepassword', [AuthController::class,'VendorsChangePassword'])->name('VendorsChangePassword');
 
-
 Route::get('/route/home',[AuthController::class,'EmailRoute']);
 
 // for storeprofiles 
@@ -30,6 +29,7 @@ Route::get('/mealxpress_storesprofile/{filename}', function($filename){
   }
  return response()->file($path);
 })->name('mealxpress_storesprofile');
+
 
 
 Route::get( '/mealxpress_images/{filename}', function($filename){
