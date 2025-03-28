@@ -54,15 +54,19 @@ class MealServerController extends Controller
     }
 
     public function SigupConfig(Request $request){
+
+        // return response()->json(['message' => 'sa,']);
        $request->validate([
-            'fullname' => 'required',
-            'username' => 'required',
+             'fullname' => 'required',
+             'username' => 'required',
              'email' => 'required',
              'referralflag' => 'required',
-             'contact' => 'required|numeric',
+             'contact' => 'required',
              'password' => 'required',
-             'referraltag' => 'required',
+             'referraltag',
         ]);
+
+        
         $hashpassword = Hash::make($request['password']);
         $validateuser = UserModel::where('contact', $request['contact'])->first();
         $referralgeneratecode = rand(999999,111111);
@@ -110,7 +114,7 @@ class MealServerController extends Controller
             'referralidtag' => $referralgeneratecode,
             'image' => '0',
             'code' => '0',
-            'referral'
+            'referral' => '1',
         ]);
         $insertdata->save();
         $url = "https://api.paystack.co/dedicated_account/assign";
