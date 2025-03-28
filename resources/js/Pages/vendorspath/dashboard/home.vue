@@ -2,7 +2,7 @@
     <div class="main-board-mealxpress">
       <TransferInit :stablevisible="stablevisible" @close="dismissmodalclear" :populatebanks="populatebanks" />
       <VisibleCharts :chartvisible="chartvisible" :totalsum="totalsum" :salescount="salescount" @close="dismisscharts"/>
-      <NavbarComponent />
+      <!-- <NavbarComponent /> -->
       <div class="mealxpress-content">
         <HeaderDashboard :imageref="imageref"/>
         <div class="mealxpress-main">

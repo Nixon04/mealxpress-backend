@@ -1,7 +1,9 @@
 <template>
+<div>
   <Head>
       <title>Mealxpress | Product Lists</title>
   </Head>
+
   <div class="main-board-mealxpress">
       <NavbarComponent />
       <div class="mealxpress-content">
@@ -43,6 +45,7 @@
        </div>
       </div>
   </div>  
+  </div>
 
 </template>
 

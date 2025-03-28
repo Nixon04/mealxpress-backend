@@ -222,6 +222,8 @@ class PostAdminController extends Controller
             }
         }
 
+        $hash  =  Hash::make($request->input('password'));
+
         $randid = rand(999999, 111111);
         $uniqueID = 'MLXPD-'.$randid;
         $date_of_reg = Carbon::now()->setTimezone('Africa/Lagos')->format('d M, Y h:i A');
@@ -238,7 +240,7 @@ class PostAdminController extends Controller
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
             'contact' => $request->input('contact'),
-            'password' => $request->input('password'),
+            'password' => $hash,
             'nextofkin' => $request->input('kin'),
             'fcm_token' => '',
             'kincontact' => $request->input('kincontact'),
