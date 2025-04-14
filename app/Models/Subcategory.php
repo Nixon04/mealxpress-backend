@@ -12,7 +12,10 @@ class Subcategory extends Model
     protected $fillable = [
       "categoryname",
       "categorysubname",
-      "categorylistdropdown",
+      "subcategorydropdown",
+      'protein',
+      'optionselect',
+      'wraps',
       "availability",
       "flag"
     ];

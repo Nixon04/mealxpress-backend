@@ -16,10 +16,34 @@
 
                   <div class="d-flex flex-column">
                     <h1 class="fs- bg-textmain bg-f-1">Dashboard</h1>
+
+
+                    <!-- <div class="filter more m-auto">
+                      <a class="icon m-auto" href="#" data-bs-toggle="dropdown">
+                          <i class="fas fa-home"></i>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-center dropdown-menu-arrow">
+                          <h5>Quick switch</h5>
+                          <li class="mt-3">
+                              <a class="dropdown-item" href="airtime.html"> Airtime</a>
+                          </li>
+                          <li class="mt-3">
+                              <a class="dropdown-item" href="data.html"> Data</a>
+                          </li>
+                          <li class="mt-3">
+                              <a class="dropdown-item" href="utility.html"> Utility Bills</a>
+                          </li>
+                          <li class="mt-3">
+                              <a class="dropdown-item" href="sltv.html"> SLTV</a>
+                          </li>
+                      </ul>
+                  </div> -->
+
+
                      <h6 class="fs-small">Here's your dashboard sales details overview</h6>
                    </div>
                   <div class="d-flex">
-                    <Button @click="showcharts" class="bg-button-submit btn p-3 m-3 py-2 bg-display-charts">
+                    <Button @click="showcharts" class="bg-button-outline btn p-3 m-3 py-2 bg-display-charts">
                       Charts
                     </Button>
                     <Button  @click="showtransfermodel" class="bg-button-submit btn  m-3 ms-2 py-2 ">
@@ -124,7 +148,7 @@
                 </div>
                 <div class="card bg-border-card px-3 py-3">
                   <div class="d-flex justify-content-between card">
-                    <h5 class="card-heade fw-bold bg-textmain">Recent PurChase</h5>
+                    <h5 class="card-heade fw-bold bg-textmain fs-2 p-1 mb-3">Recent Purchase</h5>
                     <div class="form-bod">
                       <input
                         type="text"
@@ -266,16 +290,16 @@
 // algorithms for table contents'
 console.log('Image state',imageref);
 // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
-    var pusher = new Pusher('7efbf9a2ea7d9a47dea1', {
-      cluster: 'eu'
-    });
+    // var pusher = new Pusher('7efbf9a2ea7d9a47dea1', {
+    //   cluster: 'eu'
+    // });
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      app.messages.push(JSON.stringify(data));
-    });
+    // var channel = pusher.subscribe('my-channel');
+    // channel.bind('my-event', function(data) {
+    //   app.messages.push(JSON.stringify(data));
+    // });
 
     const iconClass = computed(() => {
       return isBalanceVisible.value ? 'fa-eye' : 'fa-eye-slash';

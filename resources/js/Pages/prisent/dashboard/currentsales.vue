@@ -28,7 +28,7 @@
                             </div> -->
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-bod">
                     <div class="table-responsive text-nowrap">
                       <table class="table">
                        <thead>
@@ -40,7 +40,7 @@
                           <th>Total</th>
                           <th>CartImage</th>
                           <th>CartReference</th>
-                          <th>UserOrder</th>
+                          <th>User_ID</th>
                           <th>CartRefCode</th>
                           <th>Date</th>
                           </tr>
@@ -57,10 +57,10 @@
                             <td>  <span class="fw-medium">{{item.productname}}</span></td>
                             <td>₦{{formattedPrice(item.price)}}</td>
                             <td>  <span class="fw-medium">{{item.portion}}</span></td>
-                            <td>  <span class="fw-medium">{{item.total}}</span></td>
+                            <td>  <span class="fw-medium">₦{{formattedPrice(item.total)}}</span></td>
                             <td> 
                                 <img :src="item.cartimage=='' ? 'No Drink Found' : item.cartimage  " alt="image" width="40px" height="40px">
-                                {{ item.cartdrink }}
+                                <!-- {{ item.cartdrink }} -->
                             </td>
                             <td>  <span class="fw-medium">{{item.cartreference}}</span></td>
                             <td>  <span class="fw-medium">{{item.username}}</span></td>

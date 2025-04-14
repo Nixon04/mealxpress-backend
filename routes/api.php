@@ -70,11 +70,12 @@ Route::controller(MealServiceFetchController::class)->group(function(){
     Route::post('/referralidcount', 'ReferralIdCount');
     Route::post('/earnrewards', 'EarnRewards');
     Route::post('/alltransactions', 'AllTransactions');
+    Route::post('/fetchregion', 'CurrentRegionGroup');
 //    get routes
 
    Route::get('/fetchallmarketlist', 'FetchMarketsList');
    Route::get('/fetchads','FetchAds');
-  Route::get('/appversion', 'AppVersion');
+   Route::get('/appversion', 'AppVersion');
    Route::get('/fetchcategory', 'FetchCategory');
    Route::get('/selectdrinks', 'SelectDrinks');
    Route::get('versioncontrol', 'VersionStatus');

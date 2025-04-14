@@ -96,6 +96,7 @@
         height: 100%;
         width: 100%;
         border-radius: 0px;
+        padding: 0px;
     }
     .bg-bigger{
         font-size: 3em!important;

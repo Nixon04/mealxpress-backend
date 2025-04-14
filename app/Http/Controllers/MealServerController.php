@@ -37,7 +37,7 @@ class MealServerController extends Controller
             $validatecheck->update(['fcm_token' => $request->input('fcm_token') ?? '']);
             return response()->json(['message' => $username, 'status' =>'success']);
         }else{
-            return response()->json(['message' => 'Incorrect Details', 'status' => 'error']);
+            return response()->json(['message' => 'Password and username not valid', 'status' => 'error']);
         }
     }catch(\Exception $e){
         return response()->json(['message' => $e->getMessage()]);
@@ -114,7 +114,7 @@ class MealServerController extends Controller
             'referralidtag' => $referralgeneratecode,
             'image' => '0',
             'code' => '0',
-            'referral' => '1',
+            'referral' => '1'
         ]);
         $insertdata->save();
         $url = "https://api.paystack.co/dedicated_account/assign";

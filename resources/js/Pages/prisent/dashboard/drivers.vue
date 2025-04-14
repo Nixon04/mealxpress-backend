@@ -1,4 +1,5 @@
 <template>
+  <div>
   <Head>
     <title>Mealxpress | Drivers Information and Registration</title>
   </Head>
@@ -43,9 +44,9 @@
                         <th>TrackerId</th>
                         <th>View</th>
                         </tr>
-                    </thead>
+                    </thead>  
                     <tbody>
-                        <tr v-for="(item, index) in paginatedData" :key="item.id">
+                        <tr v-for="(item, index) in paginatedData" :key="index.id">
                           <td v-if="noResults">No data found  </td>
                           <td>  <span class="fw-medium">{{item.firstname}}</span></td>
                           <td>{{item.lastname}}</td>
@@ -77,6 +78,7 @@
     </div>
 <!--/ Bordered Table -->    
     </div>
+  </div>
   </div>
   </div>
   </div>

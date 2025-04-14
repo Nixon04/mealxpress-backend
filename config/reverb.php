@@ -17,7 +17,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Reverb Servers
+    | Reverb Servers    
     |--------------------------------------------------------------------------
     |
     | Here you may define details for each of the supported Reverb servers.

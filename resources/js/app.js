@@ -1,6 +1,7 @@
 import './bootstrap'; // Import your Laravel bootstrap.js setup
 import '../css/app.css';
 import '../css/demoassets/applayouts.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 // Vue 3 setup
 import { createApp, h } from 'vue';
@@ -10,6 +11,7 @@ import Toast from "vue-toastification";
 import PrimeVue from 'primevue/config';
 import Skeleton from 'primevue/skeleton';
 import Aura from '@primevue/themes/aura';
+
 import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';

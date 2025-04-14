@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Stores;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use App\Models\AdminLoginDetails;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,7 @@ use App\Models\DriverAccountWallets;
 use App\Models\DriversPersonalInfo;
 use App\Models\UserModel;
 use App\Models\DrinkList;
+use App\Models\ActivePlaces;
 use App\Models\Ads;
 use App\Models\AllMarkets;
 use App\Models\storesubcategory;
@@ -27,6 +29,29 @@ class PostAdminController extends Controller
     //
 
     // Route::post('/prisent/dashboard/addcategory', 'AddCategory');
+
+
+
+    public function AddRegions(Request $request){
+        $request->validate([
+          'states' => 'required|string',
+          'locationInput' => 'required|string'
+        ]);
+
+        try{
+        $date = Carbon::now()->setTimezone('Africa/Lagos')->format('Y,M d : h:i:a A');
+        $queryinsert = new ActivePlaces([
+            'states' => $request->input('states'),
+            'regions' => $request->input('locationInput'),
+            'status' => 'active',
+            'date_issued' => $date,
+        ]);
+        $queryinsert->save();
+        return response()->json(['message' => 'Successfully Added', 'status' => 'success']);
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Oops Seems Something went wrong', 'status' => 'error']);
+        }
+    }
     
 
     public function NewProductUpload(Request $request){
@@ -76,6 +101,20 @@ class PostAdminController extends Controller
             }
       }
 
+
+      public function DeleteLocation(Request $request){
+        $request->validate(['deleteid' => 'required|numeric']);
+        $query = ActivePlaces::where('id', $request->input('deleteid'))->first();
+        if($query){
+           $statuscheck = $query->delete();
+           if($statuscheck){
+            return response()->json(['statuscall' => 'success', 'message'=> 'Deleted successfully']);
+           }else{
+            return response()->json(['status' => 'failed', 'message'=> 'Oops Data not found']);
+           }
+        }
+      }
+
       public function DeleteAd(Request $request){
         $request->validate(['deleteid' => 'required|numeric']);
         $query = Ads::where('id', $request->input('deleteid'))->first();
@@ -106,6 +145,9 @@ class PostAdminController extends Controller
         $request->validate([
             'categoryname' =>  'required',
             'categoryitem' => 'required',
+            'optionselect' => 'required',
+            'protein' => 'required',
+            'wraps' => 'required',
         ]);
         try{
         $querydata = Category::where('categoryname', $request->input('categoryname'))->first();
@@ -120,9 +162,24 @@ class PostAdminController extends Controller
             'flag' => '1',
         ]);
         $queryinsert->save();
+        // queries for subcategory insert
+
+        $querysubinsert = new Subcategory([
+            "categoryname" =>  $request->input('categoryname'),
+            "categorysubname" => $request->input('categoryitem'),
+            "subcategorydropdown" => '',
+            'optionselect' =>  $request->input('optionselect'),
+            'protein' =>  $request->input('protein') ?? '',
+            'wraps' => $request->input('wraps') ?? '',
+            "availability" => '0',
+            "flag" => '0'
+        ]);
+
+        $querysubinsert->save();
+
         return response()->json(['message' => 'Category Added successfully', 'status' => 'success']);
         }catch(\Exception $e){
-            return response()->json([$e->getMessage()]);
+            return response()->json([ 'message' => $e->getMessage()]);
       }
     }
 

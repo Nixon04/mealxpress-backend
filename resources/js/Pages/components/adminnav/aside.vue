@@ -1,4 +1,5 @@
 <template>
+    <div>
     
     <!-- <aside class="aside-mealxpress">
       <div class="flex-wrap-container">
@@ -90,7 +91,7 @@
               </div>
           </div>
       </div>
-    </aside> -->
+    </aside> --></div>
 </template>
 
 <script>

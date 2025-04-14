@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SalesReceipt;
+use App\Models\ActivePlaces;
 use App\Models\ReferralPackage;
 use App\Models\VendorsWallet;
 use Faker\Provider\ar_EG\Payment;
@@ -23,6 +24,7 @@ use Carbon\Carbon;
 use App\Models\storesubcategory;
 use App\Models\PayoutMethods;
 use App\Models\marketsubcategory;
+use App\Models\Subcategory;
 use App\Models\Tracker;
 use App\Models\PromoCodes;
 use App\Models\PromoUsers;
@@ -40,8 +42,46 @@ use Kreait\Firebase\Messaging\Notification;
 class MealServiceFetchController extends Controller
 {
 
-
-    public function AllTransactions(Request $request){
+    public function CurrentRegionGroup(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'pointer' => 'required',
+        ]);
+    
+        $post_site = $request->input('pointer');
+    
+        \Log::info('servercheck', ['status' => $post_site]);
+    
+        // Split the pointer string into city and state
+        $parts = explode(',', $post_site);
+    
+        $city = trim($parts[0]);
+        $state = trim($parts[1]);
+    
+        // Get all entries from ActivePlaces
+        $querychecker = ActivePlaces::orderBy('id', 'ASC')->get();
+    
+        if ($querychecker->isNotEmpty()) {
+            foreach ($querychecker as $entrystatus) {
+                \Log::info('server', ['mainchecker' => $entrystatus]);
+    
+                if ($city === $entrystatus->regions || $state === $entrystatus->states) {
+                    // Match found, return true
+                    \Log::info('info', ['server' => 'true']);
+                    return response()->json(['message' => 'true']);
+                }
+            }
+    
+            // No match found after checking all
+            \Log::info('info', ['server' => 'false']);
+            return response()->json(['message' => 'false']);
+        }
+    
+        // No data in ActivePlaces
+        return response()->json(['message' => 'false']);
+    }
+        public function AllTransactions(Request $request){
         $request->validate([
             "username" => 'required',
         ]);
@@ -274,7 +314,6 @@ class MealServiceFetchController extends Controller
 
     public function WebHookPaystack(Request $request){
         $paymentDetails = $request->getContent();
-
         // Retrieve headers
         $headers = $request->headers->all();
         $headersJson = json_encode($headers);
@@ -352,7 +391,7 @@ class MealServiceFetchController extends Controller
      ON user_order_lists.marketid = stores.marketstoreid WHERE user_order_lists.username = :username AND user_order_lists.cartstatus = :cartstatus ORDER BY user_order_lists.id DESC', ['username' => $request['username'], 'cartstatus' => $request['statusfetch']]);
     if(!empty($getallgoods)){
         $getallgoods = collect($getallgoods)->transform(function($entry){
-            $entry->marketprofile = "https://mealxpress.ng/mealxpress_images/".$entry->marketprofile;
+            $entry->marketprofile = route('mealxpress_images', ['filename' => $entry->marketprofile]);
             return $entry;
         });
         return response()->json(['data' => $getallgoods]);
@@ -376,7 +415,7 @@ class MealServiceFetchController extends Controller
          WHERE trackers.tracker_code = :trackerid ', ['trackerid' => $request['trackerid']]);
         if(!empty($getinfo)){
           $getinfo = collect($getinfo)->transform(function($entry){
-            $entry->trackerimage = "https://mealxpress.ng/mealxpress_riders_image/".$entry->trackerimage;
+            $entry->trackerimage = route('mealxpress_riders_image', ['filename' => $entry->trackerimage]);
             return $entry;
           })->first();
           return response()->json(['data' => $getinfo]);
@@ -416,7 +455,8 @@ class MealServiceFetchController extends Controller
           if($indexfetch == "all"){
             if($validate->isNotEmpty()){
                 $validate->transform(function ($entry){
-                    $entry->marketimage =  "https://mealxpress.ng/mealxpress_images/". $entry->marketimage;
+                    $entry->marketimage = route('mealxpress_images', ['filename' => $entry->marketimage]);
+
                     return $entry;
                 });
                 return response()->json(['data' => $validate]);
@@ -426,7 +466,7 @@ class MealServiceFetchController extends Controller
             $singlefetcher =AllMarkets::where('marketproductid', $marketid)->where('marketproductoption',$indexfetch)->get();
             if($singlefetcher->isNotEmpty()){
                 $singlefetcher->transform(function ($entry){
-                    $entry->marketimage =  "https://mealxpress.ng/mealxpress_images/". $entry->marketimage;
+                    $entry->marketimage = route('mealxpress_images', ['filename' => $entry->marketimage]);
                     return $entry;
                 });
                 return response()->json(['data' => $singlefetcher]);
@@ -700,6 +740,7 @@ class MealServiceFetchController extends Controller
                 return response()->json('couldnt save');
             }
             $totalprice = 0;
+
             foreach ($request->input('cart') as $entry) {
                 $totalprice += $entry['price'];
                 $orderItem = new UserOrderList([
@@ -745,6 +786,7 @@ class MealServiceFetchController extends Controller
             if(!$status){
                 return response()->json('couldnt save');
             }
+
             $insertTracker = new Tracker([
               'marketid' => $request->input('cart')[0]['marketid'],
               'tracker_id' => '',
@@ -783,7 +825,7 @@ class MealServiceFetchController extends Controller
 
             DB::commit();  // Commit transaction if everything is successful
 
-            broadcast(new PurchaseMade($orderTotal));
+            // broadcast(new PurchaseMade($orderTotal));
 
             return response()->json(['message' => 'success', 'status' => 'success','refcode' => $cartreference], 200);
         } catch (\Exception $e) {
@@ -821,7 +863,7 @@ class MealServiceFetchController extends Controller
     $selectedrinks = DrinkList::orderBy('id')->get();
     if($selectedrinks->isNotEmpty()){
        $selectedrinks->transform(function($entrycall){
-       $entrycall->drinkimage = "https://mealxpress.ng/mealxpress_drinks/".$entrycall->drinkimage;
+        $entrycall->drinkimage = route('mealxpress_drinks', ['filename' => $entrycall->drinkimage]);
        return $entrycall; 
        });
     }
@@ -829,19 +871,41 @@ class MealServiceFetchController extends Controller
   }
 
     public function FetchSubcategory(Request $request){
-        // $request->validate(['subcatid' => 'required']);
-        // $validatedata = Subcategory::where('categorysubname', $request['subcatid'])->get();
-            return response()->json(['data' => 'meat'] );
-        // }
-        // return response()->json([]);
-    }
+        $request->validate(['subcatid' => 'required']);
+        $validatedata = Subcategory::where('categoryname', $request['subcatid'])->get();
+        if($validatedata->isNotEmpty()){
+            $jsoncall = [];
+            $firstitem = $validatedata->first();
+            if($firstitem->optionselect == 'Meal'){
+                   $jsoncall[] = [
+                    'optionselect' => $firstitem->optionselect,
+                   ];
+                   $jsoncall[] = [
+                    'protein' => $firstitem->protein,
+                   ];
+                   $jsoncall[] = [
+                    'wraps' => $firstitem->wraps,
+                   ];
+                
+                return response()->json(['message' => $jsoncall]);
+            }else if($firstitem->optionselect == 'FastFood'){
+                $jsoncall[] = [
+                    'drinks' => 'drinks'
+                ];
+            }
+            return response()->json(['message' =>  [] ] );
+        }
+            return response()->json(['data' => []] );
+     }
+        
+    
 
     public function FetchMarketsList(Request $request){
        $responsedata =  DB::select('SELECT marketproductid, marketproductweight, marketproductoption, marketstoreaddress, marketimage, marketproductprice, marketproductname, marketproductrequired, marketstorename, marketstorebio, marketstorelinks, marketstorebadge, marketreg, marketstoreprofile FROM `all_markets` LEFT JOIN `stores`  ON all_markets.marketproductid = stores.marketstoreid ');
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
+            $url->marketimage = route('mealxpress_images', ['filename' => $url->marketimage]);
+            $url->marketstoreprofile = route('mealxpress_storesprofile', ['filename' => $url->marketstoreprofile]);
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -854,8 +918,8 @@ class MealServiceFetchController extends Controller
         $responsedata =  DB::select('SELECT marketproductid, marketproductweight, marketproductoption, marketstoreaddress, marketimage, marketproductprice, marketproductname, marketproductrequired, marketstorename, marketstorebio, marketstorelinks, marketstorebadge, marketreg, marketstoreprofile FROM `ads` LEFT JOIN `stores`  ON ads.marketproductid = stores.marketstoreid ');
          if(!empty($responsedata)){
             $responsedata = collect($responsedata)->transform(function($url){
-              $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
-               $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
+              $url->marketimage = route('mealxpress_images', ['filename' => $url->marketimage]);  
+              $url->marketstoreprofile = route('mealxpress_storesprofile',['filename' => $url->marketstoreprofile]);
               return $url;
             });
              return response()->json(['data' => $responsedata]);
@@ -881,8 +945,8 @@ class MealServiceFetchController extends Controller
                  ON all_markets.marketproductid = stores.marketstoreid ');
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
+            $url->marketimage = route('mealxpress_images', ['filename' => $url->marketimage]);
+            $url->marketstoreprofile = route('mealxpress_storesprofile', ['filename' => $url->marketstoreprofile]);
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -901,8 +965,8 @@ class MealServiceFetchController extends Controller
             ['selectedvalue' => $request['filtercode']]);
         if(!empty($responsedata)){
            $responsedata = collect($responsedata)->transform(function($url){
-             $url->marketimage = "https://mealxpress.ng/mealxpress_images/". $url->marketimage;
-              $url->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/". $url->marketstoreprofile;
+            $url->marketimage = route('mealxpress_images', ['filename' => $url->marketimage]);
+            $url->marketstoreprofile = route('mealxpress_storesprofile', ['filename' => $url->marketstoreprofile]);
              return $url;
            });
             return response()->json(['data' => $responsedata]);
@@ -919,7 +983,7 @@ class MealServiceFetchController extends Controller
         try{
          if($allstores->isNotEmpty()){
             $allstores->transform(function ($entry){
-                $entry->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/" .$entry->marketstoreprofile;
+                $entry->marketstoreprofile =  route('mealxpress_storesprofile', ['filename' => $entry->marketstoreprofile]);
                 return $entry;
             });
          }
@@ -933,7 +997,8 @@ class MealServiceFetchController extends Controller
         $allstores = Stores::where('marketstorecollection', 'supermarket')->get();
          if($allstores->isNotEmpty()){
             $allstores->transform(function ($entry){
-                $entry->marketstoreprofile = "https://mealxpress.ng/mealxpress_storesprofile/" .$entry->marketstoreprofile;
+                $entry->marketstoreprofile =  route('mealxpress_storesprofile', ['filename' => $entry->marketstoreprofile]);
+
                 return $entry;
             });
          }

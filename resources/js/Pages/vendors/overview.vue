@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
       <title>Mealxpress | Rich in content, Deliverying with no hassle </title>
       <meta name="description" content="Discover extreme cheap services on our plattform, Order foods at your home and get it delivered right at your home with no hassle whatsoever, mealxpress is here to stay">
@@ -266,7 +267,7 @@
       </section> -->
     <Footer/>
   
-  
+      </div>
     </div>
   </template>
   

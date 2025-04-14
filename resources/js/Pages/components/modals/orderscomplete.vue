@@ -5,8 +5,7 @@
             <div class="header ms-2 me-2 py-3 d-flex justify-content-between">
                 <h1 class="fs-3 fw-bold text-main">Product List</h1>
                 <div class="bg-circle" @click="$emit('close')">
-                        <div class="fas fa-x fas-sm" ></div>
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22M8.97 8.97a.75.75 0 0 1 1.06 0L12 10.94l1.97-1.97a.75.75 0 0 1 1.06 1.06L13.06 12l1.97 1.97a.75.75 0 1 1-1.06 1.06L12 13.06l-1.97 1.97a.75.75 0 1 1-1.06-1.06L10.94 12l-1.97-1.97a.75.75 0 0 1 0-1.06" clip-rule="evenodd"/></svg>                    </div>
             </div>
             <div class="bg-scrollable-meal mb-4">
                 <div  v-if="loading" class="d-flex ">
@@ -134,7 +133,7 @@ export default{
                 timeout:3000,
             });
 
-            await delay(3000);
+            await delay(1000);
             console.log(response.status);
             Inertia.reload();
         }else{
@@ -154,10 +153,7 @@ export default{
 
     const submitrequest = async (cartrefcode) => {
     try {
-        if(isLoading.value){
-            console.log('Is already loading');
-            return;
-        }
+        if(isLoading.value) return null; 
       isLoading.value = true;
         const payload = {
             itemupdate: "pending",

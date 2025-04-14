@@ -55,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in data" :key="index.id" >
+                <tr v-for="(item, index) in data" :key="index.id" @click="ViewAllTogether(item)" class="cursor-pointer" >
                     <td >{{ item.username }}</td>
                     <td>{{ item.cartreference }}</td>
                     <td>{{ item.price }}</td>
@@ -339,11 +339,11 @@
                               'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled',
                              }">
                              
-                             {{ item.cartpurchasedate }}</span>
+                             {{ item.cartstatus }}</span>
                           </td>
     
     
-                      <td>{{ item.created_at }}</td>
+                      <td>{{ item.cartpurchasedate }}</td>
                       <td @click="openModal(item)" class="d-flex align-items-center justify-content-center py-4 cursor-pointer">
                         <i class="fa-solid fa-ellipsis"></i>
                       </td>
@@ -502,8 +502,25 @@ export default {
     const deliveredtable = ref(props.datareturns.Delivered || []);
     const returnstable = ref(props.datareturns.returns || []);
     const imageref = ref(props.image || []);
+
+
+    const ViewAllTogether = async (item) => {
+      if(item.cartstatus == "returns"){
+        console.log('Cart Already rejected');
+        return;
+      }
+      isVisible.value = true;
+      loading.value = true;
+      setTimeout(async () => {
+        await fetchOrderList(item);
+      }, 1000); 
+    }
    
     const openModal = async (item) => {
+      if(item.cartstatus == "returns"){
+        console.log('Cart Already rejected');
+        return;
+      }
       isVisible.value = true;
       loading.value = true;
       setTimeout(async () => {
@@ -598,6 +615,7 @@ export default {
       pendingtable,
       deliveredtable,
       returnstable,
+      ViewAllTogether,
     };
   },
 };

@@ -26,6 +26,10 @@ class AuthController extends Controller
         return view('route.home');
     }
 
+    public function VendorsMenu(){
+        return Inertia::render('vendorspath/dashboard/menu');
+    }
+
     public function VendorsChangePassword(){
         return Inertia::render('vendorspath/auth/changepassword');
     }

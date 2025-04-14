@@ -10,10 +10,17 @@ use App\Models\UserModel;
 use App\Models\DrinkList;
 use App\Models\Ads;
 use App\Models\Category;
+use App\Models\ActivePlaces;
 use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     //
+
+
+    public function ActiveRegions(){
+        $querycategory = ActivePlaces::orderBy('id','DESC')->get();
+        return Inertia::render('prisent/dashboard/regions', ['data' => $querycategory]);
+    }
 
     public function Ads(){
         $queryads = Ads::orderBy('id','DESC')->get();
@@ -40,7 +47,7 @@ class AdminController extends Controller
         // $totalsum = OrderTotal::sum(DB::raw('total_amount'));
         // $totalcount = OrderTotal::count();
 
-// best way to optimize efficient query on data
+//i think this is better for lessened queries
         $totals = OrderTotal::selectRaw(
             '
             SUM(delivery_amount + service_fee) as ordersum,

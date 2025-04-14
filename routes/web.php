@@ -32,12 +32,12 @@ Route::get('/mealxpress_storesprofile/{filename}', function($filename){
 
 
 
-Route::get( '/mealxpress_images/{filename}', function($filename){
+Route::get('/mealxpress_images/{filename}', function($filename){
   $path = storage_path('app/private/mealxpress_images/' .$filename);
   if(!file_exists($path)){
     abort(404, 'Image Not Found');
   }
-  return response()->file($path);
+  return response()->file(file: $path);
 })->name('mealxpress_images');
   
 
@@ -90,6 +90,7 @@ Route::get('/vendorspath/dashboard/listproducts', [AuthController::class,'ListPr
 Route::get('/vendorspath/dashboard/addcategories', [AuthController::class,'AddCategory'])->name('AddCategory');
 Route::get('/vendorspath/dashboard/fetchrecord', [AuthController::class,'FetchRecord'])->name('FetchRecord');
 Route::get('/vendorspath/dashboard/logout', [AuthController::class, 'VendorsLogout'])->name('VendorsLogout');
+Route::get('/vendorspath/dashboard/menu', [AuthController::class, 'VendorsMenu'])->name('VendorsMenu');
 
 
 Route::get('/vendorspath/dashboard/indexhome', [AuthController::class, 'HomeIndexCall']);
@@ -138,6 +139,7 @@ Route::controller(AdminController::class)->group(function(){
   Route::get('/prisent/dashboard/drivers', 'AdminDrivers');
   Route::get('/prisent/dashboard/sendappnotification', 'AdminAppNotification');
   Route::get('/prisent/dashboard/drinks', 'AddDrinks');
+  Route::get('/prisent/dashboard/regions', 'ActiveRegions');
   Route::get('/prisent/dashboard/ads', 'Ads');
 });
 
@@ -146,7 +148,7 @@ Route::controller(AdminController::class)->group(function(){
 Route::get('/firebase-test', function () {
   $token = 'cny_Ps_1Qu6i9_sZqoK-Xt:APA91bFhe5L5kjDVofrr-YK4udXI9SlIMvScVXhF736M3h5Dk3Ja74CnODwilaEXd8y6D-ShF0XtoRG2KZhLuOa6jiJ_GecRDBpP-orouxQ1f5wUfYsIWN0'; // Replace with a valid FCM token for a test device
   $messaging = app('firebase.messaging');
-
+  
   // $message = CloudMessage::withTarget('token',$token)
 
   $messaging = app('firebase.messaging');
@@ -178,5 +180,8 @@ Route::controller(PostAdminController::class)->group(function(){
   Route::post('/prisent/dashboard/deletecat', 'DeleteCategory');
   Route::post('/prisent/dashboard/deletead', 'DeleteAd');
   Route::post('/prisent/dashboard/adsproduct','NewProductUpload');
+  Route::post('/prisent/dashboard/regions', 'AddRegions');
+  Route::post('/prisent/dashboard/deletelocation', 'DeleteLocation');
+  
 
 });

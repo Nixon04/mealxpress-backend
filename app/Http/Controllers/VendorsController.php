@@ -6,6 +6,8 @@ use App\Models\AllMarkets;
 use App\Models\OrderTotal;
 use App\Models\PayoutMethods;   
 use App\Models\storesubcategory;
+use App\Models\UserAccounts;
+use App\Models\UserModel;
 use App\Models\UserOrderList;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -177,14 +179,23 @@ class VendorsController extends Controller
       if($orderquery){
         $queryuserpackage = UserOrderList::where('cartrefcode',$request->input('cartrefparam') )->get();
         foreach ($queryuserpackage as $entry){
-            $entry->update(['cartpremit' => '_non_initiated']);
+            $entry->update(['cartpremit' => '_non_initiated', 'cartstatus' => 'pending']);
         }
        $status =  $orderquery->update(['approvestat'=> $request->input('cartstatusreport')]);
+       
             if($status && $queryuserpackage){
                 $messaging = app('firebase.messaging');
                 $message = CloudMessage::withTarget('topic', "all_drivers")
                 ->withNotification(notification: Notification::create("New Request", body: "Vendor Currently Accepted A New Request $delivery_id, Good Luck"));
-                $messaging->send($message);          
+                $messaging->send($message);  
+                
+                // $updateusers = OrderTotal::where('delivery_code', $delivery_id)->first();
+                // if($updateusers){
+                //     $updateusers->update(['approvestat'])
+                // }
+
+                
+
                 return response()->json(['message' => 'Request Approved']);
             }else{
                 return response()->json(['message' => 'Request not approved']);
@@ -241,34 +252,71 @@ class VendorsController extends Controller
        $request->validate(['itemupdate' => 'required', 'cartref' =>'required']);
        $orderlist = UserOrderList::where('cartrefcode', $request->input('cartref'))->first();
        $orderquery = OrderTotal::where('delivery_code',  $request->input('cartref'))->first();
-    
-    try{
-    //    if($orderquery->approvestat == "accepted"){
-    //     return response()->json(['message' => 'You cant order a request twice, Thanks']);
-    //   }
-      $delivery_id = $request->input('cartref');
 
-      if($orderquery){
+    try{
+        DB::beginTransaction();
+    //   refund charge to users
+    if($orderquery){    
+        $delivery_id = $request->input('cartref');
+        $post_payment = $orderquery->total_amount;
+        $delivery_sum = $orderquery->delivery_amount + $orderquery->service_fee;
+        $vendors_pay = $orderquery->sum_total;
+        $username = $orderquery->username;
+        $vendors_id = $orderquery->market_id;
+        $ordercheck = $orderquery->approvestat;
+        if($ordercheck == 'approvestat'){
+            return;
+        }
+        // check for users and refund
+        $userquery = UserAccounts::where('username', $username)->first();
+        if($userquery){
+            $main_balance = $userquery->main_balance;
+            $add_total = $main_balance + $post_payment;
+            $userquery->update(['main_balance' => $add_total]);
+         }
+
+        //  check for vendors and reduce
+        $vendorsquery = VendorsWallet::where('username', $vendors_id)->first();
+        if($vendorsquery){
+            $vendorsinitial = $vendorsquery->accountbalance;
+            $final_total = $vendorsinitial - $vendors_pay;
+            if($final_total > $vendorsinitial){
+              $vendorsquery->update(['accountbalance' => $final_total]);
+            }
+        }
+
+        // update the approvestatus 
+        $orderquery->update(['approvestat' => 'pending']);
+        // minus via the table row for admin profit
         $queryuserpackage = UserOrderList::where('cartrefcode',$request->input('cartref') )->get();
         foreach ($queryuserpackage as $entry){
             $entry->update(['cartpremit' => '_non_initiated']);
         }
-       $status =  $orderquery->update(['approvestat'=> $request->input('itemupdate')]);
+
+           $status =  $orderquery->update(['approvestat'=> 'returns', 'delivery_amount' => '0', 'service_fee' => '0']);
             if($status && $queryuserpackage){
                 $messaging = app('firebase.messaging');
                 $message = CloudMessage::withTarget('topic', "all_drivers")
-                ->withNotification(notification: Notification::create("Goods Not Available", body: "Currently this good isn\'t available,
-                 please it will be better if you look for other alternative, Thanks, Product ID is $delivery_id"));
+                ->withNotification(notification: Notification::create("Goods Not Available", body: "Vendor Currently can't accept this product stated via the id code $delivery_id"));
                 $messaging->send($message);          
                 // return response()->json(['message' => 'Request Approved']);
-            }else{
-                // return response()->json(['message' => 'Request not approved']);
-        }
-      }
+            }
 
+            $userinfo  = UserModel::where('username', $username)->first();
+            if($userinfo){
+                $token  = $userinfo->fcm_token;
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('token', $token)
+                ->withNotification(notification: Notification::create("Order Rejected", body: "Unfortunately 😔 The Vendor can't meet up with this item, so your money 💵 has been refunded, but you can still order items on our store 💪 .  reference code - $delivery_id"));
+                $messaging->send($message);     
+            }
+        }
+
+      DB::commit();
 
        if($orderlist){
-        $stats =  $orderlist->update(['cartstatus' =>  'pending']);
+       
+        $stats =  $orderlist->update(['cartstatus' =>  'returns']);
         if($stats){
             return response()->json(['status' => 'success', 'message' => 'Order rejected succesfully']);
         }else{
@@ -278,6 +326,8 @@ class VendorsController extends Controller
         return response()->json(['status' => 'error', 'message'=> 'Couldn\'t verify']);
        }
     }catch(\Exception $e){
+        DB::rollBack();
+        Log::info('server', ['error' => $e]);
         return response()->json(['status' => 'error', 'message'=> $e->getMessage()]);
     }
     }

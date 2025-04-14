@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-bod">
                     <div class="table-responsive text-nowrap">
                       <table class="table">
                        <thead>
@@ -47,13 +47,23 @@
                       </thead>
                       <tbody>
                           <tr v-if="paginatedData.length == 0" class="text-center">
-                            <td colspan="9">No Registered Category Found</td>
+                            <td colspan="9 fw-bold">No Registered Category Found</td>
                           </tr>
                           <tr v-for="(item, index) in paginatedData" :key="index.id">
                             <td v-if="noResults">No data found  </td>
                             <td>  <span class="fw-medium">{{item.categoryname}}</span></td>
                             <td>  <span class="fw-medium">{{item.categoryitem}}</span></td>
-                            <td>  <span class="fw-medium">{{item.status}}</span></td>
+                            <td>  <span :class="{
+                              'bg-rx-success rounded-md p-2 bg-success-text' : item.status == 'active',
+                              'bg-rx-pending rounded-md p-2': item.status  == 'inactive'
+                            }">{{item.status}}</span></td>
+
+                            <!-- :class="{
+                              'position-absolute bg-rx-success rounded-md p-2 shift-call': item.cartstatus == 'Delivered',
+                              'position-absolute bg-rx-pending text-main rounded-md p-2 shift-call opacity-4': item.cartstatus == 'pending',
+                              'position-absolute bg-rx-warning rounded-md p-2 shift-call': item.cartstatus == 'returns',
+                              'position-absolute bg-rx-returns rounded-md p-2 shift-call': item.cartstatus == 'cancelled', -->
+
                             <td>
                               <a @click="DeleteModalButton(item)" class="cursor-pointer"><i class="fa-solid fa-ellipsis"></i></a>
                             </td>

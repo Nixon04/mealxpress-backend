@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-bod ">
+                            <div class="card-bo border-px-line">
                             <div class="table-responsive text-nowrap">
                               <table class="table">
                                <thead>
@@ -47,7 +47,8 @@
                                 <tr v-if="paginatedData.length  === 0" class="text-center">
                                   <td colspan="6">No Category selected Added</td>
                                 </tr>
-                                  <tr v-for="(item, index) in paginatedData" :key="index.id">
+                                  
+                                  <tr v-for="(item, index) in paginatedData" :key="index.id" @click="routeToAll(item)" class="cursor-pointer">
                                     <td v-if="noResults">No data found  </td>
                                     <td>{{(item.marketid)}}</td>
                                     <td>{{item.categoryid}}</td>
@@ -55,16 +56,16 @@
                                     <td><span class="badge bg-label-info me-1">{{item.categorylistdropdown}}</span></td>
                                     <td>{{item.flag == "1" ? 'Active' : 'Not_Active'}}</td>
                                     <td>
-                                  <div class="dropdown d-flex">
+                                        <div class="dropdown d-flex">
                                     <div class="state me-4 cursor-pointer" @click="DeleteModalButton(item)">
                                       <i class="fa-solid fa-trash text-danger" ></i>
                                   </div>
-                                </div>
-                            </td>
+                                      </div>
+                                     </td>
                             </tr>
                
-                </tbody>
-                </table>
+                          </tbody>
+                      </table>
             </div>
             <!-- pagination details -->
             <div class="card p-3">
@@ -170,6 +171,17 @@ export default {
     const identifier = ref({
       targetitem : '',
     });
+
+
+
+    const routeToAll = async (item) => {
+     deleteVisible.value = true;
+     identifier.value.targetitem = item.id;
+     console.log('Deleteditem', identifier.value.targetitem);
+    };
+    
+
+
     
   const deleteproductbutton = async () => {
     if(deleteloading.value){
@@ -459,6 +471,7 @@ export default {
       identifier,
       deleteloading,
       imageref,
+      routeToAll,
     };
   },
 };
