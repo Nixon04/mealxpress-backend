@@ -43,7 +43,7 @@ onBeforeUnmount(() => {
       </div>
       
       <div class="navnewextra">
-        <span class="desktopscene">Eatery</span>
+        <span class="desktopscene text-white">Store</span>
         <span class="mobilescene text-white" @click="toggle"> ☰</span>
       </div>
     </div>

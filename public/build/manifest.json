@@ -59,11 +59,12 @@
     "file": "assets/axios-D4YhIzwJ.js",
     "name": "axios"
   },
-  "_bootstrap-BdlpLzpZ.js": {
-    "file": "assets/bootstrap-BdlpLzpZ.js",
+  "_bootstrap-DNcdi-DM.js": {
+    "file": "assets/bootstrap-DNcdi-DM.js",
     "name": "bootstrap",
     "imports": [
-      "_@popperjs-WhmJkuoZ.js"
+      "_@popperjs-WhmJkuoZ.js",
+      "_@inertiajs-BUUkGVB4.js"
     ]
   },
   "_call-bind-C_ZW1SvI.js": {
@@ -464,7 +465,7 @@
     "src": "public/landingimages/rollback.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-D54DUJVc.css",
+    "file": "assets/app-lugd3hW_.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -2649,7 +2650,7 @@
     "src": "resources/js/Pages/assets/vendor/fonts/fontawesome/fa-solid-900.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BLR9QIRK.js",
+    "file": "assets/app-DC760RGW.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -2664,7 +2665,7 @@
       "_vue-toastification-SuRQDC9j.js",
       "_primevue-C33zR_mr.js",
       "_underscore-BI39n_-E.js",
-      "_bootstrap-BdlpLzpZ.js",
+      "_bootstrap-DNcdi-DM.js",
       "_jspdf-Dncj6YM5.js",
       "_jspdf-autotable-TLQB5wf7.js",
       "_@primevue-vq6BZafw.js",
@@ -2704,8 +2705,8 @@
       "_fflate-EnPhvkmS.js"
     ],
     "css": [
-      "assets/app-CWIkoTSA.css",
-      "assets/app-D54DUJVc.css"
+      "assets/app-DkKwfsNf.css",
+      "assets/app-lugd3hW_.css"
     ],
     "assets": [
       "assets/logo-CrdDPFJQ.png",
