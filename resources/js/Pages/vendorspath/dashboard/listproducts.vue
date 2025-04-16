@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-        <title>Mealxpress | Product Lists</title>
+        <title>Mealxpress | Product List(s)</title>
     </Head> 
 
     <div class="main-board-mealxpress bg-white">
