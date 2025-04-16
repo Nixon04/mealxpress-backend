@@ -116,7 +116,7 @@ class VendorsController extends Controller
         try {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imagename = time() . '.' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $imagename = time() . '.'    . uniqid() . '.' . $image->getClientOriginalExtension();
                 // Save the image in the 'mealxpress_storesprofile' folder under the 'public' disk (storage/app/public)
                 // $path = Storage::disk('public')->putFileAs('mealxpress_storesprofile', $image, $imagename);
                 $path = $request->file('image')->storeAs('mealxpress_storesprofile', $imagename, 'local');

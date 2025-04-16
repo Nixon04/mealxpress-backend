@@ -32,6 +32,7 @@ use App\Models\VirtualAccounts;
 use App\Models\TrackerRecord;
 use App\Mail\VerificationEmail;
 use App\Events\PurchaseMade;
+use App\Models\DepositHistory;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -58,6 +59,8 @@ class MealServiceFetchController extends Controller
     
         $city = trim($parts[0]);
         $state = trim($parts[1]);
+
+        Log::info('check', ['city' => $city]);
     
         // Get all entries from ActivePlaces
         $querychecker = ActivePlaces::orderBy('id', 'ASC')->get();
@@ -66,7 +69,7 @@ class MealServiceFetchController extends Controller
             foreach ($querychecker as $entrystatus) {
                 \Log::info('server', ['mainchecker' => $entrystatus]);
     
-                if ($city === $entrystatus->regions || $state === $entrystatus->states) {
+                if ($city == $entrystatus->regions && $state == $entrystatus->states) {
                     // Match found, return true
                     \Log::info('info', ['server' => 'true']);
                     return response()->json(['message' => 'true']);
@@ -85,8 +88,7 @@ class MealServiceFetchController extends Controller
         $request->validate([
             "username" => 'required',
         ]);
-
-        $querytransaction = OrderTotal::where('username', $request->input('username'))->get();
+        $querytransaction = DepositHistory::where('username', $request->input('username'))->orderBy('id','Desc')->get();
         if($querytransaction){
           return response()->json(['message' => $querytransaction]);
         }else{
@@ -336,34 +338,80 @@ class MealServiceFetchController extends Controller
             Log::error('JSON Decode Error', ['error' => json_last_error_msg(), 'content' => $paymentDetails]);
             return response()->json(['error' => 'Invalid JSON'], 400);
         }
-    
+
 
         if(isset($result->event)){
-        Log::info('paymentreference', ['checker' => $result]);
-        // if($result->event == "dedicatedaccount.assign.success"){
-        //     Log::info('reference', ['status' => $result->data->customer]);
-        // }
+        // Log::info('paymentreference', ['checker' => $result]);
 
+        
 
          if($result->event == "dedicatedaccount.assign.success"){
             $first= $result->data->customer->first_name;
             $account_name = $result->data->dedicated_account->account_name;
             $account_number = $result->data->dedicated_account->account_number;
+
+
    
             $checkvirtualname = VirtualAccounts::where('username', $first)->first();
             if($checkvirtualname){
               $checkvirtualname->update(['account_name' => $account_name, 'account_number' => $account_number ]);
+              \Log::info('information', ['server' => 'inserted successfully']);
             }else{
                Log::info('info', ['status' => $first]);
                return response()->json(['message' => 'Names do not align']);
                
             }
-         
+
             Log::info('information', ['name' => $first]);
            return response()->json(['message' => 'Dedicated account received']);
         }
-    }
 
+// charge via virtual account
+        else if($result->event=="charge.success"){
+            \Log::info('information', ['server' => 'Deposited successfully']);
+            $amount = $result->data->amount/100;
+            $username = $result->data->customer->first_name;
+            $references = $result->data->reference;
+            $status = $result->data->status;
+            $customer_code = $result->data->customer->customer_code;
+    
+            $querytoken = UserModel::where('username', $username)->first();
+            if($querytoken){
+
+                if(DepositHistory::where('reference', $references)->exists()){
+                    return ;
+                }
+
+                $date = Carbon::now()->setTimeZone('Africa/Lagos')->format('D, M d, Y, h:i:s A');
+
+                $queryhistory = new DepositHistory([
+                    'username' => $username,
+                    'amount' => $amount,
+                    'status' => $status,
+                    'reference' => $references,
+                    'date_issued' => $date,
+                ]);
+                $queryhistory->save();
+
+                $token = $querytoken->fcm_token;
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('token', $token)
+                ->withNotification(notification: Notification::create("🇳🇬 Cash Deposit 🤑'", body: "Your account has been credited with the sum of $amount"));
+                $messaging->send($message);
+                \Log::info('information', ['server' => 'Deposited successfully']);
+    
+            }
+    
+            $querydata = UserAccounts::where('username', $username)->first(); 
+               if($querydata){
+                $querydata->update(['main_balance' => $amount]);
+            }
+            
+        }
+
+
+
+//  for transfer purhchase 
     else if($result->event == "transfer.success"){
         $transactionid = $result->event->data->reference;
         $querypayout = PayoutMethods::where('referencecode', $transactionid)->first();
@@ -374,12 +422,25 @@ class MealServiceFetchController extends Controller
         return response()->json(['message' => 'No payout method found', ['reference_status' => 'Failed']]);
     }
 
- 
-   
+  
     //  for failed transactions
-     else if($result->event  == "transfer.failed"){
+    else if($result->event  == "transfer.failed"){
+        $transactionid = $result->event->data->reference;
+        $querypayout = PayoutMethods::where('referencecode', $transactionid)->first();
+        if($querypayout){
+            $querypayout->update(['status' => 'failed']);
+             return response()->json(['message' => 'Payout successful']);
+        }
+        return response()->json(['message' => 'No payout method found', ['reference_status' => 'Failed']]);
   
     }
+
+        
+
+    }
+
+
+  
 }
     // product status call
     public function ProductStatus(Request $request){

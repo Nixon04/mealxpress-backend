@@ -505,7 +505,7 @@ export default {
 
 
     const ViewAllTogether = async (item) => {
-      if(item.cartstatus == "returns"){
+      if(item.cartstatus == "returns" ||  item.cartstatus == "Delivered"){
         console.log('Cart Already rejected');
         return;
       }

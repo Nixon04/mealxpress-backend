@@ -35,11 +35,11 @@
                               <table class="table">
                                <thead>
                                   <tr>
-                                  <th>Project ID</th>
+                                  <th>ID</th>
                                   <th>Category ID</th>
                                   <th>Category Name</th>
-                                  <th>Order Figure</th>
-                                  <th>Order Active</th>
+                                  <th>Mandatory</th>
+                                  <th>status</th>
                                   <th>Actions</th>
                                   </tr>
                               </thead>

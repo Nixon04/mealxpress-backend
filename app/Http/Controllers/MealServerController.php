@@ -28,10 +28,13 @@ class MealServerController extends Controller
         ]);
         try{
         $validatecheck = UserModel::where('contact', $request['contact'])->first();
-        if($validatecheck->flag == "1"){
-            return response()->json([ 'message' => 'Account was deactivated',  'status' => 'notactive']);
-        }
+       
         if($validatecheck && hash::check($request['password'], $validatecheck->password)){
+
+            if($validatecheck->flag == "1"){
+                return response()->json([ 'message' => 'Account was deactivated',  'status' => 'notactive']);
+            }
+
             $username = $validatecheck->username;
             // update fcmtoken
             $validatecheck->update(['fcm_token' => $request->input('fcm_token') ?? '']);
@@ -126,7 +129,7 @@ class MealServerController extends Controller
            "email" => $request['email'],
            "first_name" => $request['username'],
            "middle_name" => " ",
-           "last_name" => "Doe",
+           "last_name" => ' ',
            "phone" => $request['contact'],
            "preferred_bank" => "test-bank",
            "country" => "NG"
@@ -135,14 +138,14 @@ class MealServerController extends Controller
         $getjson = json_decode($response->getBody());
          $checkvirtualaccountuser = VirtualAccounts::where('username', $request['username'])->first();
          if($checkvirtualaccountuser){
-          return response()->json(['Name for this particular user is already registered']);
+          return response()->json( ['message' => 'Name for this particular user is already registered', 'data' => 'false']);
          }
         $date = Carbon::now()->setTimeZone('Africa/Lagos')->format('m d, Y : h:i:s');
         $insertvalue = new VirtualAccounts([
           "username" => $request['username'],
           "account_name" => "0",
           "account_number" => "0",
-          "current_bank" => "WEMA",
+          "current_bank" => "test-bank",
           "date" => $date,
       ]);
         $insertvalue->save();
@@ -166,6 +169,7 @@ class MealServerController extends Controller
         }
     }catch(\Exception $e){
         DB::rollback();
+        \Log::info('server', ['status' => $e->getMessage()]);
         return ResponseHelper::jsonResponse('false', 500,$e->getMessage());
     }    
     }

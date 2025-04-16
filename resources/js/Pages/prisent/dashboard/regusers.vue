@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Head>
       <title>Mealxpress | Users Information and Registration</title>
     </Head>
@@ -27,14 +28,14 @@
                             </div> -->
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-bod">
                     <div class="table-responsive text-nowrap">
                       <table class="table">
                        <thead>
                           <tr>
-                          <th>Project</th>
-                          <th>Price</th>
-                          <th>Status</th>
+                          <th>Name</th>
+                          <th>Phone Contact</th>
+                          <th>Email Address</th>
                           <th>Amount</th>
                           </tr>
                       </thead>
@@ -44,12 +45,12 @@
                             No Registered User found
                           </td>
                         </tr>
-                          <tr v-for="(item, index) in paginatedData" :key="item.id">
+                          <tr v-for="(item, index) in paginatedData" :key="index.id">
                             <td v-if="noResults">No Registered User found  </td>
                             <td> {{item.fullname}}</td>
                             <td> {{item.contact}}</td>
                             <td><span class="badge bg-label-info me-1">{{item.email}}</span></td>
-                            <td><span class="fw-bold">N {{formattedPrice(item.main_balance)}}</span></td>
+                            <td><span class="fw-bold">₦{{formattedPrice(item.main_balance)}}</span></td>
                             <td>
                       
                     </td>
@@ -80,6 +81,7 @@
     </div>
         </div>
         </div>
+    </div>
     </div>
   </template>
   

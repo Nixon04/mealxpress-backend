@@ -231,7 +231,24 @@ class DriverController extends Controller
        }
 
     public function FetchAllUsersRequest(Request $request){
-      $request->validate(['status' => 'required']);  
+      $request->validate(['status' => 'required', 'username' => 'required']);  
+
+
+        // if($request->input('status') == 'Delivered'){
+        //     $selectedvalues = DB::select('SELECT  fullname, email, contact, marketid, productname,
+        //     cartpremit as cartpermit,
+        //      price, COALESCE(`portion`,0) as port, total, option, cartimage, cartweight, cartreference,
+        //       cartdrink, cartstatus, cartrefcode, cartpurchasedate FROM user_order_lists
+        //        LEFT JOIN user_models ON user_order_lists.username = user_models.username
+        //         WHERE user_order_lists.cartstatus = :statuscall ORDER BY user_order_lists.id DESC AND user_order_lists.username = :userstate',
+        //          ['statuscall' =>  $request['status'],
+        //          'userstate' => 'MLXPD-304258'
+        //         ]);
+                
+        // }
+
+  
+
         $selectedvalues = DB::select('SELECT  fullname, email, contact, marketid, productname,
         cartpremit as cartpermit,
          price, COALESCE(`portion`,0) as port, total, option, cartimage, cartweight, cartreference,
@@ -239,6 +256,8 @@ class DriverController extends Controller
            LEFT JOIN user_models ON user_order_lists.username = user_models.username
             WHERE user_order_lists.cartstatus = :statuscall ORDER BY user_order_lists.id DESC',
              ['statuscall' =>  $request['status']]);
+            
+    
        
     // array holder
     $uniqueReferences = [];
@@ -361,6 +380,7 @@ class DriverController extends Controller
         return response()->json(['message' => 'Incorrect Details', 'status' => 'error']);
     }
 }catch(\Exception $e){
+    \Log::info('error_Status', ['infostatus' =>  $e->getMessage()]);
     return response()->json(['message' => $e->getMessage()]);
 }
   }
