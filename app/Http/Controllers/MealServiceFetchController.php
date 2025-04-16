@@ -404,7 +404,9 @@ class MealServiceFetchController extends Controller
     
             $querydata = UserAccounts::where('username', $username)->first(); 
                if($querydata){
-                $querydata->update(['main_balance' => $amount]);
+                $initial_balance = $querydata->main_balance;
+                $total_balance = $initial_balance + $amount;
+                $querydata->update(['main_balance' => $total_balance]);
             }
             
         }
