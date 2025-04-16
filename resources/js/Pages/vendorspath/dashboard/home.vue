@@ -78,11 +78,11 @@
                                    <div class="div-centered mb-3 px-3 p-2">
                                     <h1 class="fs-4 fw-bold mb-3 bg-textmain"> ₦{{ formatCurrency(totalsum) }} </h1>
                                     <div class="d-flex">
-                                      <div class="bg-auto-rate me-2">
+                                      <!-- <div class="bg-auto-rate me-2">
                                         <i class="fa-solid fa-arrow-up-long"></i>
                                         +5%
                                       </div>
-                                      <span>Vs Last Month</span>
+                                      <span>Vs Last Month</span> -->
                                     </div>
                                    </div>
                                   <Link href="/vendorspath/dashboard/orders">
@@ -108,11 +108,11 @@
                                  <div class="div-centered mb-3 px-3 p-2">
                                   <h1 class="fs-4 fw-bold mb-3 bg-textmain"> {{formatCurrency(salescount)}}</h1>
                                   <div class="d-flex">
-                                    <div class="bg-auto-rate me-2">
+                                    <!-- <div class="bg-auto-rate me-2">
                                       <i class="fa-solid fa-arrow-up-long"></i>
                                       +5%
                                     </div>
-                                    <span>Vs Last Month</span>
+                                    <span>Vs Last Month</span> -->
                                   </div>
                                  </div>
                                 <Link href="/vendorspath/dashboard/orders">

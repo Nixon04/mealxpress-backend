@@ -575,6 +575,7 @@ public function UpdateCurrentProductList(Request $request)
         'ProductName' => 'required',
         'ProductPrice' => 'required',
         'ProductWeight' => 'required|numeric',
+        'ProductDescription' => 'required',
         'ProductID' => 'required',
         'ProductImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate the image if provided
     ]);
@@ -589,10 +590,11 @@ public function UpdateCurrentProductList(Request $request)
 
     if ($allmarkets) {
         $updateData = [
-            'marketproductname' => $request->ProductName,
-            'marketproductprice' => $request->ProductPrice,
-            'marketproductweight' => $request->ProductWeight,
-        ];
+            'marketproductname' => $request->input('ProductName'),
+            'marketproductprice' => $request->input('ProductPrice'),
+            'marketproductweight' => $request->input('ProductWeight'),
+            'marketproductlink' => $request->input('ProductDescription'),
+         ];
 
         if (isset($imageName)) {
             $updateData['marketimage'] = $imageName;

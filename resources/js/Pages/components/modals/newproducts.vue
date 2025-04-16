@@ -24,6 +24,14 @@
                 <label for="ProductPrice">Product Price</label>
                 <input type="text" id="ProductPrice" v-model="ModalData.productPrice" class="form-control py-3" placeholder="">
              </div>
+
+             <div class="form-input mb-3">
+                <label for="InputDescription">Product Description</label>
+                <textarea name="" id="ProductDescription" v-model="ModalData.productDescription" rows="4" class="form-control" placeholder="Brief Description not more than 60 words in total">
+                </textarea>
+              </div>
+
+
              <div class="form-input mb-4">
                 <label for="ProductWeight">Product Weight</label>
                 <input type="text" id="ProductWeight" v-model="ModalData.productWeight" class="form-control py-3" placeholder="">

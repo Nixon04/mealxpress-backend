@@ -4,16 +4,16 @@
         <title>Mealxpress | Product Lists</title>
     </Head> 
 
-    <div class="main-board-mealxpress">
+    <div class="main-board-mealxpress bg-white">
      <Newproducts :isVisible="isVisible"   @close="disclosemodel" :ModalData="ModalData" @submit="updateproducts" @file-change="handleFileChange" :isLoadingUpdate="isLoadingUpdate"/>
      <Addproducts :addVisible="addVisible" :isLoadingProduct="isLoadingProduct" :isLoadingUpdate="isLoadingUpdate" :cat="cat" @close="CloseCenterModel"  @submitmodal="UploadProducts"/>
       <DeleteModel :deleteVisible="deleteVisible" :deleteloading="deleteloading" :identifier="identifier" @close="deleteclear" @deletesubmit="deleteproductbutton"/>  
       <NavbarComponent/>
-        <div class="mealxpress-content">
+        <div class="mealxpress-content bg-white">
           <HeaderDashboard :userid="userid" :imageref="imageref"/>
           <div class="mealxpress-mai">
             <div class="card-general-container card p-2">
-                        <div class="card">
+                        <div class="card ">
                             <h5 class="card-header"></h5>
                             <div class="d-flex justify-content-between px-6">
                                 <div class="d-flex">
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-bod">
                             <div class="table-responsive text-nowrap">
                               <table class="table">
                                <thead>
@@ -265,13 +265,20 @@ export default {
     const updateproducts = async (data) => {
       const toast = useToast();
 
-      if(! ModalData.value.productName.trim() || !ModalData.value.productPrice.trim() || !ModalData.value.productWeight.trim()){
+      if(! ModalData.value.productName.trim() || !ModalData.value.productPrice.trim() || !ModalData.value.productDescription || !ModalData.value.productWeight.trim()){
         toast.info("Empty field detected", {
         timeout: 2000,
         hideProgressBar:true,
         icon: false,
       });
         return null;
+      }
+      if(isNaN(ModalData.value.productWeight)){
+        toast.info("Please remove the letters attached to your weight Number", {
+        timeout: 2000,
+        hideProgressBar:true,
+        icon: false,
+      });
       }
 
       const formData = new FormData();
@@ -280,6 +287,7 @@ export default {
       formData.append('ProductPrice', data.productPrice);
       formData.append('ProductWeight', data.productWeight);
       formData.append('ProductID', data.productID);
+      formData.append('ProductDescription', data.productDescription);
 
       if (selectedFile.value) {
         formData.append('ProductImage', selectedFile.value);
@@ -318,6 +326,7 @@ export default {
       productName: '',
       productPrice: '',
       productWeight: '',
+      productDescription: ''
     });
 
     const showmodel = async (item) => {
@@ -379,6 +388,7 @@ export default {
           ModalData.value.productName = RData.value.marketproductname || '';
           ModalData.value.productPrice = RData.value.marketproductprice || '';
           ModalData.value.productWeight = RData.value.marketproductweight || '';
+          ModalData.value.productDescription = RData.value.marketproductlink || '';
           console.log('Success ', ModalData.value);
         } else {
           console.log(response.status);

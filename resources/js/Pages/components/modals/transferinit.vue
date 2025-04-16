@@ -18,7 +18,7 @@
                             {{ items.bank_name }}
                         </option>
                     </select>
-                    <div class="form-input mb-5">
+                    <div class="form-input mb-2">
                         <input
                             type="text"
                             class="py-3 form-control"
@@ -33,13 +33,13 @@
 
                     <!-- Display fetched account name -->
                     <div v-if="fetching">Loading....</div>
-                    <div v-if="username" class="alert alert-success mb-3">
+                    <div v-if="username" class="alert alert-success mb-2">
                         Account Name: {{ username }}
                     </div>
 
                     <input type="text" :value="recipientname" class="form-control d-none">
 
-                    <div class="form-input mb-5">
+                    <div class="form-input mb-2">
                         <input
                             type="text"
                             class="py-3 form-control"
@@ -52,7 +52,7 @@
                         />
                     </div>
 
-                    <div class="form-input mb-5">
+                    <div class="form-input mb-2">
                         <input
                             type="text"
                             class="py-3 form-control"
@@ -61,7 +61,7 @@
                         />
                     </div>
 
-                    <div class="p-1 mx-0 bg-label-success mb-5">
+                    <div class="p-1 mx-0 bg-label-success mb-2">
                         <span>Note: (V.A.T) Charges are applied with a capped of 50 at ₦10,000, and you are limited just ₦50,000 per Transfer.</span>
                     </div>
 

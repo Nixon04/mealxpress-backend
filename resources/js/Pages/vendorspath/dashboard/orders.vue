@@ -17,12 +17,14 @@
               <div class="col-lg-12">
                 <!-- table contents -->
 
+
+
     <Tabs value="0" class="tablets custom-tabs px-3 m-2">
       <TabList class="bg-meal-tablist">
-          <Tab value="0">All</Tab>
-          <Tab value="1">Processing</Tab>
-          <Tab value="2">Completed</Tab>
-          <Tab value="3">Returns</Tab>
+          <Tab value="0" @click="selectedStatus = '0' ">All</Tab>
+          <Tab value="1" @click="selectedStatus ='1'  ">Processing</Tab>
+          <Tab value="2" @click="selectedStatus  = '2' ">Completed</Tab>
+          <Tab value="3" @click="selectedStatus = '3' ">Returns</Tab>
       </TabList>
       <TabPanels class="tablets px-0">
           <TabPanel value="0">
@@ -55,6 +57,7 @@
                 </tr>
               </thead>
               <tbody>
+                <tr v-if="noResults"></tr>
                 <tr v-for="(item, index) in data" :key="index.id" @click="ViewAllTogether(item)" class="cursor-pointer" >
                     <td >{{ item.username }}</td>
                     <td>{{ item.cartreference }}</td>
@@ -78,6 +81,7 @@
                     <i class="fa-solid fa-ellipsis"></i>
                   </td>
                 </tr>
+                
               </tbody>
             </table>
             <div v-if="noResults" class="text-center py-4 bg-textmain">
@@ -555,27 +559,51 @@ export default {
       isVisible.value = false;
     };
 
-    const filteredData = computed(() => {
-      if (!data.value) return [];
-      if (!searchQuery.value) return data.value;
-      return data.value.filter((item) =>
-        Object.values(item).some((val) =>
-          String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
-        )
-      );
-    });
+    const selectedStatus = ref(0); // 0: All, 1: Processing, 2: Completed, 3: Returns
 
-    const noResults = computed(() => filteredData.value.length === 0);
+const activestatus = computed(() => {
+  switch (selectedStatus.value) {
+    case 0:
+      return data.value;
+    case 1:
+      return pendingtable.value;
+    case 2:
+      return deliveredtable.value;
+    case 3:
+      return returnstable.value;
+    default:
+      return data.value;
+  }
+});
 
-    const totalPages = computed(() => {
-      return Math.ceil(filteredData.value.length / rowsPerPage.value);
-    });
+const filteredData = computed(() => {
+  if (!activestatus.value) return [];
 
-    const paginatedData = computed(() => {
-      const start = (currentPage.value - 1) * rowsPerPage.value;
-      const end = start + rowsPerPage.value;
-      return filteredData.value.slice(start, end);
-    });
+  if (!searchQuery.value) return activestatus.value;
+
+  return activestatus.value.filter((item) =>
+    Object.values(item).some((val) =>
+      String(val).toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  );
+});
+
+// Check if no results without using .length
+const noResults = computed(() => !filteredData.value || filteredData.value.length === 0);
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredData.value.length / rowsPerPage.value);
+});
+
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * rowsPerPage.value;
+  const end = start + rowsPerPage.value;
+  return filteredData.value.slice(start, end);
+});
+
+
+
+
 
     const nextPage = () => {
       if (currentPage.value < totalPages.value) currentPage.value++;
@@ -615,6 +643,8 @@ export default {
       pendingtable,
       deliveredtable,
       returnstable,
+      selectedStatus,
+      activestatus,
       ViewAllTogether,
     };
   },
