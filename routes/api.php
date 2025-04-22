@@ -71,6 +71,7 @@ Route::controller(MealServiceFetchController::class)->group(function(){
     Route::post('/earnrewards', 'EarnRewards');
     Route::post('/alltransactions', 'AllTransactions');
     Route::post('/fetchregion', 'CurrentRegionGroup');
+    Route::post('/requesttoken', 'SmsToken');
 //    get routes
 
    Route::get('/fetchallmarketlist', 'FetchMarketsList');

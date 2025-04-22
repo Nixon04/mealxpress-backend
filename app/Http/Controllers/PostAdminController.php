@@ -31,6 +31,44 @@ class PostAdminController extends Controller
     // Route::post('/prisent/dashboard/addcategory', 'AddCategory');
 
 
+    public function UpdateDrivers(Request $request){
+        $request->validate([
+            'firstname' =>  'required|string',
+            'lastname' =>  'required',
+            'email' =>  'required|email',
+            'contact' => 'required|numeric',
+            'nextofkin' =>  'required',
+            'trackerid' => 'required',
+            'kincontact' => 'required|numeric',
+            'productImage' => 'required|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $getName = $request->file(key: 'productImage');
+        $getImageName = time() . '.'. uniqid() .'.'.  $getName->getClientOriginalExtension(); 
+        $path = $getName->storeAs('mealxpress_riders_image', $getImageName, 'local');
+
+        try{
+        $queryupdata = DriversPersonalInfo::where('trackerid', $request->input('trackerid'))->first();
+        if($queryupdata){
+            $queryupdata->update([
+                "firstname" => $request->input('firstname'),
+                "lastname" => $request->input('lastname'),
+                "email" => $request->input('email'),
+                "contact" => $request->input('contact'),
+                "nextofkin" => $request->input('nextofkin'),
+                "kincontact" =>  $request->input('kincontact'),
+                "image" => $getImageName,
+            ]);
+            return response()->json(['message' => 'Updated Successfully', 'status' => 'success']);
+        }else{
+            return response()->json(['message' => 'Could Not Update', 'status' => 'error']);
+        }
+       }catch(\Exception $e){
+        return response()->json(['message' => $e->getMessage()]);
+       }
+    }
+
+
 
     public function AddRegions(Request $request){
         $request->validate([

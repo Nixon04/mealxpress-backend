@@ -139,6 +139,7 @@
   <script>
   import { useToast } from 'vue-toastification';
   import axios from 'axios';
+  import { Inertia } from '@inertiajs/inertia';
   const toast = useToast();
   export default {
     
@@ -201,7 +202,7 @@
       },
   
       // Handle the form submission
-      submitProduct() {
+     async submitProduct() {
         if (!this.dataHolder.firstname || !this.dataHolder.lastname || !this.dataHolder.email
          || !this.dataHolder.contact || !this.dataHolder.nextofkin || !this.dataHolder.kincontact 
      
@@ -214,15 +215,40 @@
           });
           return;
         }
-        // Prepare the form data to send to the backend
+        // Prepare the form data to send to the backend 
         const formData = new FormData();
-        formData.append('vendorId', this.vendorId);
-        formData.append('vendorContact', this.vendorContact);
-        formData.append('vendorEmail', this.vendorEmail);
-        formData.append('productImage', this.file); // Send the image data
+        formData.append('firstname', this.dataHolder.firstname);
+        formData.append('lastname', this.dataHolder.lastname);
+        formData.append('email', this.dataHolder.email);
+        formData.append('contact', this.dataHolder.contact);
+        formData.append('nextofkin', this.dataHolder.nextofkin);
+        formData.append('kincontact', this.dataHolder.kincontact);
+        formData.append('trackerid', this.dataHolder.trackerid);
+        formData.append('productImage', this.file); 
   
-        this.$emit('editsubmit', formData);
+        const response = await axios.post('/prisent/updatedrivers',formData, {
+          'Content-Type': 'application/json',
+        });
+            if(response.status == 200){
+              const toast = useToast();
+            if(response.data.status  == "success"){
+              toast.success(response.data.message, {
+                hideProgressBar:true,
+                timeout: 3000,
+              });
+              Inertia.reload('');
 
+              setTimeout(() => {
+              CloseCenterModel();
+              }, 3000);
+            }
+            else{
+              toast.info(response.data.message, {
+                hideProgressBar:true,
+                timeout: 3000,
+              });
+            }
+          }
       },
     },
   };

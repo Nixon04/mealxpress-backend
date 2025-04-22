@@ -43,6 +43,49 @@ use Kreait\Firebase\Messaging\Notification;
 class MealServiceFetchController extends Controller
 {
 
+
+  
+public function SmsToken(Request $request)
+{
+    try {
+        $url = "https://v3.api.termii.com/api/sms/otp/send";
+
+        $payload = [
+            "api_key" => "TLMeX6iew1N6xlVsuTrNdWNBHghTCRDXvqkyvzis055bPFnzcNUs5utrkExZk5",
+            "message_type" => "1234", // <-- corrected
+            "to" => "2349068225050",
+            "from" => "prisent limited", // <-- needs to be approved by Termii
+            "channel" => "dnd",
+            "pin_attempts" => 10,
+            "pin_time_to_live" => 5,
+            "pin_length" => 6,
+            "pin_placeholder" => "< 1234 >",
+            "message_text" => "hey Nixon, your verification Token to verify your Phone contact is < 1234 >",
+            "pin_type" => "1234" // <-- corrected
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post($url, $payload);
+
+        if ($response->successful()) {
+            return response()->json([
+                'success' => true,
+                'data' => $response->json()
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => $response->json()
+            ]);
+        }
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+}
     public function CurrentRegionGroup(Request $request)
     {
         $request->validate([
@@ -467,7 +510,7 @@ class MealServiceFetchController extends Controller
     public function PostTracker(Request $request){
         // this post request is used as reference for future await to the user goods
         $request->validate(['trackerid' => 'required']);
-       $getinfo = DB::select('SELECT tracker_id as trackerid, 
+        $getinfo = DB::select('SELECT tracker_id as trackerid, 
         delivery_code as codeverify,
         tracker_history as history, tracker_code as code, 
         tracker_courier_name as trackername,
@@ -603,6 +646,7 @@ class MealServiceFetchController extends Controller
         DB::beginTransaction();  // Start Transaction
         try {
 
+        
             $queryemail = UserModel::where('username', $request->input('username'))->first();
             if($queryemail){
                 $email_address = $queryemail->email;
@@ -756,6 +800,26 @@ class MealServiceFetchController extends Controller
         DB::beginTransaction();  // Start Transaction
         try {
 
+            $post_site = $request->input('useraddress');
+        \Log::info('servercheck', ['status' => $post_site]);
+        // Split the pointer string into city and state
+        $parts = explode(',', $post_site);
+        $city = trim($parts[0]);
+        $state = trim($parts[1]) ?? 'Rivers';
+        Log::info('check', ['city' => $city]);
+        $querychecker = ActivePlaces::orderBy('id', 'ASC')->get();
+
+        if ($querychecker->isNotEmpty()) {
+            foreach ($querychecker as $entrystatus) {    
+                if ($city != $entrystatus->regions && $state != $entrystatus->states) {
+                    // Match found, return true
+                    \Log::info('info', ['server' => 'true']);
+                    return response()->json(['message' => 'Region not supported for now.', 'status' => 'error']);
+                }
+            }
+        }
+
+
             $queryemail = UserModel::where('username', $request->input('username'))->first();
             if($queryemail){
                 $email_address = $queryemail->email;
@@ -892,10 +956,10 @@ class MealServiceFetchController extends Controller
 
             return response()->json(['message' => 'success', 'status' => 'success','refcode' => $cartreference], 200);
         } catch (\Exception $e) {
-            Log::info('status', ['error' => $e->getMessage()]);
+            Log::info('status', ['error' => $e->getLine()]);
             DB::rollBack();  // Rollback transaction if any operation fails
             return response()->json([
-                'message' => 'Transaction failed: ' . $e->getMessage(),
+                'message' => 'Oops seems something went wrong, try again later ', 'errorstatus' => $e->getMessage(),
             ],);
         }
     }

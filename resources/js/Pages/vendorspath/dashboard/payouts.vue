@@ -57,7 +57,7 @@
                                 <td>{{item.payout}}</td>
                                 <td>{{item.recipient}}</td>
                                 <td>₦{{formattedPrice(item.amount)}}</td>
-                                <td>{{formattedSettledPrice(item.settleamount)}}</td>
+                                <td>₦{{formattedSettledPrice(item.settleamount)}}</td>
                                  <td>{{item.referencecode}}</td>
                                  <td><span :class="[item.status == 'active' ? 'bg-label-success rounded-lg  p-2' : 'bg-label-info p-2 rounded-lg']">{{item.status}}</span></td>
                        

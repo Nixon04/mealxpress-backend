@@ -5,7 +5,7 @@
   </Head>
   <div class="main-board-mealxpress">
     <Addproducts :addVisible="addVisible" @close="CloseCenterModel" @submitmodal="SubmitFunction" />
-    <EditDriversComponent :showEditValue="showEditValue" @close="CloseEditModal" :dataHolder="dataHolder" :editsubmit="updateDrivers"/>
+    <EditDriversComponent :showEditValue="showEditValue" @close="CloseEditModal" :dataHolder="dataHolder"/>
       <NavbarComponent />
       <div class="mealxpress-content">
         <HeaderDashboard/>
@@ -34,7 +34,7 @@
                   <div class="table-responsive text-nowrap">
                     <table class="table">
                      <thead>
-                        <tr>
+                        <tr >
                         <th>FirstName</th>
                         <th>LastName</th>
                         <th>Email</th>
@@ -46,7 +46,7 @@
                         </tr>
                     </thead>  
                     <tbody>
-                        <tr v-for="(item, index) in paginatedData" :key="index.id">
+                        <tr v-for="(item, index) in paginatedData" :key="index.id" @click="editdrivers(item)" class="cursor-pointer">
                           <td v-if="noResults">No data found  </td>
                           <td>  <span class="fw-medium">{{item.firstname}}</span></td>
                           <td>{{item.lastname}}</td>
@@ -134,11 +134,21 @@ export default {
   const dataHolder =  ref('');
 
 
-  const updateDrivers = (item) => {
-  const response = axios.post('', item,{
-    'Content-Type': 'application/json',
-  })
-  };
+//   const  updateDrivers = async (item)  => {
+
+//     try{
+//       console.log('Item showed' , item);
+//   const response = await axios.post('/prisent/updatedrivers', item,{
+//     'Content-Type': 'application/json',
+//   });
+   
+
+// }catch(e){
+//   console.log('Error $e');
+// }
+
+
+//   };
 
 
   const editdrivers = async (item) => {
@@ -253,7 +263,7 @@ export default {
     addVisible,
     SubmitFunction,
     dataHolder,
-    updateDrivers,
+    // updateDrivers,
   }
   }
 }

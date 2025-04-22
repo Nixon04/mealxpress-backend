@@ -59,7 +59,7 @@
                   </div>
                   <div class="d-flex gap-3 align-items-center">
                   <span v-if="!isBalanceVisible" class="bg-f-2 fw-bold bg-textmain">₦*********</span>
-                    <h1 v-show="isBalanceVisible" class="bg-f-2 fw-bold bg-textmain">₦{{formatCurrency(mainbalance)}}</h1>
+                    <h1 v-show="isBalanceVisible" class="bg-f-2 fw-bold bg-textmain">₦{{formatCurrency(mainbalance) }}</h1>
                     <i @click="toggleVisibility"  :class="['fas', 'fs-4', 'cursor-pointer', 'bg-textmain', iconClass]"></i>
                   </div>
                 </div>

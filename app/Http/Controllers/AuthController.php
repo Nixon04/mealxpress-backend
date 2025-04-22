@@ -202,17 +202,20 @@ class AuthController extends Controller
     
         // Counters for statuses (with default values)
         $orders = $filcount->get('pending', 0);
-        $delivered = $filcount->get('delivered', 0);
+        $delivered = $filcount->get('Delivered', 0);
         $returns = $filcount->get('returns', 0);
         $cancelled = $filcount->get('cancelled', 0);
+
+
     
         // Data grouped by cart status
         $data = [
             'pending' => $filteredResults->where('cartstatus', 'pending')->values(),
-            'delivered' => $filteredResults->where('cartstatus', 'delivered')->values(),
+            'delivered' => $filteredResults->where('cartstatus', 'Delivered')->values(),
             'returns' => $filteredResults->where('cartstatus', 'returns')->values(),
             'cancelled' => $filteredResults->where('cartstatus', 'cancelled')->values(),
         ];
+
 
         $imagequery = Stores::where('marketstoreid', Session::get('userid'))->first();
         $imagefetch = route('mealxpress_storesprofile', ['filename' => $imagequery->marketstoreprofile ]);

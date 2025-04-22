@@ -115,6 +115,7 @@ Route::controller(VendorsController::class)->group(function(){
     Route::post('/vendorspath/updatetrackgoods', 'PostUpdateGoods');
     Route::post('/vendorspath/addcategory', 'AddCategory');
     Route::post('/vendorspath/updateprofileimage', 'UpdateUserImage');
+    
 
     // verification sender
     Route::post('/vendorspath/verifyemail', 'VendorEmailVerification');
@@ -146,14 +147,14 @@ Route::controller(AdminController::class)->group(function(){
 
 
 Route::get('/firebase-test', function () {
-  $token = 'cny_Ps_1Qu6i9_sZqoK-Xt:APA91bFhe5L5kjDVofrr-YK4udXI9SlIMvScVXhF736M3h5Dk3Ja74CnODwilaEXd8y6D-ShF0XtoRG2KZhLuOa6jiJ_GecRDBpP-orouxQ1f5wUfYsIWN0'; // Replace with a valid FCM token for a test device
+  $token = 'fgROfw1tQxSlzCFKnWGZ6a:APA91bG84ef4NbtVK8VH0hvYLcOj87B6yvDrnoG8sOT6QXpbocv21pYUOIP1fr3nxbbCSPQ90eoXc5CJja0kRUSNFraeXySOEQU4zhd93jbBeSRMOhL2ohU'; // Replace with a valid FCM token for a test device
   $messaging = app('firebase.messaging');
   
   // $message = CloudMessage::withTarget('token',$token)
 
   $messaging = app('firebase.messaging');
-  $message = CloudMessage::withTarget('topic', "all_drivers")
-  ->withNotification(notification: Notification::create("New Request!!'", body: "Order request is 49343434"));
+  $message = CloudMessage::withTarget('token',$token)
+  ->withNotification(notification: Notification::create("Testing Mood'", body: "I have a dream of cause, Don't bother about it"));
    $notifier =  $messaging->send($message);
 
 
@@ -170,6 +171,7 @@ Route::get('/firebase-test', function () {
 
 
 Route::controller(PostAdminController::class)->group(function(){
+  
   Route::post('/prisent/auth/login','AdminPostLogin');
   Route::post('/prisent/dashboard/addvendors','AdminPostVendors');
   Route::post('/prisent/dashboard/postdrivers','AdminPostDrivers');
@@ -181,7 +183,8 @@ Route::controller(PostAdminController::class)->group(function(){
   Route::post('/prisent/dashboard/deletead', 'DeleteAd');
   Route::post('/prisent/dashboard/adsproduct','NewProductUpload');
   Route::post('/prisent/dashboard/regions', 'AddRegions');
-  Route::post('/prisent/dashboard/deletelocation', 'DeleteLocation');
+  Route::post('/prisent/dashboard/deletelocation', action: 'DeleteLocation');
+  Route::post('/prisent/updatedrivers', 'UpdateDrivers');
   
 
 });
