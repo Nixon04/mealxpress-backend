@@ -854,7 +854,7 @@ public function SmsToken(Request $request)
                 if (strtolower($city) == strtolower($entrystatus->regions) && strtolower($state) == strtolower($entrystatus->states)) {
                 }else{
                     // Match found, return true
-                    \Log::info('info', ['server' => 'true']);
+                    \Log::info('infos', ['server' => 'true']);
                     return response()->json(['message' => 'Region not supported for now.', 'status' => 'error']);
                 }
             }
