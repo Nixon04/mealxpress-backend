@@ -33,6 +33,8 @@ use App\Models\TrackerRecord;
 use App\Mail\VerificationEmail;
 use App\Events\PurchaseMade;
 use App\Models\DepositHistory;
+use App\Models\NumbersValidation;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -44,24 +46,63 @@ class MealServiceFetchController extends Controller
 {
 
 
-  
+public function VerificationNumber(Request $request){
+    $request->validate([
+        'id' => 'required',
+        'type' => 'required|string',
+    ]);
+
+    try{
+    $requery = NumbersValidation::where('phone_number', $request->input('id'))->first();
+    if($requery){
+        return response()->json(['message' => '409']);
+    }
+
+    if($request->input('type') == 'number'){
+        $queryid = Str::uuid();
+        $token = rand(999999,111111);
+        $queryinsert = new NumbersValidation(attributes: [
+            'user_id' => $queryid,
+            'phone_number' =>  $request->input('id') ?? '',
+            'token' => $token,
+        ]);
+        $queryinsert->save();
+        return response()->json(['message' => '200']);
+     } 
+     else if ($request->input('type') == 'token'){
+        $querycheck = NumbersValidation::where('token', $request->input('id'))->first();
+        if($querycheck){
+            return response()->json(['message' => '200']);
+        }else{
+            return response()->json(['message' => 'Incorrect Token']);
+        }
+     }
+       
+    else{
+        return response()->json(['message' => '200']);
+    }
+    }catch(\Exception $e){
+        Log::info('error', ['verifynumbersection' => $e->getMessage()]);
+    }
+
+}
 public function SmsToken(Request $request)
 {
     try {
         $url = "https://v3.api.termii.com/api/sms/otp/send";
 
         $payload = [
-            "api_key" => "TLMeX6iew1N6xlVsuTrNdWNBHghTCRDXvqkyvzis055bPFnzcNUs5utrkExZk5",
-            "message_type" => "1234", // <-- corrected
+            "api_key" => "TLIBBlydFQdOwCUDqRRIWxTnifflgTnzTIRVeAyNQtDocdaoPzzptBfBBHwEKk",
+            "message_type" => "NUMERIC", // Value directly placed as a numeric string
             "to" => "2349068225050",
-            "from" => "prisent limited", // <-- needs to be approved by Termii
+            "from" => "mlx1211pres", // Ensure this is approved by Termii
             "channel" => "dnd",
             "pin_attempts" => 10,
             "pin_time_to_live" => 5,
             "pin_length" => 6,
-            "pin_placeholder" => "< 1234 >",
-            "message_text" => "hey Nixon, your verification Token to verify your Phone contact is < 1234 >",
-            "pin_type" => "1234" // <-- corrected
+            "pin_placeholder" => "<1234>",
+            "message_text" => "Hey Nixon, your verification token to verify your phone contact is <1234>",
+            "pin_type" => "NUMERIC" // Same here, placed as the value
         ];
 
         $response = Http::withHeaders([
@@ -637,6 +678,7 @@ public function SmsToken(Request $request)
             'deliverycharge' => 'required|numeric',
             'servicecharge' => 'required|numeric',
             'sumtotal' => 'required|numeric',
+            'additionaladdress' => 'required',
             'total' => 'required|numeric',
             'useraddress' => 'required',
             'useramount' => 'required|numeric',
@@ -644,9 +686,7 @@ public function SmsToken(Request $request)
         ]);
     
         DB::beginTransaction();  // Start Transaction
-        try {
-
-        
+        try {        
             $queryemail = UserModel::where('username', $request->input('username'))->first();
             if($queryemail){
                 $email_address = $queryemail->email;
@@ -679,7 +719,7 @@ public function SmsToken(Request $request)
                 'sum_total' => $request->input('sumtotal'),
                 'total_amount' => $request->input('total'),
                 'status_point' => $cartreference,
-                'delivery_address' => $request->input('useraddress'),
+                'delivery_address' => $request->input('useraddress') . $request->input('additionaladdress') ?? '',
                 'approvestat' => 'waiting', // awaiting approval from the vendor
                 'delivery_message' => '',
                 'delivery_code' => $delivery_code_main,
@@ -811,7 +851,8 @@ public function SmsToken(Request $request)
 
         if ($querychecker->isNotEmpty()) {
             foreach ($querychecker as $entrystatus) {    
-                if ($city != $entrystatus->regions && $state != $entrystatus->states) {
+                if (strtolower($city) == strtolower($entrystatus->regions) && strtolower($state) == strtolower($entrystatus->states)) {
+                }else{
                     // Match found, return true
                     \Log::info('info', ['server' => 'true']);
                     return response()->json(['message' => 'Region not supported for now.', 'status' => 'error']);
@@ -855,7 +896,7 @@ public function SmsToken(Request $request)
                 'sum_total' => $request->input('sumtotal'),
                 'total_amount' => $request->input('total'),
                 'status_point' => $cartreference,
-                'delivery_address' => $request->input('useraddress'),
+                'delivery_address' =>  $request->input('useraddress') . $request->input('additionaladdress') ?? '',
                 'approvestat' => 'waiting', // awaiting approval from the vendor
                 'delivery_message' => '',
                 'delivery_code' => $delivery_code_main,
