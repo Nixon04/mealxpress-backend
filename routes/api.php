@@ -73,6 +73,10 @@ Route::controller(MealServiceFetchController::class)->group(function(){
     Route::post('/fetchregion', 'CurrentRegionGroup');
     Route::post('/requesttoken', 'SmsToken');
     Route::post('/verifynumbertoken', 'VerificationNumber');
+    Route::post('/postuserslocations', 'PostUsersLocation');
+    Route::post('/viewuserlocation', 'Viewuserlocation');
+    Route::post('/viewlocations', 'Viewuserlocation');
+
 //    get routes
 
    Route::get('/fetchallmarketlist', 'FetchMarketsList');
@@ -86,4 +90,5 @@ Route::controller(MealServiceFetchController::class)->group(function(){
    Route::get('/localmarkets', 'LocalMarkets');
    Route::get('/supermarkets', 'SuperMarkets');
    Route::get('/payment-success', 'PaymentSuccess');
+   Route::get('/fetchachiveregions', 'Fetchachiveregions');
 });

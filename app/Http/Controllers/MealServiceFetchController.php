@@ -34,6 +34,7 @@ use App\Mail\VerificationEmail;
 use App\Events\PurchaseMade;
 use App\Models\DepositHistory;
 use App\Models\NumbersValidation;
+use App\Models\LocationArchive;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +47,77 @@ class MealServiceFetchController extends Controller
 {
 
 
+public function Viewuserlocation(Request $request){
+  $request->validate([
+    'username' => 'required',
+  ]);
+  $queryview = LocationArchive::where('username', $request->input('username'))->first();
+  if($queryview){
+    return response()->json(['message' => $queryview->address]);
+  }else{
+    return response()->json(['message' => '']);
+  }
+}
+
+public function PostUsersLocation(Request $request){
+    $request->validate([
+        'username' => 'required',
+        'region' => 'required',
+        'address' => 'required',
+    ]);
+    try{
+    // $region = trim($request->input('region'));
+    // $address = trim($request->input('address'));
+
+    $querycheck = LocationArchive::where('username', $request->input('username'))->first();
+    if($querycheck){
+        $querycheck->update([
+            'username' => $request->input('username'),
+            'location' => $request->input('region'),
+            'address' => $request->input('address'), 
+        ]);
+        return response()->json([
+            'message' => 'Location Saved successfully',
+             'status' => 'success'
+        ]);
+    }
+
+    $queryinsert = new LocationArchive([
+        'username' => $request->input('username'),
+        'location' => $request->input('region'),
+        'address' => $request->input('address'),        
+    ]);
+
+    $queryinsert->save();
+     if($queryinsert){
+    return response()->json([
+        'message' => 'Location Saved successfully',
+         'status' => 'success'
+    ]);
+    }else{
+        return response()->json([
+            'message' => 'Couldn\'t save your location',
+             'status' => 'error'
+        ]);
+    }
+    
+
+    }catch(\Exception $e){
+        Log::info('PostUsersLocation', [
+            'error' => $e->getMessage()
+        ]);
+    }
+}
+
+public function Fetchachiveregions(){
+    $getregions = ActivePlaces::orderBy('id')->get();
+    if($getregions){
+
+        return response()->json(['message' => $getregions->pluck('regions')]);
+    }else{
+        return response()->json(['message' => '']);
+    } 
+}
 public function VerificationNumber(Request $request){
     $request->validate([
         'id' => 'required',
@@ -136,12 +208,12 @@ public function SmsToken(Request $request)
     
         $post_site = $request->input('pointer');
     
-        \Log::info('servercheck', ['status' => $post_site]);
+        Log::info('servercheck', ['status' => $post_site]);
     
         // Split the pointer string into city and state
         $parts = explode(',', $post_site);
     
-        $city = trim($parts[0]);
+        $city = trim(string: $parts[0]);
         $state = trim($parts[1]);
 
         Log::info('check', ['city' => $city]);
@@ -151,17 +223,17 @@ public function SmsToken(Request $request)
     
         if ($querychecker->isNotEmpty()) {
             foreach ($querychecker as $entrystatus) {
-                \Log::info('server', ['mainchecker' => $entrystatus]);
+                Log::info('server', ['mainchecker' => $entrystatus]);
     
                 if ($city == $entrystatus->regions && $state == $entrystatus->states) {
                     // Match found, return true
-                    \Log::info('info', ['server' => 'true']);
+                    Log::info('info', ['server' => 'true']);
                     return response()->json(['message' => 'true']);
                 }
             }
     
             // No match found after checking all
-            \Log::info('info', ['server' => 'false']);
+            Log::info('info', ['server' => 'false']);
             return response()->json(['message' => 'false']);
         }
     
@@ -439,7 +511,7 @@ public function SmsToken(Request $request)
             $checkvirtualname = VirtualAccounts::where('username', $first)->first();
             if($checkvirtualname){
               $checkvirtualname->update(['account_name' => $account_name, 'account_number' => $account_number ]);
-              \Log::info('information', ['server' => 'inserted successfully']);
+              Log::info('information', ['server' => 'inserted successfully']);
             }else{
                Log::info('info', ['status' => $first]);
                return response()->json(['message' => 'Names do not align']);
@@ -452,7 +524,7 @@ public function SmsToken(Request $request)
 
 // charge via virtual account
         else if($result->event=="charge.success"){
-            \Log::info('information', ['server' => 'Deposited successfully']);
+            Log::info('information', ['server' => 'Deposited successfully']);
             $amount = $result->data->amount/100;
             $username = $result->data->customer->first_name;
             $references = $result->data->reference;
@@ -482,7 +554,7 @@ public function SmsToken(Request $request)
                 $message = CloudMessage::withTarget('token', $token)
                 ->withNotification(notification: Notification::create("🇳🇬 Cash Deposit 🤑'", body: "Your account has been credited with the sum of $amount"));
                 $messaging->send($message);
-                \Log::info('information', ['server' => 'Deposited successfully']);
+                Log::info('information', ['server' => 'Deposited successfully']);
     
             }
     
@@ -840,25 +912,25 @@ public function SmsToken(Request $request)
         DB::beginTransaction();  // Start Transaction
         try {
 
-            $post_site = $request->input('useraddress');
-        \Log::info('servercheck', ['status' => $post_site]);
-        // Split the pointer string into city and state
-        $parts = explode(',', $post_site);
-        $city = trim($parts[0]);
-        $state = trim($parts[1]) ?? 'Rivers';
-        Log::info('check', ['city' => $city]);
-        $querychecker = ActivePlaces::orderBy('id', 'ASC')->get();
+        //     $post_site = $request->input('useraddress');
+        // Log::info('servercheck', ['status' => $post_site]);
+        // // Split the pointer string into city and state
+        // $parts = explode(',', $post_site);
+        // $city = trim($parts[0]);
+        // $state = trim($parts[1]) ?? 'Rivers';
+        // Log::info('check', ['city' => $city]);
+        // $querychecker = ActivePlaces::orderBy('id', 'ASC')->get();
 
-        if ($querychecker->isNotEmpty()) {
-            foreach ($querychecker as $entrystatus) {    
-                if (strtolower($city) == strtolower($entrystatus->regions) && strtolower($state) == strtolower($entrystatus->states)) {
-                }else{
-                    // Match found, return true
-                    \Log::info('infos', ['server' => 'true']);
-                    return response()->json(['message' => 'Region not supported for now.', 'status' => 'error']);
-                }
-            }
-        }
+        // if ($querychecker->isNotEmpty()) {
+        //     foreach ($querychecker as $entrystatus) {    
+        //         if (strtolower($city) == strtolower($entrystatus->regions) && strtolower($state) == strtolower($entrystatus->states)) {
+        //         }else{
+        //             // Match found, return true
+        //             Log::info('infos', ['server' => 'true']);
+        //             return response()->json(['message' => 'Region not supported for now.', 'status' => 'error']);
+        //         }
+        //     }
+        // }
 
 
             $queryemail = UserModel::where('username', $request->input('username'))->first();
@@ -946,8 +1018,10 @@ public function SmsToken(Request $request)
             $dateissued = $datecollection;
             $token = $delivery_code_main;
             $reference = $rand_ref;
-            Mail::to($email_address)->send(new SalesReceipt($username,$amount,$reference, $dateissued, $token));
-
+             $querycheck = Mail::to($email_address)->send(new SalesReceipt($username,$amount,$reference, $dateissued, $token));
+                if(!$querycheck){
+                    // please continue
+                }
             // Deduct the total amount from user's balance
             $userAccount->main_balance -= $request->input('total');
             $status = $userAccount->save();
@@ -997,8 +1071,8 @@ public function SmsToken(Request $request)
 
             return response()->json(['message' => 'success', 'status' => 'success','refcode' => $cartreference], 200);
         } catch (\Exception $e) {
-            Log::info('status', ['error' => $e->getLine()]);
-            DB::rollBack();  // Rollback transaction if any operation fails
+            Log::info('status', ['error' => $e->getMessage()]);
+            DB::rollBack(); 
             return response()->json([
                 'message' => 'Oops seems something went wrong, try again later ', 'errorstatus' => $e->getMessage(),
             ],);
